@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--Bootsrap-->
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<!--Fin bootsrap-->
+	<script type="text/javascript" src="Formulaire.js"></script>
+	<link rel="stylesheet" href="Formulaire.css">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width">
+	<title>Formulaire</title>
+</head>
+<body>
+
+	<h2>Formulaire d'inscription</h2>
+	<div>
+		Remarque : vous avez cliqué ici parce que vous voulez vous inscrire. <br/>
+		Veuillez remplir les champs suivant : 
+	</div>
+
+	<!--Ecrire les trucs pour le js ou python pour le formulaire-->
+	<form id="inscription">
+		<label>Nom : <input type="text" name="nom_inscr" placeholder="Nom" required autofocus></label><br/>
+		<label>Prénom : <input type="text" name="prénom_inscr" placeholder="Prénom" required autofocus></label><br/>
+		<label>Genre : <input type="radio" name="genre_inscr" value="masculin"> Masculin 
+						<input type="radio" name="genre_inscr" value="féminin"> Féminin
+		</label><br/>
+		<!--Marche pas sur Firefox-->
+		<label>Date de naissance : <input type="date" name="ddn_inscr" placeholder="jj/mm/aaaa" required autofocus></label><br/>
+		<label>Mot de passe : <input type="password" name="mdp_inscr" required autofocus></label><br/>
+		<label>Adresse e-mail : <input type="email" name="email_inscr" required autofocus></label><br/>
+	</form>
+
+	<input class="button" type="submit" name="btn" value="Inscription">
+
+
+
+	<h2>Formulaire de modification</h2>
+	<div id="essai">
+		Vous avez cliqué ici à partir de votre profil, et c'est pour modifier vos informations.
+	</div>
+	<form id="modif">
+		<label><input type="image" name="img_modif" src="../images/profil_chat.jpg" ></label><br/>
+		<label>Nom : <input type="text" name="nom_modif" value="nom qu'il y a dans la BDD" required autofocus></label><br/>
+		<label>Prénom : <input type="text" name="prénom_modif" value="prénom qu'il y a dans la BDD" required autofocus></label><br/>
+		<label>Autre prénoms : <input type="text" name="autrepren_modif" value="autres prénoms qu'il y a dans la BDD" autofocus></label><br/>
+		<!--Pour le genre il faut regarder ce qui est coché dans la BDD...-->
+		<label>Genre : <input type="radio" name="genre_modif" value="masculin"> Masculin 
+						<input type="radio" name="genre_modif" value="féminin"> Féminin
+		</label><br/>
+		<!--Marche pas sur Firefox-->
+		<label>Date de naissance : <input type="date" name="ddn_modif"  value="ddn qu'il y a dans la BDD" required autofocus></label><br/>
+		<label>Mot de passe : <input type="password" name="mdp_modif" required autofocus></label><br/>
+		<label>Adresse e-mail : <input type="email" name="email_modif"  value="email qu'il y a dans la BDD" required autofocus></label><br/>
+		<label>Adresse postale : <input type="text" name="postal_modif" value="adresse qu'il y a dans la BDD" autofocus></label><br/>
+		<label>Profession : <input type="text" name="profession_modif" value="profession qu'il y a dans la BDD" autofocus></label><br/>
+		<label>Description : <input type="textarea" name="descr_modif" value="description qu'il y a dans la BDD" autofocus></label><br/>
+	</form>
+
+	<input class="button" type="submit" name="btn" value="Modifier">
+
+
+
+</body>
+</html>
