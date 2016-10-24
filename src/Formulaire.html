@@ -34,7 +34,7 @@
 		<label>Adresse e-mail : <input type="email" name="email_inscr" required autofocus></label><br/>
 	</form>
 
-	<input class="button" type="submit" name="btn" value="Inscription">
+	<input type="button" name="btn" value="Inscription">
 
 
 
@@ -43,8 +43,12 @@
 		Vous avez cliqué ici à partir de votre profil, et c'est pour modifier vos informations.
 	</div>
 	<form id="modif">
-		<label><input type="image" name="img_modif" src="../images/profil_chat.jpg" ></label><br/>
+		<div id="img">
+			<label><input type="image" name="img_modif" src="../images/profil_chat.jpg" width="200" height="auto"></label>
+		</div>
+		<input type="button" onclick="javascript:changerimg()" value="Changer la photo"><br/><br/>
 		<label>Nom : <input type="text" name="nom_modif" value="nom qu'il y a dans la BDD" required autofocus></label><br/>
+		<br/>
 		<label>Prénom : <input type="text" name="prénom_modif" value="prénom qu'il y a dans la BDD" required autofocus></label><br/>
 		<label>Autre prénoms : <input type="text" name="autrepren_modif" value="autres prénoms qu'il y a dans la BDD" autofocus></label><br/>
 		<!--Pour le genre il faut regarder ce qui est coché dans la BDD...-->
@@ -60,7 +64,15 @@
 		<label>Description : <input type="textarea" name="descr_modif" value="description qu'il y a dans la BDD" autofocus></label><br/>
 	</form>
 
-	<input class="button" type="submit" name="btn" value="Modifier">
+	<input type="button" name="btn" value="Modifier">
+
+
+	<h2>Formulaire de connection</h2>
+	<form id="connec">
+		<label>Adresse e-mail : <input type="email" name="email_connec" required></label><br/>
+		<label>Mot de passe : <input type="password" name="mdp_connec" required></label><br/>
+	</form>
+	<input type="button" name="btn" value="Connection">
 
 
 
