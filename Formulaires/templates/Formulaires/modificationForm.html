@@ -1,0 +1,71 @@
+<html>
+  <head>
+    <title>Formulaire d'inscription</title>
+  </head>
+  <body>
+    <div id="inscription">
+      <form class="form-horizontal" id="formu" role="form" method="post" action="{% url 'Formulaires:Felicitations' %}">
+        {% csrf_token %}
+        <fieldset>
+          <legend>Inscription</legend>
+            {{ form.image.label_tag }}
+            {{ form.image }}
+            {{ form.image.errors }}
+            <br/>
+            <br/>
+            {{ form.nom.label_tag }}
+            {{ form.nom }}
+            {{ form.nom.errors }}
+            <br/>
+            <br/>
+            {{ form.prenom.label_tag }}
+            {{ form.prenom }}
+            {{ form.prenom.errors }}
+            <br/>
+            <br/>
+            {{ form.prenoms_autre.label_tag }}
+            {{ form.prenoms_autre }}
+            {{ form.prenoms_autre.errors }}
+            <br/>
+            <br/>
+            {{ form.genre.label_tag }}
+            {{ form.genre }}
+            {{ form.genre.errors}}
+            <br/>
+            {{ form.ddn.label_tag }}
+            {{ form.ddn }}
+            {{ form.ddn.errors}}
+            <br/>
+            <br/>
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            {{ form.email.errors}}
+            <br/>
+            <br/>
+            {{ form.postal.label_tag }}
+            {{ form.postal }}
+            {{ form.postal.errors}}
+            <br/>
+            <br/>
+            {{ form.profession.label_tag }}
+            {{ form.profession }}
+            {{ form.profession.errors}}
+            <br/>
+            <br/>
+            {{ form.description.label_tag }}
+            {{ form.description }}
+            {{ form.description.errors}}
+            <br/>
+            <br/>
+            {{ form.mdp.label_tag }}
+            {{ form.mdp }}
+            {{ form.mdp.errors}}
+            <br/>
+            <br/>
+            <div><button type="submit" id="bouton" class="btn btn-primary">Valider</button></div>
+        </fieldset>
+      </form>
+    </div>
+
+  </body>
+</html>
