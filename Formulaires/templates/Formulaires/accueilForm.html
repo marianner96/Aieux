@@ -1,0 +1,30 @@
+<!--*****************
+** Author : Léa 
+** Name : accueilForm.html
+******************-->
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/Formulaires.css' %}" />
+<script type="text/javascript" src="{% static 'Formulaires/Formulaires.js' %}"></script>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width">
+  <title>Formulaire_accueil.html</title>
+</head>
+<body>
+
+  <div>
+    Vous voulez : <br/><br/>
+    <a href="{% url 'Formulaires:inscriptionForm' %}">
+    	<button type="submit" name="btn">Vous inscrire</button><br/><br/>
+	</a>
+	<a href="{% url 'Formulaires:connectionForm' %}">
+    	<button type="submit" name="btn">Vous connecter</button><br/><br/>
+	</a><br/>
+  </div>
+
+</body>
+</html>

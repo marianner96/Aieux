@@ -1,0 +1,17 @@
+Nom : 
+{{ nom }}
+
+Prénom : 
+{{ prenom }}
+
+Genre : 
+{{ genre}}
+
+Date de naissance : 
+{{ ddn }}
+
+Email : 
+{{ email }}
+
+Mot de passe : 
+{{ mdp }}
