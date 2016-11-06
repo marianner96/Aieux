@@ -6,7 +6,7 @@ from django.shortcuts import render
 from bottle import Bottle, template, request, run
 from django.http import HttpResponseRedirect
 
-from .models import inscripForm, connecForm, modifForm
+from .models import inscripForm, connecForm, modifForm, utilisateur
 
 def accueilForm(request):
 	return render(request, 'Formulaires/accueilForm.html')
@@ -24,6 +24,10 @@ def inscriptionForm(request):
 			email = form.cleaned_data['email']
 			mdp = form.cleaned_data['mdp']
 
+			#Ca, ça créé une nouvelle entrée dans la bdd
+			utilisateur(nom=nom, prenom=prenom, genre=genre, ddn=ddn, email=email, mdp=mdp)
+
+			#Du coup est ce que form.save est vraiment nécessaire ?
 			form.save()
 
 			return render_to_response('Formulaires/inscriptionForm.html', {'form':form}, 
