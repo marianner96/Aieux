@@ -15,19 +15,34 @@
   <title>Formulaire_accueil.html</title>
 </head>
 <body>
+  <div id="bgBlack">
+  <div id="boxAccueil">
 
-  <div>
-    Vous voulez : <br/><br/>
-    <a href="{% url 'Formulaires:inscriptionForm' %}">
-    	<button type="submit" name="btn">Vous inscrire</button><br/><br/>
-	</a>
-	<a href="{% url 'Formulaires:connectionForm' %}">
-    	<button type="submit" name="btn">Vous connecter</button><br/><br/>
-	</a>
-    <a href="{% url 'Formulaires:modificationForm' %}">
-      <button type="submit" name="btn">Modifier votre profil</button><br/><br/>
-  </a><br/>
-  </div>
+      <div id="boxBvn">
+          <h1 id="TitreDeBvn">Bienvenue sur notre site!</h1>
+
+          <p id="MsgBvn">Ce site a pour but de permettre au grand public de consulter et préserver leur histoire. Vous pourrez y retrouver les membres de votre famille, partager des faits historiques ou bien créer votre propre arbre généalogique. <br> <br>Alors n'hesitez pas à vous inscrire c'est gratuit et simple d'utilisation! </p>
+      </div> <!--fin boxBvn-->
+
+      <div id="boxInscriConnex">
+        <div>
+            Vous souhaitez : <br/><br/>
+            <a href="{% url 'Formulaires:inscriptionForm' %}" >
+              	<button type="submit" name="btn" class="btn">Vous inscrire</button><br/><br/>
+          	</a>
+
+          	<a href="{% url 'Formulaires:connectionForm' %}">
+              	<button type="submit" name="btn" class="btn">Vous connecter</button><br/><br/>
+          	</a>
+
+            <a href="{% url 'Formulaires:modificationForm' %}">
+                <button type="submit" name="btn" class="btn">Modifier votre profil</button><br/><br/>
+            </a><br/>
+        </div>
+      </div> <!--fin boxInscriConnex -->
+
+  </div> <!--fin boxAccueil -->
+  </div> <!-- fin bgBlack -->
 
 </body>
 </html>
