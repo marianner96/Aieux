@@ -3,7 +3,6 @@
 
 from django.http import HttpResponse
 from django.shortcuts import render
-from bottle import Bottle, template, request, run
 from django.http import HttpResponseRedirect
 
 from .models import inscripForm, connecForm, modifForm, utilisateur
