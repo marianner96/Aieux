@@ -21,7 +21,31 @@ Aieux/
         wsgi.py
 
     Formulaires/ 
-    	... 
+    	__init__.py
+        admin.py
+        apps.py
+        models.py
+        tests.py
+        urls.py
+        views.py
+        images/
+        migrations/
+            __init__.py
+        static/
+            Formulaires/
+                Formulaires.css
+                Formulaires.js
+                Fonts/
+                    sail/
+        templates/
+            Formulaires/
+                accueilForm.html
+                connectionForm.html
+                contact_templates.txt
+                Felicitations.html
+                inscripForm.html
+                modificationForm.html
+
     	...
 
 
