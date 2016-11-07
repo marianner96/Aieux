@@ -3,7 +3,6 @@
 
 from django.http import HttpResponse
 from django.shortcuts import render
-from bottle import Bottle, template, request, run
 from django.http import HttpResponseRedirect
 
 from .models import inscripForm, connecForm, modifForm, utilisateur
@@ -29,6 +28,10 @@ def inscriptionForm(request):
 
 			#Du coup est ce que form.save est vraiment nécessaire ?
 			form.save()
+
+			#Essai pour les sessions : 
+			request.session['nom'] = 'Est ce que la session marche ?'
+			print request.session.nom
 
 			return render_to_response('Formulaires/inscriptionForm.html', {'form':form}, 
 				contect_instance=RequestContext(request))
