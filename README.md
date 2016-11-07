@@ -20,6 +20,10 @@ Aieux/
         urls.py
         wsgi.py
 
+    Formulaires/ 
+    	... 
+    	...
+
 
     Le premier répertoire racine Aieux/ n’est qu’un contenant pour le projet. Son nom n’a pas d’importance pour Django ; on peut le renommer comme vous voulez.
 
