@@ -31,7 +31,7 @@ def inscriptionForm(request):
 
 			#Essai pour les sessions : 
 			request.session['nom'] = 'Est ce que la session marche ?'
-			print request.session.nom
+			print (request.session.nom)
 
 			return render_to_response('Formulaires/inscriptionForm.html', {'form':form}, 
 				contect_instance=RequestContext(request))
