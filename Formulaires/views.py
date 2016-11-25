@@ -3,58 +3,81 @@
 
 from django.http import HttpResponse
 from django.shortcuts import render
+from bottle import Bottle, template, request, run
 from django.http import HttpResponseRedirect
 
-from .models import InscripConnecForm, modifForm
+from django.template import Context, loader, RequestContext
+from django.shortcuts import render_to_response
+
+from django.views import generic
+
+from .forms import ClassFormInscription, ClassFormConnection, ClassmodifForm
 
 def accueilForm(request):
 	return render(request, 'Formulaires/accueilForm.html')
 
-def inscriptionForm(request):
+
+############Tests inscription connection#############
+
+
+##########################
+
+
+
+def accueilForm(request):
 	if request.method == 'POST':
-		form = inscripForm(request.POST)
-		if form.is_(valid):
+		#On s'occupe du formulaire d'inscription
+		FormInscription = ClassFormInscription(request.POST)
+#		FormConnection = ClassFormConnection(request.POST)
+
+		if FormInscription.is_(valid):
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est form.save() et c'est tout mais bon ..
-			nom = form.cleaned_data['nom']
-			prenom = form.cleaned_data['prenom']
-			genre = form.cleaned_data['genre']
-			ddn = form.cleaned_data['ddn']
-			email = form.cleaned_data['email']
-			mdp = form.cleaned_data['mdp']
+			nom = FormInscription.cleaned_data['nom']
+			prenom = FormInscription.cleaned_data['prenom']
+			genre = FormInscription.cleaned_data['genre']
+			ddn = FormInscription.cleaned_data['ddn']
+			email = FormInscription.cleaned_data['email']
+			mdp = FormInscription.cleaned_data['mdp']
 
-			#Ca, ça créé une nouvelle entrée dans la bdd
-			utilisateur(nom=nom, prenom=prenom, genre=genre, ddn=ddn, email=email, mdp=mdp)
+			FormInscription.save()
 
-			#Du coup est ce que form.save est vraiment nécessaire ?
-			form.save()
-
-			#Essai pour les sessions : 
-			request.session['nom'] = 'Est ce que la session marche ?'
-			print (request.session.nom)
-
-			return render_to_response('Formulaires/inscriptionForm.html', {'form':form}, 
-				contect_instance=RequestContext(request))
-	else: 
-		form = inscripForm()
-	return render(request, 'Formulaires/inscriptionForm.html', {'form':form})
-
-def connectionForm(request):
-	if request.method == 'POST':
-		form = connecForm(request.POST)
-		if form.is_(valid):
+			
+#		if FormConnection.is_(valid):
+		#On s'ocucpe du formulaire de connection
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est form.save() et c'est tout mais bon ..
-			email = form.cleaned_data['email']
+#			email = FormConnection.cleaned_data['email']
+#			mdp = FormConnection.cleaned_data['mdp']
+
+#			FormConnection.save()
+
+			return render_to_response('Formulaires/accueilForm.html', {'FormInscription':FormInscription}, #{'FormConnection':FormConnection},  
+				contect_instance=RequestContext(request))
+	else: 
+		FormInscription = ClassFormInscription()
+	return render(request, 'Formulaires/accueilForm.html', {'FormInscription':FormInscription}, #{'FormConnection':FormConnection}
+		)
+
+
+def FormConnection(request):
+	if request.method == 'POST':
+		#On s'occupe du formulaire d'inscription
+		form = ClassFormConnection(request.POST)
+		if form.is_(valid):
+
+			mail = form.cleaned_data['email']
 			mdp = form.cleaned_data['mdp']
 
 			form.save()
 
-			return render_to_response('Formulaires/connectionForm.html', {'form':form}, 
+			return render_to_response('Formulaires/accueilForm.html', {'FormConnection':form},  
 				contect_instance=RequestContext(request))
 	else: 
-		form = connecForm()
-	return render(request, 'Formulaires/connectionForm.html', {'form':form})
+		form = ClassFormConnection()
+	return render(request, 'Formulaires/accueilForm.html', {'FormConnection':form})
+
+
 
 def modificationForm(request):
 	if request.method == 'POST':
@@ -86,4 +109,20 @@ def modificationForm(request):
 def Felicitations(request):
 	return render(request, 'Formulaires/Felicitations.html')
 
-### Ajout de template ...
+def Menubis(request):
+	return render(request, 'Formulaires/Menubis.html')
+
+def Menu(request):
+	return render(request, 'Formulaires/Menu.html')
+
+def Form_famille(request):
+	return render(request, 'Formulaires/Form_famille.html')
+
+def Form_famille_ajoutmembre(request):
+	return render(request, 'Formulaires/Form_famille_ajoutmembre.html')
+
+def Form_event(request):
+	return render(request, 'Formulaires/Form_event.html')
+
+def Confirm_ajoutevent(request):
+	return render(request, 'Formulaires/Confirm_ajoutevent.html')
