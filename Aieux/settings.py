@@ -74,12 +74,12 @@ WSGI_APPLICATION = 'Aieux.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-DATABASE_ENGINE = 'oracle' 
-DATABASE_NAME = 'XE' 
-DATABASE_USER = 'hr' 
-DATABASE_PASSWORD = 'hr' 
-DATABASE_HOST = 'localhost' 
-DATABASE_PORT = '1521'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 
 # Password validation

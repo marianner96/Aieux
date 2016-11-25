@@ -1,22 +1,19 @@
-"""Aieux URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/1.10/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
-from django.conf.urls import include, url
+from django.conf.urls import url
 from django.contrib import admin
 
+from Formulaires import views
+
+
+app_name = 'Formulaires'
 urlpatterns = [
-    url(r'^Formulaires/', include('Formulaires.urls')),
-    url(r'^admin/', admin.site.urls),
+    url(r'^$', views.accueilForm, name='accueilForm'),
+    url(r'^modificationForm/$', views.modificationForm, name='modificationForm'),
+    url(r'^Felicitations/$', views.Felicitations, name='Felicitations'),
+    url(r'^Menubis/$', views.Menubis, name='Menubis'),
+    url(r'^Menu/$', views.Menu, name='Menu'),
+    url(r'^Form_famille/$', views.Form_famille, name='Form_famille'),
+    url(r'^Form_famille_ajoutmembre/$', views.Form_famille_ajoutmembre, name='Form_famille_ajoutmembre'),
+    url(r'^Form_event/$', views.Form_event, name='Form_event'),
+    url(r'^Confirm_ajoutevent/$', views.Confirm_ajoutevent, name='Confirm_ajoutevent'),
 ]
+
