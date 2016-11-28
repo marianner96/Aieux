@@ -11,10 +11,10 @@ from django.shortcuts import render_to_response
 
 from django.views import generic
 
-from .forms import ClassFormInscription, ClassFormConnection, ClassmodifForm
+from .models import ClassFormInscription, ClassFormConnection, ClassmodifForm
 
 def accueilForm(request):
-	return render(request, 'Formulaires/accueilForm.html')
+	return render(request, 'accueilForm.html')
 
 
 ############Tests inscription connection#############
@@ -52,11 +52,11 @@ def accueilForm(request):
 
 #			FormConnection.save()
 
-			return render_to_response('Formulaires/accueilForm.html', {'FormInscription':FormInscription}, #{'FormConnection':FormConnection},  
+			return render_to_response('accueilForm.html', {'FormInscription':FormInscription},  
 				contect_instance=RequestContext(request))
 	else: 
 		FormInscription = ClassFormInscription()
-	return render(request, 'Formulaires/accueilForm.html', {'FormInscription':FormInscription}, #{'FormConnection':FormConnection}
+	return render(request, 'accueilForm.html', {'FormInscription':FormInscription},
 		)
 
 
@@ -71,11 +71,11 @@ def FormConnection(request):
 
 			form.save()
 
-			return render_to_response('Formulaires/accueilForm.html', {'FormConnection':form},  
+			return render_to_response('templates/accueilForm.html', {'FormConnection':form},  
 				contect_instance=RequestContext(request))
 	else: 
 		form = ClassFormConnection()
-	return render(request, 'Formulaires/accueilForm.html', {'FormConnection':form})
+	return render(request, 'accueilForm.html', {'FormConnection':form})
 
 
 
@@ -99,30 +99,30 @@ def modificationForm(request):
 
 			form.save()
 
-			return render_to_response('Formulaires/modificationForm.html', {'form':form}, 
+			return render_to_response('modificationForm.html', {'form':form}, 
 				contect_instance=RequestContext(request))
 	else: 
 		form = modifForm()
-	return render(request, 'Formulaires/modificationForm.html', {'form':form})
+	return render(request, 'modificationForm.html', {'form':form})
 
 
 def Felicitations(request):
-	return render(request, 'Formulaires/Felicitations.html')
+	return render(request, 'Felicitations.html')
 
 def Menubis(request):
-	return render(request, 'Formulaires/Menubis.html')
+	return render(request, 'Menubis.html')
 
 def Menu(request):
-	return render(request, 'Formulaires/Menu.html')
+	return render(request, 'Menu.html')
 
 def Form_famille(request):
-	return render(request, 'Formulaires/Form_famille.html')
+	return render(request, 'Form_famille.html')
 
 def Form_famille_ajoutmembre(request):
-	return render(request, 'Formulaires/Form_famille_ajoutmembre.html')
+	return render(request, 'Form_famille_ajoutmembre.html')
 
 def Form_event(request):
-	return render(request, 'Formulaires/Form_event.html')
+	return render(request, 'Form_event.html')
 
 def Confirm_ajoutevent(request):
-	return render(request, 'Formulaires/Confirm_ajoutevent.html')
+	return render(request, 'Confirm_ajoutevent.html')
