@@ -11,11 +11,11 @@ from django.shortcuts import render_to_response
 
 from django.views import generic
 
-<<<<<<< HEAD
+
 from .forms import Utilisateur
-=======
+
 from .models import ClassFormInscription, ClassFormConnection, ClassmodifForm
->>>>>>> 6b30769b78af72b0597741177f4155b0f21a77b1
+
 
 def accueilForm(request):
 	return render(request, 'accueilForm.html')

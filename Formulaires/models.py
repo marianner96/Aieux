@@ -24,9 +24,9 @@ class Famille(models.Model):
 # nom : nom de l'utilisateur
 # prenom : prénom de l'utilisateur
 # genre : genre de l'utilisateur
-# date_naissance : date de naissance de l'utilisateur
+# ddn : date de naissance de l'utilisateur
+# email : e-mail de l'utilisateur
 # mdp : mot de passe chiffré
-# mail : e-mail de l'utilisateur
 # adresse : adresse de l'utilisateur
 # profession : profession de l'utilisateur
 # nationalite : nationalite de l'utilisateur
@@ -40,10 +40,11 @@ class Utilisateur(models.Model):
     genre = models.CharField(max_length=8, choices=GENRES)
     ddn = models.DateField(blank=True, null=True)
     email = models.EmailField()
-    mdp = models.CharField(widget=models.PasswordInput())
+    mdp = models.CharField()
     adresse = models.CharField(max_length=200)
     profession = models.CharField(max_length=60)
-    nationalite = models.CharField(max_length=200)
+    nationalite = models.CharField(max_length=60)
+    description = models.CharField(max_length=200)
     famille = models.ForeignKey(Famille, on_delete=models.CASCADE)
     rang = models.IntegerField(default=0)
     moderateur = models.IntegerField(default=1)
@@ -55,6 +56,19 @@ class Arbre(models.Model):
     famille = models.ForeignKey(Famille, on_delete=models.CASCADE)
 
 
+# id_arbre : l'identifiant de l'arbre sur lequel ce fait est relié
+# code : code du fait : 1 si naissance, 2 si mariage et 3 si décès
+# date_fait : date du fait historique
+# nom : nom de la personne concernée par ce fait
+# prenom : prenom de la personne concernée par ce fait
+class Fait_historique(models.Model):
+    arbre = models.ForeignKey(Arbre, on_delete=models.CASCADE)
+    code = models.IntegerField()
+    date_fait = models.DateField()
+    nom = models.CharField(max_length=30)
+    prenom = models.CharField(max_length=30)
+    autre_nom = models.CharField(max_length=30, null=True)
+    autre_prenom = models.CharField(max_length=30, null=True)
 
 """
 class ClassFormInscription(forms.Form):
