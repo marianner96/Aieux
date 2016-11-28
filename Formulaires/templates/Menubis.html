@@ -1,0 +1,94 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/materialize.min.css' %}" />
+
+<script type="text/javascript" src="{% static 'Formulaires/Formulaires.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/materialize.min.js' %}"></script>
+
+<!-- Icones -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8" />
+    <title>Mes aïeux - visiteur</title>
+	<!-- Icones -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+
+<body class="cyan lighten-4">
+
+<div  id="conteneur_site">
+
+
+<!-- Menu de navigation -->
+	<nav class="nav-extended teal lighten-2">
+	    <div class="nav-wrapper">
+	      <ul class="tabs tabs-transparent centre_moi aggrandir_nav">
+	        <li class="tab aggrandir_nav"><a class="active" href="#box_accueil">ACCUEIL</a></li>
+	      </ul>
+	    </div>
+	</nav>
+
+
+
+
+<!--Onglet pour l'accueil-->
+	<div class="gros_conteneur">
+		<div id="box_accueil" class="col s12 gros_conteneur_central">
+						<nav>
+						    <div class="nav-wrapper teal lighten-2">
+						      <form>
+						        <div class="input-field">
+						          <input id="search" type="search" required>
+						          <label for="search"><i class="material-icons">search</i></label>
+						          <i class="material-icons">close</i>
+						        </div>
+						      </form>
+						    </div>
+					  	</nav>
+
+					  	<div id="rech_opts"> 
+					  		<p>Vous recherchez: </p>
+						  	<p>
+						      <input type="checkbox" id="rech_pers" />
+						      <label for="rech_pers">Une personne</label>
+						    </p>
+						    <p>
+						      <input type="checkbox" id="rech_fam" />
+						      <label for="rech_fam">Une famille</label>
+						    </p>
+						    <p>
+						      <input type="checkbox" id="rech_page" />
+						      <label for="rech_page">Des documents publics</label>
+						    </p>
+					  	</div>
+		</div>
+	</div>
+
+
+	</div>
+        
+
+    <!-- Scripts pour le framework Materialize -->    
+	<script>
+		$(".dropdown-button").dropdown();
+		$(".button-collapse").sideNav();
+		//Ce script sert pour le tooltip, la petite fenetre noir lorsqu'on passe la souris sur le bouton "déconnecter" en haut à gauche
+	  	$(document).ready(function(){
+	    $('.tooltipped').tooltip({delay: 50});
+	  	});
+	  	// Script qui permet d'afficher le modal du bouton 'déconnecter' en haut à gauche
+	  	$(document).ready(function(){
+	    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+	    $('.modal').modal();
+	  	});
+	</script>
+
+</div>
+</body>
+</html>

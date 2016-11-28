@@ -1,0 +1,50 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/materialize.min.css' %}" />
+
+<script type="text/javascript" src="{% static 'Formulaires/Formulaires.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/materialize.min.js' %}"></script>
+
+<!-- Icones -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width">
+	<title>Ajout d'un membre à la famille</title>
+</head>
+<body class="teal">
+	<div class="pop_up">
+	
+			<h3>Vous êtes là parce que normalement, vous voulez ajouter quelqu'un à votre famille.</h3>
+			<!--Il faudra vérifier si le nom de la famille existe dans la BDD. Si oui, on lui demandera si il ne veut pas plutôt rejoindre cette famille. Si non, on l'a créé quand même.-->
+
+			<form method='post' action="{% url 'Formulaires:Menu' %}" class="col s12">
+								    <div class="row">
+
+								        <div class="input-field col s6">
+								          <input id="nom_membre" name="nom_membre" type="text" class="form-control validate" required="required">
+								          <label >Nom du membre à ajouter</label>
+								       	</div>
+
+								        <div class="input-field col s6">
+								          <input id="prenom_membre" name="prenom_membre" type="text" class="form-control validate" required="required">
+								          <label>Prénom du membre à ajouter</label>
+								        </div>
+
+								        <div><button type='submit' id='bouton' class='btn btn-primary'>Ajouter le membre</button></div>
+								    </div>
+			</form>
+			<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de la famille.</p>
+			<div><a href="{% url 'Formulaires:Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
+			<!--Il faut afficher un truc qui recherche le membre dans la base de donnée, puis : 
+			on affiche le membre en question, on demande si c'est lui
+			et si il y en a plusieurs, on lui demande "c'est lequel ?"-->
+		
+	</div>
+</body>
+</html>

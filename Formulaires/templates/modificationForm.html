@@ -1,0 +1,132 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/materialize.min.css' %}" />
+
+<script type="text/javascript" src="{% static 'Formulaires/Formulaires.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/materialize.min.js' %}"></script>
+
+<!-- Icones -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Formulaire de modification</title>
+  </head>
+
+  <body class="cyan darken-2">
+    <div id="box_global">
+    <div class="pop_up">    
+        <div id='modif'>
+        <div class="enfants_box">
+        <h1>Modificiation des informations du profil</h1>
+            <form class="form-horizontal" id="formu" role="form" method="post" action="{% url 'Formulaires:Felicitations' %}">
+                    <!--<div id='img'>
+                        <label><b><input type='image' id='img_modif' src='../Images/profil_chat.jpg' width='200' height='auto'></label>
+                    </div>
+                    <button type='submit' class='btn btn-primary'>Changer la photo</button><br/><br/>-->
+
+                    <img id='img'><script type="text/javascript"> affich_img </script></img>
+                   
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Changer la photo de profil</span>
+                            <input type="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input id="img_modif" class="file-path validate" type="text">
+                        </div>
+                    </div>
+
+                    <div class="box_type">
+                        <div class="enfants_box_type">
+                            <p>
+                            <input id="masculin" name="genre_inscr" type="radio" value="Masculin"/>
+                            {{ form.modif_genre.1 }}
+                            </p>
+                        </div>
+
+                        <div class="enfants_box_type">
+                            <p>
+                            <input id="feminin" name="genre_inscr" type="radio" value="Féminin"/>
+                            {{ form.modif_genre.0 }}
+                            </p>
+                        </div>
+                    </div><br>
+
+
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">account_circle</i>
+                        {{ form.modif_nom.label_tag }}
+                        {{ form.modif_nom }}
+                    </div>
+
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">account_circle</i>
+                        {{ form.modif_prenom.label_tag }}
+                        {{ form.modif_prenom }}
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">account_circle</i>
+                        {{ form.modif_prenoms_autre.label_tag }}
+                        {{ form.modif_prenoms_autre }}
+                    </div>
+
+                    <div class="input-field col s12">
+                        <div>
+                            <i class="material-icons prefix">perm_contact_calendar</i>
+                            {{ form.modif_ddn.label_tag }}
+                            {{ form.modif_ddn }}
+                        </div>
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">email</i>
+                        {{ form.modif_email }}
+                        {{ form.modif_email.label_tag }}
+                    </div>
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">email</i>
+                        {{ form.modif_postal }}
+                        {{ form.modif_postal.label_tag }}
+                    </div>
+
+
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">verified_user</i>
+                        {{ form.modif_mdp }}
+                        {{ form.modif_mdp.label_tag }}
+                    </div>
+
+                    <div class="input-field col s12">
+                        <div>
+                            <i class="material-icons prefix">account_circle</i>
+                            {{ form.modif_profession.label_tag }}
+                            {{ form.modif_profession }}
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <i class="material-icons prefix">account_circle</i>
+                            {{ form.modif_description.label_tag }}
+                            {{ form.modif_description }}
+                        </div>
+                    </div>
+
+                    <input type='hidden' name='verif' id='verif' value='modif'></input><br/>
+            <div><button type='submit' id='bouton' class='btn btn-primary'>Modifier</button></div>
+            </form>
+            <p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on redirige vers le profil de l'utilisateur.</p>
+            <div><a href="{% url 'Formulaires:Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
+        </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
