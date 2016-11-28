@@ -23,7 +23,7 @@
 			<h3>Vous êtes là parce que normalement, vous voulez ajouter quelqu'un à votre famille.</h3>
 			<!--Il faudra vérifier si le nom de la famille existe dans la BDD. Si oui, on lui demandera si il ne veut pas plutôt rejoindre cette famille. Si non, on l'a créé quand même.-->
 
-			<form method='post' action="{% url 'Formulaires:Menu' %}" class="col s12">
+			<form method='post' action="{% url 'Menu' %}" class="col s12">
 								    <div class="row">
 
 								        <div class="input-field col s6">
@@ -40,7 +40,7 @@
 								    </div>
 			</form>
 			<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de la famille.</p>
-			<div><a href="{% url 'Formulaires:Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
+			<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 			<!--Il faut afficher un truc qui recherche le membre dans la base de donnée, puis : 
 			on affiche le membre en question, on demande si c'est lui
 			et si il y en a plusieurs, on lui demande "c'est lequel ?"-->

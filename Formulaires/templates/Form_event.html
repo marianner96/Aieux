@@ -28,7 +28,7 @@
 			      <div class="collapsible-header teal lighten-2"><i class="material-icons">filter_drama</i>Une naissance</div>
 			      <div class="collapsible-body teal lighten-5">
 								<div class="row">
-								<form method='post' action={% url 'Formulaires:Confirm_ajoutevent' %} class="col s12">
+								<form method='post' action={% url 'Confirm_ajoutevent' %} class="col s12">
 								    <div class="row">
 								        <div class="input-field col s6">
 								          <input id="prenom_naissance" name="prenom_naissance" type="text" class="validate">
@@ -88,7 +88,7 @@
 									<button type='submit' id='btn' class='btn btn-primary'>Ajout de la naissance</button>
 
 									<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de l'utilisateur où on verra une frise chronologique.</p>
-									<div><a href="{% url 'Formulaires:Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
+									<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 
 								</form>
 								</div>
@@ -100,7 +100,7 @@
 			      <div class="collapsible-header teal lighten-2"><i class="material-icons">grade</i>Un mariage</div>
 			      <div class="collapsible-body teal lighten-5">
 								<div class="row">
-								<form method='post' action="{% url 'Formulaires:Confirm_ajoutevent' %}" class="col s12">
+								<form method='post' action="{% url 'Confirm_ajoutevent' %}" class="col s12">
 									<div class="box-type">
 								        <div class="input-field col s12">
 											<label>Date du mariage</label><br><br>
@@ -131,7 +131,7 @@
 									<button type='submit' id='btn' class='btn btn-primary'>Ajout du mariage</button>
 
 									<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de l'utilisateur où on verra une frise chronologique.</p>
-									<div><a href="{% url 'Formulaires:Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
+									<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 
 								</form>
 								</div>
@@ -145,7 +145,7 @@
 			      <div class="collapsible-header teal lighten-2"><i class="material-icons">description</i>Un décès</div>
 			      <div class="collapsible-body teal lighten-5">
 			      				<div class="row">
-					      		<form method='post' action="{% url 'Formulaires:Confirm_ajoutevent' %}" class="col s12">
+					      		<form method='post' action="{% url 'Confirm_ajoutevent' %}" class="col s12">
 					      			<div class="box-type">
 								        <div class="input-field col s12">
 											<label>Date du décès : </label><br/><br/>
@@ -176,7 +176,7 @@
 									<button type='submit' id='btn' class='btn btn-primary'>Ajout du décès</button>
 						
 									<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de l'utilisateur où on verra une frise chronologique.</p>
-									<div><a href="{% url 'Formulaires:Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
+									<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 								</form>
 								</div>
 				  </div>
@@ -185,7 +185,7 @@
 				<li>
 			      <div class="collapsible-header teal lighten-2"><i class="material-icons">language</i>Un voyage</div>
 			      <div class="collapsible-body teal lighten-5">
-			      		<form method='post' action="{% url 'Formulaires:Confirm_ajoutevent' %}">
+			      		<form method='post' action="{% url 'Confirm_ajoutevent' %}">
 						<label>Lieu du voyage : <input type='nom' name='lieu_voyage' id='lieu_voyage'></label><br/>
 						<label>Date de début du voyage : <input type='date' name='date_voyage_deb' id='date_voyage_deb'></label><br/>
 						<label>Date de fin du voyage : <input type='date' name='date_voyage_fin' id='date_voyage_fin'></label><br/>
@@ -194,14 +194,14 @@
 						<button type='submit' id='btn' class='btn btn-primary'>Ajout du voyage</button>
 						</form>
 						<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de l'utilisateur où on verra une frise chronologique.</p>
-						<div><a href="{% url 'Formulaires:Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
+						<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 				  </div>
 				</li>
 
 				<li>
 			      <div class="collapsible-header teal lighten-2"><i class="material-icons">work</i>Une immigration</div>
 			      <div class="collapsible-body teal lighten-5">
-			      		<form method='post' action="{% url 'Formulaires:Confirm_ajoutevent' %}">
+			      		<form method='post' action="{% url 'Confirm_ajoutevent' %}">
 						<label>Date de l'immigration : <input type='date' name='date_immigration' id='date_immigration'></label><br/>
 						<label>Pays de départ : <input type='prenom' name='pays_depart' id='pays_depart'></label><br/>
 						<label>Pays d'arrivé : <input type='nom' name='pays_arrive' id='pays_arrive'></label><br/>
@@ -210,7 +210,7 @@
 						<button type='submit' id='btn' class='btn btn-primary'>Ajout de l'immigration</button>
 						</form>
 						<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de l'utilisateur où on verra une frise chronologique.</p>
-						<div><a href="{% url 'Formulaires:Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
+						<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 				  </div>
 				</li>
 
@@ -218,7 +218,7 @@
 			      <div class="collapsible-header teal lighten-2"><i class="material-icons">store</i>Un ville habitée</div>
 			      <div class="collapsible-body teal lighten-5">
 			      	<div class="row">
-			      		<form method='post' action="{% url 'Formulaires:Confirm_ajoutevent' %}" class="col s12">
+			      		<form method='post' action="{% url 'Confirm_ajoutevent' %}" class="col s12">
 			      		
 							<label>Ville habitée : <input type='text' name='ville_habitee' id='ville_habitee'></label><br/>
 							<label>Date d'arrivée : <input type='date' name='date_arrive' id='date_arrive'></label><br/>
@@ -249,7 +249,7 @@
 						</form>
 						</div>
 						<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de l'utilisateur où on verra une frise chronologique.</p>
-						<div><a href="{% url 'Formulaires:Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
+						<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 				  </div>
 				</li>
 			</ul>

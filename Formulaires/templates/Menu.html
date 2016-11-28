@@ -61,7 +61,7 @@
 							      <ul class="tabs tabs-transparent centre_moi">
 							        <li class="tab"><a class="active" href="#albums">Albums et évènements</a></li>
 							        <li class="tab"><a href="#modif_visi">Modifier visibilité</a></li>
-							        <li class="tab"><a target="_blank" href="{% url 'Formulaires:modificationForm' %}">Modifier mon profil</a></li>
+							        <li class="tab"><a target="_blank" href="{% url 'modificationForm' %}">Modifier mon profil</a></li>
 							      </ul>
 							    </div>
 							  </nav>
@@ -74,7 +74,7 @@
 							      <p>Êtes-vous sur que vous souhaitez vous déconnecter ?</p>
 							    </div>
 							    <div class="modal-footer">
-							      <a href="{% url 'Formulaires:accueilForm' %}" class=" modal-action modal-close waves-effect waves-green btn-flat">Oui, je veux me déconnecter.</a>
+							      <a href="{% url 'accueilForm' %}" class=" modal-action modal-close waves-effect waves-green btn-flat">Oui, je veux me déconnecter.</a>
 							      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Non, je veux rester.</a>
 							    </div>
 							  </div>
@@ -99,11 +99,11 @@
 						  		<div class="ajouts">
 						  			<a href="#" class="waves-effect waves-light btn">Famille1</a>
 						  			<a href="#" class="waves-effect waves-light btn">Famille2</a>
-						  			<a href="{% url 'Formulaires:Form_famille' %}" class="waves-effect waves-light btn">Créer une nouvelle famille</a>
+						  			<a href="{% url 'Form_famille' %}" class="waves-effect waves-light btn">Créer une nouvelle famille</a>
 						  		</div>
 							  	<div class="actus teal">
 							  		<div class="actus_fam">
-							  			<a href="{% url 'Formulaires:Form_famille_ajoutmembre' %}" class="waves-effect waves-light btn teal lighten-3">Ajout membre</a>
+							  			<a href="{% url 'Form_famille_ajoutmembre' %}" class="waves-effect waves-light btn teal lighten-3">Ajout membre</a>
 
 							  			<a href="#" class="waves-effect waves-light btn teal lighten-3">Supprimer membre</a>
 
@@ -154,7 +154,7 @@
 
 					  	<div id="actualité"> 
 					  		<div class="ajouts">
-					  			<a href="{% url 'Formulaires:Form_event' %}" class="waves-effect waves-light btn">Ajouter un évènement</a>
+					  			<a href="{% url 'Form_event' %}" class="waves-effect waves-light btn">Ajouter un évènement</a>
 					  			<a href="#" class="waves-effect waves-light btn">Ajouter une/des image(s)</a>
 					  		</div>
 						  	<div class="actus">
