@@ -3,7 +3,7 @@
 
 from django.http import HttpResponse
 from django.shortcuts import render
-from bottle import Bottle, template, request, run
+
 from django.http import HttpResponseRedirect
 
 from django.template import Context, loader, RequestContext
@@ -11,7 +11,7 @@ from django.shortcuts import render_to_response
 
 from django.views import generic
 
-from .forms import ClassFormInscription, ClassFormConnection, ClassmodifForm
+from .forms import Utilisateur
 
 def accueilForm(request):
 	return render(request, 'Formulaires/accueilForm.html')
@@ -30,7 +30,7 @@ def accueilForm(request):
 		FormInscription = ClassFormInscription(request.POST)
 #		FormConnection = ClassFormConnection(request.POST)
 
-		if FormInscription.is_(valid):
+		if FormInscription.is_valid():
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est form.save() et c'est tout mais bon ..
 			nom = FormInscription.cleaned_data['nom']

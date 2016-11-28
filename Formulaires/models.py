@@ -5,11 +5,31 @@ import datetime
 from django.db import models
 from django.utils import timezone
 
+GENRES = (
+    ('feminin', 'Feminin'),
+    ('masculin', 'Masculin'),
+)
+
 class Famille(models.Model):
     nom = models.CharField(max_length=30)
-    nb_personnes = models.IntegerField(max_length=50)
-    
+    nb_personnes = models.IntegerField()
 
+class Utilisateur(models.Model):
+    nom = models.CharField(max_length=30)
+    prenom = models.CharField(max_length=30)
+    genre = models.CharField(max_length=8, choices=GENRES)
+    ddn = models.DateField(blank=True, null=True)
+    email = models.EmailField()
+    mdp = models.CharField(widget=models.PasswordInput())
+    adresse = models.CharField(max_length=200)
+    profession = models.CharField(max_length=60)
+    nationalite = models.CharField(max_length=200)
+    famille = models.ForeignKey(Famille, on_delete=models.CASCADE)
+    rang = models.IntegerField(default=0)
+    moderateur = models.IntegerField(default=1)
+    
+class Arbre(models.Model):
+    famille = models.ForeignKey(Famille, on_delete=models.CASCADE)
 
 """class modifForm(forms.Form):
     #image = 
