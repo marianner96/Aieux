@@ -40,7 +40,7 @@ class Utilisateur(models.Model):
     genre = models.CharField(max_length=8, choices=GENRES)
     ddn = models.DateField(blank=True, null=True)
     email = models.EmailField()
-    mdp = models.CharField()
+    mdp = models.CharField(max_length=10)
     adresse = models.CharField(max_length=200)
     profession = models.CharField(max_length=60)
     nationalite = models.CharField(max_length=60)
@@ -61,6 +61,8 @@ class Arbre(models.Model):
 # date_fait : date du fait historique
 # nom : nom de la personne concernée par ce fait
 # prenom : prenom de la personne concernée par ce fait
+#autre_nom : nom du conjoint (de la conjointe) si mariage
+#autre_prenom : prenom du conjoint (de la conjointe) si mariage
 class Fait_historique(models.Model):
     arbre = models.ForeignKey(Arbre, on_delete=models.CASCADE)
     code = models.IntegerField()

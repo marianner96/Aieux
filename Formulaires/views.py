@@ -14,7 +14,8 @@ from django.views import generic
 
 from .forms import Utilisateur
 
-from .models import ClassFormInscription, ClassFormConnection, ClassmodifForm
+#from .models import ClassFormInscription, ClassFormConnection, ClassmodifForm
+from .models import Utilisateur, Famille, Arbre, Fait_historique
 
 
 def accueilForm(request):
@@ -31,7 +32,7 @@ def accueilForm(request):
 def accueilForm(request):
 	if request.method == 'POST':
 		#On s'occupe du formulaire d'inscription
-		FormInscription = ClassFormInscription(request.POST)
+		FormInscription = Utilisateur(request.POST)
 #		FormConnection = ClassFormConnection(request.POST)
 
 		if FormInscription.is_valid():
@@ -59,7 +60,7 @@ def accueilForm(request):
 			return render_to_response('accueilForm.html', {'FormInscription':FormInscription},  
 				contect_instance=RequestContext(request))
 	else: 
-		FormInscription = ClassFormInscription()
+		FormInscription = Utilisateur()
 	return render(request, 'accueilForm.html', {'FormInscription':FormInscription},
 		)
 
