@@ -18,8 +18,8 @@ from .forms import Utilisateur
 from .models import Utilisateur, Famille, Arbre, Fait_historique
 
 
-def accueilForm(request):
-	return render(request, 'accueilForm.html')
+#def accueilForm(request):
+#	return render(request, 'accueilForm.html')
 
 
 ############Tests inscription connection#############
@@ -38,25 +38,33 @@ def accueilForm(request):
 		if FormInscription.is_valid():
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est form.save() et c'est tout mais bon ..
-			nom = FormInscription.cleaned_data['nom']
-			prenom = FormInscription.cleaned_data['prenom']
-			genre = FormInscription.cleaned_data['genre']
-			ddn = FormInscription.cleaned_data['ddn']
-			email = FormInscription.cleaned_data['email']
-			mdp = FormInscription.cleaned_data['mdp']
+			#nom = FormInscription.cleaned_data['nom']
+			#prenom = FormInscription.cleaned_data['prenom']
+			#genre = FormInscription.cleaned_data['genre']
+			#ddn = FormInscription.cleaned_data['ddn']
+			#email = FormInscription.cleaned_data['email']
+			#mdp = FormInscription.cleaned_data['mdp']
 
-			FormInscription.save()
+			form = Utilisateur(
+				nom = FormInscription.cleaned_data['nom'], 
+				prenom = FormInscription.cleaned_data['prenom'],
+				genre = FormInscription.cleaned_data['genre'],
+				ddn = FormInscription.cleaned_data['ddn'],
+				email = FormInscription.cleaned_data['email'],
+				mdp = FormInscription.cleaned_data['mdp']) 
+
+			form.save()
 
 			
 #		if FormConnection.is_(valid):
-		#On s'ocucpe du formulaire de connection
+		#On s'occupe du formulaire de connection
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est form.save() et c'est tout mais bon ..
 #			email = FormConnection.cleaned_data['email']
 #			mdp = FormConnection.cleaned_data['mdp']
 
 #			FormConnection.save()
-
+			#il faudrait pouvoir se loguer quand on vient de s'inscrire 
 			return render_to_response('accueilForm.html', {'FormInscription':FormInscription},  
 				contect_instance=RequestContext(request))
 	else: 
