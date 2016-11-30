@@ -1,21 +1,17 @@
 #!/usr/bin/python
 # -*- coding:Utf-8 -*-
 
-from django.http import HttpResponse
-from django.shortcuts import render
+import hashlib
 
-from django.http import HttpResponseRedirect
-
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, render_to_response
 from django.template import Context, loader, RequestContext
-from django.shortcuts import render_to_response
-
 from django.views import generic
-
-
-from .forms import Utilisateur
+from getpass import getpass
 
 #from .models import ClassFormInscription, ClassFormConnection, ClassmodifForm
 from .models import Utilisateur, Famille, Arbre, Fait_historique
+
 
 
 #def accueilForm(request):
@@ -36,8 +32,6 @@ def accueilForm(request):
 #		FormConnection = ClassFormConnection(request.POST)
 
 		if FormInscription.is_valid():
-			#Il faut enregistrer tout ça dans la BDD ...
-			#En fait je crois que c'est form.save() et c'est tout mais bon ..
 			#nom = FormInscription.cleaned_data['nom']
 			#prenom = FormInscription.cleaned_data['prenom']
 			#genre = FormInscription.cleaned_data['genre']
@@ -51,9 +45,16 @@ def accueilForm(request):
 				genre = FormInscription.cleaned_data['genre'],
 				ddn = FormInscription.cleaned_data['ddn'],
 				email = FormInscription.cleaned_data['email'],
-				mdp = FormInscription.cleaned_data['mdp']) 
+				mdp = hashlib.sha1(FormInscription.cleaned_data['mdp']).hexdigest()) 
 
 			form.save()
+
+			# il faudrait vérifier si une famille existe avec ce nom
+			# si oui --> changer rang
+			# si non --> la créer
+
+			#ajouter id de la famille à familler_id du gars
+			# form.famille_id = familledugars.id
 
 			
 #		if FormConnection.is_(valid):
@@ -72,7 +73,7 @@ def accueilForm(request):
 	return render(request, 'accueilForm.html', {'FormInscription':FormInscription},
 		)
 
-
+# pour décrypté un mot de passe, il faut crypté celui qu'on vient de recevoir avec celui deja dans la bdd
 def FormConnection(request):
 	if request.method == 'POST':
 		#On s'occupe du formulaire d'inscription
@@ -82,7 +83,13 @@ def FormConnection(request):
 			mail = form.cleaned_data['email']
 			mdp = form.cleaned_data['mdp']
 
-			form.save()
+			#form.save()
+			user = Utilisateur.objects.get(email=mail)
+			if (hashlib.sha1(mdp).hexdigest() == user.mdp) {
+				#on se connecte
+			} else {
+				#on envoie un message d'erreur
+			}
 
 			return render_to_response('templates/accueilForm.html', {'FormConnection':form},  
 				contect_instance=RequestContext(request))

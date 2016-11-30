@@ -19,6 +19,9 @@ class Famille(models.Model):
     nom = models.CharField(max_length=30)
     nb_personnes = models.IntegerField()
 
+    def __str__(self):
+        return self.nom
+
 
 # id : identifiant unique de l'utilisateur (généré automatiquement)
 # nom : nom de l'utilisateur
@@ -45,9 +48,12 @@ class Utilisateur(models.Model):
     profession = models.CharField(max_length=60)
     nationalite = models.CharField(max_length=60)
     description = models.CharField(max_length=200)
-    famille = models.ForeignKey(Famille, on_delete=models.CASCADE)
+    famille = models.ForeignKey(Famille, on_delete=models.CASCADE, default=0)
     rang = models.IntegerField(default=0)
     moderateur = models.IntegerField(default=1)
+
+    def __str__(self):
+        return self.email
 
    
 # id : identifiant unique de l'arbre de la famille généré automatiquement)
