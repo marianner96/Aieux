@@ -10,7 +10,7 @@ from django.views import generic
 from getpass import getpass
 
 #from .models import ClassFormInscription, ClassFormConnection, ClassmodifForm
-from .models import Utilisateur, Famille, Arbre, Fait_historique
+from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm
 
 
 #def accueilForm(request):
@@ -57,56 +57,8 @@ def InscriptionForm(request):
 	return render(request, 'InscriptionForm.html', {'FormInscription':FormInscription},
 		)
 
-
 # pour décrypté un mot de passe, il faut crypté celui qu'on vient de recevoir avec celui deja dans la bdd
 def accueilForm(request):
-		FormInscription = Utilisateur(request.POST)
-#		FormConnection = ClassFormConnection(request.POST)
-
-		if FormInscription.is_valid():
-			#nom = FormInscription.cleaned_data['nom']
-			#prenom = FormInscription.cleaned_data['prenom']
-			#genre = FormInscription.cleaned_data['genre']
-			#ddn = FormInscription.cleaned_data['ddn']
-			#email = FormInscription.cleaned_data['email']
-			#mdp = FormInscription.cleaned_data['mdp']
-
-			form = Utilisateur(
-				nom = FormInscription.cleaned_data['nom'], 
-				prenom = FormInscription.cleaned_data['prenom'],
-				genre = FormInscription.cleaned_data['genre'],
-				ddn = FormInscription.cleaned_data['ddn'],
-				email = FormInscription.cleaned_data['email'],
-				mdp = hashlib.sha1(FormInscription.cleaned_data['mdp']).hexdigest()) 
-
-			form.save()
-
-			# il faudrait vérifier si une famille existe avec ce nom
-			# si oui --> changer rang
-			# si non --> la créer
-
-			#ajouter id de la famille à familler_id du gars
-			# form.famille_id = familledugars.id
-
-			
-#		if FormConnection.is_(valid):
-		#On s'occupe du formulaire de connection
-			#Il faut enregistrer tout ça dans la BDD ...
-			#En fait je crois que c'est form.save() et c'est tout mais bon ..
-#			email = FormConnection.cleaned_data['email']
-#			mdp = FormConnection.cleaned_data['mdp']
-
-#			FormConnection.save()
-			#il faudrait pouvoir se loguer quand on vient de s'inscrire 
-			return render_to_response('accueilForm.html', {'FormInscription':FormInscription},  
-				contect_instance=RequestContext(request))
-	else: 
-		FormInscription = Utilisateur()
-	return render(request, 'accueilForm.html', {'FormInscription':FormInscription},
-		)
-
-# pour décrypté un mot de passe, il faut crypté celui qu'on vient de recevoir avec celui deja dans la bdd
-def FormConnection(request):
 	if request.method == 'POST':
 		#On s'occupe du formulaire de connection
 		FormConnection = UtilisateurForm(request.POST)
