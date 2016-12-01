@@ -8,7 +8,6 @@ from django.utils import timezone
 from django import forms
 from django.forms import ModelForm
 
-
 GENRES = (
     ('feminin', 'Féminin'),
     ('masculin', 'Masculin'),
@@ -81,6 +80,7 @@ class Fait_historique(models.Model):
     autre_prenom = models.CharField(max_length=30, null=True)
 
 
+
 ###### Léa #####
 class UtilisateurForm(forms.Form):
     nom = forms.CharField(label='Nom ', required='required')
@@ -89,7 +89,6 @@ class UtilisateurForm(forms.Form):
     ddn = forms.CharField(label='Date de naissance ', required='required')
     email = forms.EmailField(label='E-mail', required='required')
     mdp = forms.CharField(widget=forms.PasswordInput(), label="Mot de passe", required='required')
-
 
 
 """
@@ -105,14 +104,11 @@ class ClassFormConnection(forms.Form):
     email = forms.EmailField(label='E-mail', required='required')
     mdp = forms.CharField(widget=forms.PasswordInput(), label="Mot de passe", required='required')
 
-
-
-
 class ClassmodifForm(forms.Form):
     #image = 
     nom = forms.CharField(label='Nom ', required='required', initial="nom bdd")
-    prenom = forms.CharField(label='Prenom ', required='required', initial="prénom bdd")
-    prenoms_autre = forms.CharField(label='Autres prénoms', initial="autres prénom bdd")
+    prenom = forms.CharField(label='Prenom ', required='required', initial="prenom bdd")
+    prenoms_autre = forms.CharField(label='Autres prenoms', initial="autres prenom bdd")
     genre = forms.ChoiceField(label='Genre', widget=forms.RadioSelect, choices=GENRES, required='required')
     ddn = forms.CharField(label='Date de naissance ', required='required', initial="date de naissance bdd")
     email = forms.EmailField(label='E-mail', required='required', initial="email bdd")
@@ -120,6 +116,7 @@ class ClassmodifForm(forms.Form):
     profession = forms.CharField(label='Profession', initial="profession bdd")
     description = forms.CharField(widget=forms.Textarea(), label='Description', initial="description bdd")
     mdp = forms.CharField(widget=forms.PasswordInput(), label="Mot de passe", required='required')
+<<<<<<< HEAD
 
 class modifForm(forms.Form):
     #image = 
