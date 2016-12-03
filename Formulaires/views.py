@@ -3,10 +3,14 @@
 
 import hashlib
 
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 from django.template import Context, loader, RequestContext
 from django.views import generic
+
 from getpass import getpass
 
 #from .models import ClassFormInscription, ClassFormConnection, ClassmodifForm
@@ -32,40 +36,36 @@ def accueilForm(request):
 #		FormConnection = ClassFormConnection(request.POST)
 
 		if FormInscription.is_valid():
-			#nom = FormInscription.cleaned_data['nom']
-			#prenom = FormInscription.cleaned_data['prenom']
-			#genre = FormInscription.cleaned_data['genre']
-			#ddn = FormInscription.cleaned_data['ddn']
-			#email = FormInscription.cleaned_data['email']
-			#mdp = FormInscription.cleaned_data['mdp']
+			nom = FormInscription.cleaned_data['nom']
+			prenom = FormInscription.cleaned_data['prenom']
+			genre = FormInscription.cleaned_data['genre']
+			ddn = FormInscription.cleaned_data['ddn']
+			email = FormInscription.cleaned_data['email']
+			mdp = FormInscription.cleaned_data['mdp']
 
-			form = Utilisateur(
-				nom = FormInscription.cleaned_data['nom'], 
-				prenom = FormInscription.cleaned_data['prenom'],
-				genre = FormInscription.cleaned_data['genre'],
-				ddn = FormInscription.cleaned_data['ddn'],
-				email = FormInscription.cleaned_data['email'],
-				mdp = hashlib.sha1(FormInscription.cleaned_data['mdp']).hexdigest()) 
-
+			form = Utilisateur(nom, prenom, genre, ddn, email) 
 			form.save()
 
-			# il faudrait vérifier si une famille existe avec ce nom
-			# si oui --> changer rang
-			# si non --> la créer
+			user = User.objects.create_user(username = email, password = mdp)
+			user.save()
 
-			#ajouter id de la famille à familler_id du gars
-			# form.famille_id = familledugars.id
-
+			#Vérifier si une famille existe lors de la création de l'utilisateur
+			try:
+				fam = Famille.objects.get(nom = nom)
+			except ObjectDoesNotExist:
+				print("Votre famille n'existe pas ! Voulez-vous la créer ?")
+				#creation famille + changement de fonction
 			
-#		if FormConnection.is_(valid):
-		#On s'occupe du formulaire de connection
-			#Il faut enregistrer tout ça dans la BDD ...
-			#En fait je crois que c'est form.save() et c'est tout mais bon ..
-#			email = FormConnection.cleaned_data['email']
-#			mdp = FormConnection.cleaned_data['mdp']
+			#On change le statut de l'utilisateur
+			#form.moderateur = 0
+			#On rajoute l'id de la famille à l'utilisateur
+			#form.famille_id = fam.id
+			#form.save()
+			# à faire avec les groupes ? + rajouter autorisation de rentrer dans la famille
+			
 
 #			FormConnection.save()
-			#il faudrait pouvoir se loguer quand on vient de s'inscrire 
+			#authenticate(username = email, password = mdp)
 			return render_to_response('accueilForm.html', {'FormInscription':FormInscription},  
 				contect_instance=RequestContext(request))
 	else: 
@@ -78,18 +78,16 @@ def FormConnection(request):
 	if request.method == 'POST':
 		#On s'occupe du formulaire d'inscription
 		form = ClassFormConnection(request.POST)
-		if form.is_(valid):
+		if form.is_valid():
 
 			mail = form.cleaned_data['email']
 			mdp = form.cleaned_data['mdp']
 
-			#form.save()
-			user = Utilisateur.objects.get(email=mail)
-			if (hashlib.sha1(mdp).hexdigest() == user.mdp) {
-				#on se connecte
-			} else {
-				#on envoie un message d'erreur
-			}
+			user = authenticate(username = mail, password = mdp)
+			if user is not None:
+				mot = 'Coucou'
+			else:
+				mot = 'hello'
 
 			return render_to_response('templates/accueilForm.html', {'FormConnection':form},  
 				contect_instance=RequestContext(request))
