@@ -38,79 +38,10 @@
     <!--/////////////////////////-->
 
     <div class="enfants_box">
-      <h1>Vous souhaitez : </h1>
-
-      <div>
-        <h2>Vous inscrire</h2>
-        <div id="inscription" class="row">
-          <form class="col s12" id="formu" role="form" method="post" action="{% url 'Felicitations' %}">
-            {% csrf_token %}
-            <div class="row">
-
-              <!--////////////Problème ici pour les radio//////////-->
-              <div class="box_type">
-              <div class="enfants_box_type">
-              <p>
-                  <input id="masculin" name="genre_inscr" type="radio" value="Masculin"/>
-                  {{ FormInscription.genre.1 }}
-                </p>
-                </div>
-
-                <div class="enfants_box_type">
-                <p>
-                  <input id="feminin" name="genre_inscr" type="radio" value="Féminin"/>
-                  {{ FormInscription.genre.0 }}
-                </p>
-                </div>
-              </div><br>
-
-              <div class="input-field col s6">
-                <i class="material-icons prefix">account_circle</i>
-                {{ FormInscription.nom }}
-                {{ FormInscription.nom.label_tag }}
-              </div>
-
-              <div class="input-field col s6">
-                <i class="material-icons prefix">account_circle</i>
-                {{ FormInscription.prenom }}
-                {{ FormInscription.prenom.label_tag }}
-              </div>
-
-              <div class="input-field col s12">
-                <div>
-                  <i class="material-icons prefix">perm_contact_calendar</i>
-                  {{ FormInscription.ddn.label_tag }}
-                  {{ FormInscription.ddn }}
-                </div>
-              </div>
-
-              <div class="input-field col s12">
-                <i class="material-icons prefix">email</i>
-                {{ FormInscription.email }}
-                {{ FormInscription.email.label_tag }}
-              </div>
-
-              <div class="input-field col s12">
-                <i class="material-icons prefix">verified_user</i>
-                {{ FormInscription.mdp }}
-                {{ FormInscription.mdp.label_tag }}
-              </div>
-
-              <div><button type="submit" id="bouton" class="btn btn-primary">Valider</button></div>
-            </div> <!--Fin class row-->
-          </form>
-          <p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions.</p>
-          <div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
-        </div>
-      </div>
+      <h1>Connectez vous !</h1>
     
-
-      <br/>
-
-    
-      <h2>Vous connecter</h2>
       <div id='connection' class="row">
-        <form class="col s12" id="formu" role="form" method="post" action="{% url 'Felicitations' %}">
+        <form class="col s12" id="formu" role="form" method="post" action="{% url 'accueilForm' %}">
           {% csrf_token %}
           <div class="row">
             <div class="input-field col s6">
@@ -131,6 +62,13 @@
         <p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions.</p>
         <div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
     </div>
+
+  </div>
+
+
+<div class="enfants_box">
+    <h2>Vous n'avez pas de compte ? <a href="{% url 'InscriptionForm' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Cliquez ici</button></a></h2>
+  </div>
   </div> <!-- box_co_inscri -->
 
   </div> <!-- fin conteneur_global -->

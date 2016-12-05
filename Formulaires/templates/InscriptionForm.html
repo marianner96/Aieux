@@ -1,0 +1,130 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/materialize.min.css' %}" />
+
+<script type="text/javascript" src="{% static 'Formulaires/Formulaires.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/materialize.min.js' %}"></script>
+
+<!-- Icones -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width">
+  <title>Formulaire_accueil.html</title>
+</head>
+<body class="cyan darken-2">
+
+  <div id="box_global">
+  <div id="box_centrale">
+
+    <div class="enfants_box">
+      <h1>Bienvenue sur notre site!</h1>
+
+      <p>Ce site a pour but de permettre au grand public de consulter et préserver leur histoire. Vous pourrez y retrouver les membres de votre famille, partager des faits historiques ou bien créer votre propre arbre généalogique. <br> <br>Alors n'hesitez pas à vous inscrire c'est gratuit et simple d'utilisation! </p> <br> <br>
+
+
+      <a href="{% url 'Menubis' %}"><button class="btn waves-effect waves-light" type="submit" name="visiteur" >Simple visiteur
+        <i class="material-icons right">send</i>
+        </button>
+      </a>
+
+    </div> <!--fin box_bvn-->
+
+    <!--/////////////////////////-->
+
+    <div class="enfants_box">
+      <h1>Inscription</h1>
+
+      <div>
+        <div id="inscription" class="row">
+          <form class="col s12" id="formu" role="form" method="post" action="{% url 'InscriptionForm' %}">
+            {% csrf_token %}
+            <div class="row">
+
+              <!--////////////Problème ici pour les radio//////////-->
+              <div class="box_type">
+              <div class="enfants_box_type">
+              <p>
+                  <input id="masculin" name="genre_inscr" type="radio" value="Masculin"/>
+                  {{ FormInscription.genre.1 }}
+                </p>
+                </div>
+
+                <div class="enfants_box_type">
+                <p>
+                  <input id="feminin" name="genre_inscr" type="radio" value="Féminin"/>
+                  {{ FormInscription.genre.0 }}
+                </p>
+                </div>
+              </div><br>
+
+              <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                {{ FormInscription.nom }}
+                {{ FormInscription.nom.label_tag }}
+              </div>
+
+              <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                {{ FormInscription.prenom }}
+                {{ FormInscription.prenom.label_tag }}
+              </div>
+
+              <div class="input-field col s12">
+                <div>
+                  <i class="material-icons prefix">perm_contact_calendar</i>
+                  {{ FormInscription.ddn.label_tag }}
+                  {{ FormInscription.ddn }}
+                </div>
+              </div>
+
+              <div class="input-field col s12">
+                <i class="material-icons prefix">email</i>
+                {{ FormInscription.email }}
+                {{ FormInscription.email.label_tag }}
+              </div>
+
+              <div class="input-field col s12">
+                <i class="material-icons prefix">verified_user</i>
+                {{ FormInscription.mdp }}
+                {{ FormInscription.mdp.label_tag }}
+              </div>
+
+              <div><button type="submit" id="bouton" class="btn btn-primary">Valider</button></div>
+            </div> <!--Fin class row-->
+          </form>
+          <p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions.</p>
+          <div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
+        </div>
+      </div>
+    
+
+      <br/>
+</div>
+
+
+<div class="enfants_box">
+    <a href="{% url 'accueilForm' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>J'ai déjà un compte.</button></a>
+  </div>
+  </div> <!-- box_co_inscri -->
+
+  </div> <!-- fin conteneur_global -->
+
+    <!--/////////////////////////-->
+
+    <!--
+    <script> 
+    $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 15 // Creates a dropdown of 15 years to control year
+      });
+    </script>
+  -->
+
+</body>
+</html>
