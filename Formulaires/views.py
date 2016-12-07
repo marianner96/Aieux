@@ -13,31 +13,22 @@ from django.views import generic
 
 from getpass import getpass
 
-#from .models import ClassFormInscription, ClassFormConnection, ClassmodifForm
 from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm
-
-
-#def accueilForm(request):
-#	return render(request, 'accueilForm.html')
-
 
 def InscriptionForm(request):
 	if request.method == 'POST':
 		#On s'occupe du formulaire d'inscription
 		FormInscription = UtilisateurForm(request.POST)
-
-		#if FormInscription.is_valid():
-		#	nom = FormInscription.cleaned_data['nom']
-
 		if FormInscription.is_valid():
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est form.save() et c'est tout mais bon ..
 			
 			mdp = FormInscription.cleaned_data['mdp']
 			email = FormInscription.cleaned_data['email']
+			nom = FormInscription.cleaned_data['nom']
 
 			FormInscription = Utilisateur(
-				nom = FormInscription.cleaned_data['nom'], 
+				nom = FormInscription.cleaned_data['nom'],
 				prenom = FormInscription.cleaned_data['prenom'],
 				genre = FormInscription.cleaned_data['genre'],
 				ddn = FormInscription.cleaned_data['ddn'],
@@ -53,7 +44,7 @@ def InscriptionForm(request):
 			try:
 				fam = Famille.objects.get(nom = nom)
 			except ObjectDoesNotExist:
-				print("Votre famille n'existe pas ! Voulez-vous la créer ?")
+				redirect('/Form_famille/')
 				#creation famille + changement de fonction
 			
 			#On change le statut de l'utilisateur
