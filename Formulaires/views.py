@@ -36,7 +36,7 @@ def InscriptionForm(request):
 			mdp = FormInscription.cleaned_data['mdp']
 			email = FormInscription.cleaned_data['email']
 
-			form = Utilisateur(
+			FormInscription = Utilisateur(
 				nom = FormInscription.cleaned_data['nom'], 
 				prenom = FormInscription.cleaned_data['prenom'],
 				genre = FormInscription.cleaned_data['genre'],
@@ -44,7 +44,7 @@ def InscriptionForm(request):
 				email = FormInscription.cleaned_data['email'],
 				mdp = hashlib.sha1(mdp).hexdigest())
 
-			form.save()
+			FormInscription.save()
 
 			user = User.objects.create_user(username = email, password = mdp)
 			user.save()
@@ -66,7 +66,7 @@ def InscriptionForm(request):
 
 #			FormConnection.save()
 			#authenticate(username = email, password = mdp)
-		return render_to_response('accueilForm.html', {'FormInscription':FormInscription},  
+		return render_to_response('Menu.html', {'FormInscription':FormInscription},  
 			contect_instance=RequestContext(request))
 			
 	else: 
@@ -92,7 +92,7 @@ def accueilForm(request):
 			else:
 				mot = 'hello'
 
-			return render_to_response('templates/accueilForm.html', {'FormConnection':form},  
+			return render_to_response('Menu.html', {'FormConnection':form},  
 				contect_instance=RequestContext(request))
 			#form.save()
 			user = Utilisateur.objects.get(email=mail)
@@ -102,9 +102,10 @@ def accueilForm(request):
 			#else:
 				#on envoie un message d'erreur
 			
-			return render_to_response('accueilForm.html', {'FormConnection':FormConnection},  
+			return render_to_response('Menu.html', {'FormConnection':FormConnection},  
 				context_instance=RequestContext(request))
 	else: 
+
 		FormConnection = UtilisateurForm()
 	return render(request, 'accueilForm.html', {'FormConnection':FormConnection})
 
