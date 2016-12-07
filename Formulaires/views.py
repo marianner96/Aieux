@@ -64,9 +64,6 @@ def InscriptionForm(request):
 
 def accueilForm(request):
 	if request.method == 'POST':
-		#On s'occupe du formulaire d'inscription
-		#form = ClassFormConnection(request.POST)
-		#if form.is_valid():
 
 		#On s'occupe du formulaire de connection
 		FormConnection = UtilisateurForm(request.POST)
