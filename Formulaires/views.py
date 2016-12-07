@@ -32,7 +32,19 @@ def InscriptionForm(request):
 		if FormInscription.is_valid():
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est form.save() et c'est tout mais bon ..
-		
+			
+			mdp = FormInscription.cleaned_data['mdp']
+			email = FormInscription.cleaned_data['email']
+
+			form = Utilisateur(
+				nom = FormInscription.cleaned_data['nom'], 
+				prenom = FormInscription.cleaned_data['prenom'],
+				genre = FormInscription.cleaned_data['genre'],
+				ddn = FormInscription.cleaned_data['ddn'],
+				email,
+				mdp = hashlib.sha1(mdp).hexdigest())
+
+			form.save()
 
 			user = User.objects.create_user(username = email, password = mdp)
 			user.save()
@@ -54,27 +66,8 @@ def InscriptionForm(request):
 
 #			FormConnection.save()
 			#authenticate(username = email, password = mdp)
-			return render_to_response('accueilForm.html', {'FormInscription':FormInscription},  
-				contect_instance=RequestContext(request))
-
-			mdp = FormInscription.cleaned_data['mdp']
-
-			form = Utilisateur(
-				nom = FormInscription.cleaned_data['nom'], 
-				prenom = FormInscription.cleaned_data['prenom'],
-				genre = FormInscription.cleaned_data['genre'],
-				ddn = FormInscription.cleaned_data['ddn'],
-				email = FormInscription.cleaned_data['email'],
-				mdp = hashlib.sha1(FormInscription.cleaned_data['mdp']).hexdigest())
-
-			form.save()
-
-			# il faudrait vérifier si une famille existe avec ce nom
-			# si oui --> changer rang
-			# si non --> la créer
-
-			#ajouter id de la famille à familler_id du gars
-			# form.famille_id = familledugars.id
+		return render_to_response('accueilForm.html', {'FormInscription':FormInscription},  
+			contect_instance=RequestContext(request))
 			
 	else: 
 		FormInscription = UtilisateurForm()
