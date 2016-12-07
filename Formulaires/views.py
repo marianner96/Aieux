@@ -44,28 +44,24 @@ def InscriptionForm(request):
 			try:
 				fam = Famille.objects.get(nom = nom)
 			except ObjectDoesNotExist:
-				redirect('/Form_famille/')
-				#creation famille + changement de fonction
+				redirect('/Form_famille/') #creation famille
 			
-			#On change le statut de l'utilisateur
+			#Demande à l'utilisateur si il veut être dans une famille existante ou si il veut en créer une
 			#form.moderateur = 0
 			#On rajoute l'id de la famille à l'utilisateur
 			#form.famille_id = fam.id
 			#form.save()
-			# à faire avec les groupes ? + rajouter autorisation de rentrer dans la famille
+			#rajouter autorisation de rentrer dans la famille
 			
 
-#			FormConnection.save()
+			#FormConnection.save()
 			#authenticate(username = email, password = mdp)
-		return render_to_response('accueilForm.html', {'FormInscription':FormInscription},  
-			contect_instance=RequestContext(request))
+		return render_to_response('accueilForm.html', {'FormInscription':FormInscription},  contect_instance=RequestContext(request))
 			
 	else: 
 		FormInscription = UtilisateurForm()
-	return render(request, 'InscriptionForm.html', {'FormInscription':FormInscription},
-		)
+	return render(request, 'InscriptionForm.html', {'FormInscription':FormInscription})
 
-# pour décrypté un mot de passe, il faut crypté celui qu'on vient de recevoir avec celui deja dans la bdd
 def accueilForm(request):
 	if request.method == 'POST':
 		#On s'occupe du formulaire d'inscription
@@ -104,7 +100,7 @@ def accueilForm(request):
 def modificationForm(request):
 	if request.method == 'POST':
 		FormModif = modifForm(request.POST)
-		if FormModif.is_(valid):
+		if FormModif.is_valid():
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est FormModif.save() et c'est tout mais bon ..
 			#image = 
@@ -138,7 +134,16 @@ def Menu(request):
 	return render(request, 'Menu.html')
 
 def Form_famille(request):
-	return render(request, 'Form_famille.html')
+	if request.method == 'POST':
+		ajoutFamille = Famille(request.POST)
+		if ajoutFamille.is_valid():
+			form = Famille(
+				nom = ajoutFamille.cleaned_data['nom'],
+				nb_personnes = 1)
+			form.save()
+	else :
+		ajoutFamille = Famille()
+	return render(request, 'Form_famille.html', {'ajoutFamille':ajoutFamille})
 
 def Form_famille_ajoutmembre(request):
 	return render(request, 'Form_famille_ajoutmembre.html')
