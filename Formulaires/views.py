@@ -41,7 +41,7 @@ def InscriptionForm(request):
 				prenom = FormInscription.cleaned_data['prenom'],
 				genre = FormInscription.cleaned_data['genre'],
 				ddn = FormInscription.cleaned_data['ddn'],
-				email,
+				email = FormInscription.cleaned_data['email'],
 				mdp = hashlib.sha1(mdp).hexdigest())
 
 			form.save()
