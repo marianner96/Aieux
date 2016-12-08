@@ -4,6 +4,7 @@
 import hashlib
 
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseRedirect
@@ -40,6 +41,10 @@ def InscriptionForm(request):
 			user = User.objects.create_user(username = email, password = mdp)
 			user.save()
 
+			#Connexion automatique lors de l'inscription
+			util = authenticate(username=email, password=mdp)
+			login(request, util)
+
 			#Vérifier si une famille existe lors de la création de l'utilisateur
 			try:
 				fam = Famille.objects.get(nom = nom)
@@ -53,9 +58,6 @@ def InscriptionForm(request):
 			#form.save()
 			#rajouter autorisation de rentrer dans la famille
 			
-
-			#FormConnection.save()
-			#authenticate(username = email, password = mdp)
 		return render_to_response('accueilForm.html', {'FormInscription':FormInscription},  contect_instance=RequestContext(request))
 			
 	else: 
@@ -72,19 +74,10 @@ def accueilForm(request):
 			mdp = FormConnection.cleaned_data['mdp']
 			user = authenticate(username = mail, password = mdp)
 			if user is not None:
-				mot = 'Coucou'
+				login(request, user)
+				redirect('/Menu/') 
 			else:
 				mot = 'hello'
-
-			return render_to_response('templates/accueilForm.html', {'FormConnection':form},  
-				contect_instance=RequestContext(request))
-			#form.save()
-			user = Utilisateur.objects.get(email=mail)
-			
-			#if (hashlib.sha1(mdp).hexdigest() == user.mdp):
-				#on se connecte
-			#else:
-				#on envoie un message d'erreur
 			
 			return render_to_response('accueilForm.html', {'FormConnection':FormConnection},  
 				context_instance=RequestContext(request))
@@ -93,7 +86,7 @@ def accueilForm(request):
 	return render(request, 'accueilForm.html', {'FormConnection':FormConnection})
 
 
-
+@login_required
 def modificationForm(request):
 	if request.method == 'POST':
 		FormModif = modifForm(request.POST)
@@ -127,9 +120,11 @@ def Felicitations(request):
 def Menubis(request):
 	return render(request, 'Menubis.html')
 
+@login_required
 def Menu(request):
 	return render(request, 'Menu.html')
 
+@login_required
 def Form_famille(request):
 	if request.method == 'POST':
 		ajoutFamille = Famille(request.POST)
@@ -142,6 +137,7 @@ def Form_famille(request):
 		ajoutFamille = Famille()
 	return render(request, 'Form_famille.html', {'ajoutFamille':ajoutFamille})
 
+@login_required
 def Form_famille_ajoutmembre(request):
 	return render(request, 'Form_famille_ajoutmembre.html')
 
