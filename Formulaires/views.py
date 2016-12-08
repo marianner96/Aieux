@@ -81,11 +81,11 @@ def accueilForm(request):
 			else:
 				mot = 'hello'
 			
-			return render_to_response('Menu.html', {'FormConnection':FormConnection})  
+			return render_to_response('accueilForm.html', {'FormConnection':FormConnection})  
 	else: 
 
 		FormConnection = UtilisateurForm()
-	return render(request, 'Menu.html', {'FormConnection':FormConnection})
+	return render(request, 'accueilForm.html', {'FormConnection':FormConnection})
 
 
 @login_required
