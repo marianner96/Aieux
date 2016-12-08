@@ -8,10 +8,6 @@ from django.utils import timezone
 from django import forms
 from django.forms import ModelForm
 
-GENRES = (
-    ('feminin', 'Féminin'),
-    ('masculin', 'Masculin'),
-)
 
 # id : identifiant unique de la famille (généré automatiquement)
 # nom : nom de la famille
@@ -39,9 +35,13 @@ class Famille(models.Model):
 # rang : droit de l'utilisateur : 0 si c'est un utilisateur classique, 1 si c'est un historien et 2 si c'est un administrateur
 # moderateur : savoir si l'utilisateur est modérateur de son groupe famille. Par défaut il l'est donc c'est égal à 1, sinon c'est égal à 0
 class Utilisateur(models.Model):
+    GENRES = (
+        (1, 'Féminin'),
+        (2, 'Masculin'),
+    )
     nom = models.CharField(max_length=30)
     prenom = models.CharField(max_length=30)
-    genre = models.CharField(max_length=8, choices=GENRES)
+    genre = models.IntegerField(choices=GENRES)
     ddn = models.DateField(blank=True, null=True)
     email = models.EmailField()
     mdp = models.CharField(max_length=10)
@@ -55,6 +55,13 @@ class Utilisateur(models.Model):
 
     def __str__(self):
         return self.email
+
+class UtilisateurForm(ModelForm):
+    mdp = forms.CharField(widget=forms.PasswordInput)
+    class Meta:
+        model = Utilisateur
+        fields = ['nom','prenom','genre','ddn','email','mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
+        widgets = {'genre':forms.RadioSelect}
 
    
 # id : identifiant unique de l'arbre de la famille généré automatiquement)
@@ -82,14 +89,14 @@ class Fait_historique(models.Model):
 
 
 ###### Léa #####
-class UtilisateurForm(forms.Form):
+"""class UtilisateurForm(forms.Form):
     nom = forms.CharField(label='Nom ', required='required')
     prenom = forms.CharField(label='Prenom ', required='required')
     genre = forms.ChoiceField(label='Genre', widget=forms.RadioSelect, choices=GENRES, required='required')
     ddn = forms.CharField(label='Date de naissance ', required='required')
     email = forms.EmailField(label='E-mail', required='required')
     mdp = forms.CharField(widget=forms.PasswordInput(), label="Mot de passe", required='required')
-
+"""
 
 """
 class ClassFormInscription(forms.Form):
