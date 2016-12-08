@@ -66,6 +66,9 @@ def InscriptionForm(request):
 		FormInscription = UtilisateurForm()
 	return render(request, 'InscriptionForm.html', {'FormInscription':FormInscription})
 
+
+########On rentre pas dans la boucle if FormConnection.is_valid()
+########Faut essayer de trouver pourquoi si non on envoie un mail !
 def accueilForm(request):
 	if request.method == 'POST':
 
@@ -77,11 +80,11 @@ def accueilForm(request):
 			user = authenticate(username = mail, password = mdp)
 			if user is not None:
 				login(request, user)
-				redirect('/Menu/') 
+				#redirect('/Menu/')
+				return render_to_response('Menu.html', {'FormConnection':FormConnection})
 			else:
-				mot = 'hello'
-			
-			return render_to_response('accueilForm.html', {'FormConnection':FormConnection})  
+				#mot = 'hello'
+				return render_to_response('Menu.html', {'FormConnection':FormConnection})  
 	else: 
 
 		FormConnection = UtilisateurForm()

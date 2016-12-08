@@ -47,17 +47,20 @@
             <div class="row">
 
               <!--////////////Problème ici pour les radio//////////-->
+              <!--Il faut essayer de faire la même chose sur json pour voir si ça marche sans le css par exemple ... 
+              <input id="masculin" name="genre" value="Masculi" type="radio">
+              <label for="id_genre_1"></label>-->
               <div class="box_type">
               <div class="enfants_box_type">
               <p>
-                  <input id="masculin" name="genre_inscr" type="radio" value="Masculin"/>
+                  <input id="masculin" name="genre" type="radio" value="Masculin"/>
                   {{ FormInscription.genre.1 }}
                 </p>
                 </div>
 
                 <div class="enfants_box_type">
                 <p>
-                  <input id="feminin" name="genre_inscr" type="radio" value="Féminin"/>
+                  <input id="feminin" name="genre" type="radio" value="Féminin"/>
                   {{ FormInscription.genre.2 }}
                 </p>
                 </div>
