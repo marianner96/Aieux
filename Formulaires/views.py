@@ -3,16 +3,14 @@
 
 import hashlib
 
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response, redirect
 from django.template import Context, loader, RequestContext
 from django.views import generic
-
-from getpass import getpass
 
 from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm
 
