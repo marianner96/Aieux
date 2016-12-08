@@ -23,17 +23,19 @@
 		<div>
 			<h3>Vous êtes là parce que normalement, vous voulez créer une famille.</h3>
 			<p>Pour créer une famille vous devez y mettre un nom, normalement le votre.</p>
-			<p>Celui qui créé la famille est par défaut le maître de la famille, il peut de ce fait ajouter ou supprimer des membres. Les membres que vous ajoutez auront alors la possibilité de se connecter à cette famille eux-aussi.</p>
+			<p>Celui qui créé la famille est par défaut le modérateur de la famille, il peut de ce fait ajouter ou supprimer des membres. Les membres que vous ajoutez auront alors la possibilité de se connecter à cette famille eux-aussi.</p>
 			Veuillez donc remplir le nom de votre famille ci-dessous.
 		</div>
 		<br/><br>
 		<!--Il faudra vérifier si le nom de la famille existe dans la BDD. Si oui, on lui demandera si il ne veut pas plutôt rejoindre cette famille. Si non, on l'a créé quand même.-->
 
 		<div class="row etire_form">
-			<form method='post' action='#' class="col s12 ">
+			<form method='post' action='/Form_famille/' class="col s12 ">
+			{% csrf_token %}
+			{{ ajoutFamille}}
 				<div class="row">
 					<div class="input-field col s12">
-			          <input id="nom_famille" name="nom_famille" type="text" class="validate">
+			          <input id="nom_famille" name="nom" type="text" class="validate">
 			          <label for="nom_famille">Nom de la famille</label>
 			        </div>
 
