@@ -7,6 +7,7 @@ from Formulaires import views
 app_name = 'Formulaires'
 urlpatterns = [
     url(r'^$', views.accueilForm, name='accueilForm'),
+    url(r'^admin/', admin.site.urls),
     url(r'^InscriptionForm/$', views.InscriptionForm, name='InscriptionForm'),
     url(r'^modificationForm/$', views.modificationForm, name='modificationForm'),
     url(r'^Felicitations/$', views.Felicitations, name='Felicitations'),

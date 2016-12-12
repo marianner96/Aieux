@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import include,url
 from django.contrib import admin
 
 from Formulaires import views
@@ -7,6 +7,7 @@ from Formulaires import views
 app_name = 'Formulaires'
 urlpatterns = [
     url(r'^$', views.accueilForm, name='accueilForm'),
+    url(r'^admin/$', admin.site.urls),
     url(r'^InscriptionForm/$', views.InscriptionForm, name='InscriptionForm'),
     url(r'^modificationForm/$', views.modificationForm, name='modificationForm'),
     url(r'^Felicitations/$', views.Felicitations, name='Felicitations'),
@@ -18,3 +19,4 @@ urlpatterns = [
     url(r'^Confirm_ajoutevent/$', views.Confirm_ajoutevent, name='Confirm_ajoutevent'),
 ]
 
+#l'admin a pour nom eisti et le mdp est rogerdeeisti
