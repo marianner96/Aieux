@@ -123,7 +123,7 @@ def Felicitations(request):
 def Menubis(request):
 	return render(request, 'Menubis.html')
 
-@login_required
+##@login_required
 def Menu(request):
 	return render(request, 'Menu.html')
 
