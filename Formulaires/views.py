@@ -36,7 +36,7 @@ def InscriptionForm(request):
 
 			FormInscription.save()
 
-			user = User.objects.create_user(username = email, password = mdp)
+			user = User.objects.create_user(email, email, mdp)
 			user.save()
 
 			#Connexion automatique lors de l'inscription
@@ -47,7 +47,7 @@ def InscriptionForm(request):
 			try:
 				fam = Famille.objects.get(nom = nom)
 			except ObjectDoesNotExist:
-				redirect('/Form_famille/') #creation famille
+				return redirect('Form_famille') #creation famille
 			
 			#Demande à l'utilisateur si il veut être dans une famille existante ou si il veut en créer une
 			#form.moderateur = 0
@@ -58,7 +58,7 @@ def InscriptionForm(request):
 			
 #			FormConnection.save()
 			#authenticate(username = email, password = mdp)
-		return render_to_response('Menu.html', {'FormInscription':FormInscription})
+		return redirect('Menu')
 
 	else: 
 		FormInscription = UtilisateurForm()
@@ -78,8 +78,7 @@ def accueilForm(request):
 			user = authenticate(username = mail, password = mdp)
 			if user is not None:
 				login(request, user)
-				#redirect('/Menu/')
-				return render_to_response('Menu.html', {'FormConnection':FormConnection})
+				redirect('Menu')
 			else:
 				#mot = 'hello'
 				return render_to_response('Menu.html', {'FormConnection':FormConnection})  
