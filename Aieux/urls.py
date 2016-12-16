@@ -17,5 +17,6 @@ urlpatterns = [
     url(r'^Form_famille_ajoutmembre/$', views.Form_famille_ajoutmembre, name='Form_famille_ajoutmembre'),
     url(r'^Form_event/$', views.Form_event, name='Form_event'),
     url(r'^Confirm_ajoutevent/$', views.Confirm_ajoutevent, name='Confirm_ajoutevent'),
+    url(r'^logout/$', views.logout_view, name='logout'),
 ]
 

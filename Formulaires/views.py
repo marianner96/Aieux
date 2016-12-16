@@ -3,7 +3,7 @@
 
 import hashlib
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -18,7 +18,7 @@ def InscriptionForm(request):
 	if request.method == 'POST':
 		#On s'occupe du formulaire d'inscription
 		FormInscription = UtilisateurForm(request.POST)
-           print(FormInscription.errors)
+           #print(FormInscription.errors)
 		if FormInscription.is_valid():
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est form.save() et c'est tout mais bon ..
@@ -150,3 +150,7 @@ def Form_event(request):
 
 def Confirm_ajoutevent(request):
 	return render(request, 'Confirm_ajoutevent.html')
+
+def logout_view(request):
+	logout(request)
+	return redirect('accueilForm')
