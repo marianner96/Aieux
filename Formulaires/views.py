@@ -18,6 +18,7 @@ def InscriptionForm(request):
 	if request.method == 'POST':
 		#On s'occupe du formulaire d'inscription
 		FormInscription = UtilisateurForm(request.POST)
+           print(FormInscription.errors)
 		if FormInscription.is_valid():
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est form.save() et c'est tout mais bon ..
