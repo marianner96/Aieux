@@ -1,0 +1,52 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/materialize.min.css' %}" />
+
+<script type="text/javascript" src="{% static 'Formulaires/Formulaires.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/materialize.min.js' %}"></script>
+
+<!-- Icones -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!--<link rel="stylesheet" href="../css/accueil.css" />-->
+	<meta name="viewport" content="width=device-width">
+	<title>Rejoindre une famille</title>
+</head>
+<body class="teal">
+	<div class="pop_up">
+		<div>
+			<h3>Vous êtes là parce que nous avons trouver une ou plusieurs famille qui correspondaient à votre nom.</h3>
+			<p>Vous devez choisir entre en rejoindre une et en créer une nouvelle.<p>
+			<p>Si vous choisissez d'en créer une nouvelle, vous serez redirigé vers la page de création</p>
+			Veuillez donc faire votre choix.
+		</div>
+		<br/><br>
+		<!--Il faudra vérifier si le nom de la famille existe dans la BDD. Si oui, on lui demandera si il ne veut pas plutôt rejoindre cette famille. Si non, on l'a créé quand même.-->
+
+		<div class="row etire_form">
+			<form method='post' action='/Form_famille/' class="col s12 ">
+			{% csrf_token %}
+			{{ ajoutFamille}}
+				<div class="row">
+					<div class="input-field col s12">
+			          <input id="nom_famille" name="nom" type="text" class="validate">
+			          <label for="nom_famille">Nom de la famille</label>
+			        </div>
+
+					<div><button type='submit' id='bouton' class='btn btn-primary'>Créer la famille</button></div>
+				</div>
+			</form>
+		</div>
+
+		<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de la famille.</p>
+		<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
+		
+	</div>
+</body>
+</html>

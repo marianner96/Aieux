@@ -33,6 +33,8 @@
 	        <li class="tab aggrandir_nav"><a class="active" href="#box_accueil">ACCUEIL</a></li>
 	        <li class="tab aggrandir_nav"><a href="#box_discu"><i class="material-icons left centre_icons">forum</i>Discussions</a></li>
 	        <li class="tab aggrandir_nav"><a href="#box_notif"><i class="material-icons left centre_icons">new_releases</i>Notifications</a></li>
+	        <!-- Cette partie correspond au bouton 'deconnecter' en haut à gauche -->
+			<li><a href="#modal1" class="btn-floating btn-large waves-effect waves-light teal lighten-3 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Me déconnecter"><i class="material-icons">exit_to_app</i>Déconnexion</a></li>
 	      </ul>
 	    </div>
 	</nav>
@@ -53,9 +55,6 @@
 							    <div class="nav-wrapper">
 							      <a href="#" class="brand-logo center wrap">Profil de Nom Prénom</a>
 
-							<!-- Cette partie correspond au bouton 'deconnecter' en haut à gauche -->
-							      <a href="#modal1" class="btn-floating btn-large waves-effect waves-light teal lighten-3 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Me déconnecter"><i class="material-icons">exit_to_app</i></a>
-
 
 							<!-- Cette partie correspond aux différents onglets 'Ma famille','Mes evenements',.. -->
 							      <ul class="tabs tabs-transparent centre_moi">
@@ -68,16 +67,7 @@
 
 							  </div>
 
-							  <!-- Modal Structure | Cette partie correspond à la fenetre lorsqu'on appuie sur le bouton 'déconnecter' -->
-							  <div id="modal1" class="modal">
-							    <div class="modal-content">
-							      <p>Êtes-vous sur que vous souhaitez vous déconnecter ?</p>
-							    </div>
-							    <div class="modal-footer">
-							      <a href="{% url 'accueilForm' %}" class=" modal-action modal-close waves-effect waves-green btn-flat">Oui, je veux me déconnecter.</a>
-							      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Non, je veux rester.</a>
-							    </div>
-							  </div>
+							  
 
 							  <div id="albums" class="col s12">
 									Ici on mettra les albums et évènements. Si la personne est propriétaire du document/publication il y aura un petit icon permettant de modifier la 
@@ -90,7 +80,16 @@
 
 		</div>
 
-
+<!-- Modal Structure | Cette partie correspond à la fenetre lorsqu'on appuie sur le bouton 'déconnecter' -->
+							  <div id="modal1" class="modal">
+							    <div class="modal-content">
+							      <p>Êtes-vous sur que vous souhaitez vous déconnecter ?</p>
+							    </div>
+							    <div class="modal-footer">
+							      <a href="{% url 'logout' %}"" class=" modal-action modal-close waves-effect waves-green btn-flat">Oui, je veux me déconnecter.</a>
+							      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Non, je veux rester.</a>
+							    </div>
+							  </div>
 
 
 <!--Onglet pour la ou les famille(s)-->

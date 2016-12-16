@@ -39,10 +39,10 @@ class Utilisateur(models.Model):
         ('feminin', 'feminin'),
         ('masculin', 'masculin'),
     )
-    nom = models.CharField(max_length=30)
-    prenom = models.CharField(max_length=30)
+    nom = models.CharField(max_length=30, blank=True)
+    prenom = models.CharField(max_length=30, blank=True)
     autre_prenoms = models.CharField(max_length=60, blank=True)
-    genre = models.CharField(max_length=10, choices=GENRES)
+    genre = models.CharField(max_length=10, choices=GENRES, blank=True)
     ddn = models.DateField(blank=True, null=True)
     email = models.EmailField()
     mdp = models.CharField(max_length=10)
