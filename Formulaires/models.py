@@ -36,22 +36,23 @@ class Famille(models.Model):
 # moderateur : savoir si l'utilisateur est modérateur de son groupe famille. Par défaut il l'est donc c'est égal à 1, sinon c'est égal à 0
 class Utilisateur(models.Model):
     GENRES = (
-        (1, 'Féminin'),
-        (2, 'Masculin'),
+        ('feminin', 'feminin'),
+        ('masculin', 'masculin'),
     )
     nom = models.CharField(max_length=30)
     prenom = models.CharField(max_length=30)
-    genre = models.IntegerField(choices=GENRES)
+    autre_prenoms = models.CharField(max_length=60, blank=True)
+    genre = models.CharField(max_length=10, choices=GENRES)
     ddn = models.DateField(blank=True, null=True)
     email = models.EmailField()
     mdp = models.CharField(max_length=10)
-    adresse = models.CharField(max_length=200)
-    profession = models.CharField(max_length=60)
-    nationalite = models.CharField(max_length=60)
-    description = models.CharField(max_length=200)
-    famille = models.ForeignKey(Famille, on_delete=models.CASCADE, default=0)
-    rang = models.IntegerField(default=0)
-    moderateur = models.IntegerField(default=1)
+    adresse = models.CharField(max_length=200, blank=True)
+    profession = models.CharField(max_length=60, blank=True)
+    nationalite = models.CharField(max_length=60, blank=True)
+    description = models.CharField(max_length=200, blank=True)
+    famille = models.ForeignKey(Famille, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    rang = models.IntegerField(default=0, blank=True)
+    moderateur = models.IntegerField(default=1, blank=True)
 
     def __str__(self):
         return self.email

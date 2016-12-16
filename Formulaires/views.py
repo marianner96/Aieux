@@ -22,30 +22,30 @@ def InscriptionForm(request):
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est form.save() et c'est tout mais bon ..
 			
-			mdp = FormInscription.cleaned_data['mdp']
-			email = FormInscription.cleaned_data['email']
-			nom = FormInscription.cleaned_data['nom']
+			mdp_session = FormInscription.cleaned_data['mdp']
+			email_session = FormInscription.cleaned_data['email']
+			nom_session = FormInscription.cleaned_data['nom']
 
-			FormInscription = UtilisateurForm(
+			"""FormInscription = UtilisateurForm(
 				nom = FormInscription.cleaned_data['nom'],
 				prenom = FormInscription.cleaned_data['prenom'],
 				genre = FormInscription.cleaned_data['genre'],
 				ddn = FormInscription.cleaned_data['ddn'],
 				email = FormInscription.cleaned_data['email'],
-				mdp = hashlib.sha1(mdp).hexdigest())
+				mdp = hashlib.sha1(mdp_session).hexdigest())"""
 
 			FormInscription.save()
 
-			user = User.objects.create_user(email, email, mdp)
+			user = User.objects.create_user(email_session, email=email_session, password=mdp_session)
 			user.save()
 
 			#Connexion automatique lors de l'inscription
-			util = authenticate(username=email, password=mdp)
+			util = authenticate(username=email_session, password=mdp_session)
 			login(request, util)
 
 			#Vérifier si une famille existe lors de la création de l'utilisateur
 			try:
-				fam = Famille.objects.get(nom = nom)
+				fam = Famille.objects.get(nom = nom_session)
 			except ObjectDoesNotExist:
 				return redirect('Form_famille') #creation famille
 			
@@ -58,6 +58,7 @@ def InscriptionForm(request):
 			
 #			FormConnection.save()
 			#authenticate(username = email, password = mdp)
+		print(FormInscription.errors)
 		return redirect('Menu')
 
 	else: 
