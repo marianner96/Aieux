@@ -18,10 +18,8 @@ def InscriptionForm(request):
 	if request.method == 'POST':
 		#On s'occupe du formulaire d'inscription
 		FormInscription = UtilisateurForm(request.POST)
-           #print(FormInscription.errors)
+
 		if FormInscription.is_valid():
-			#Il faut enregistrer tout ça dans la BDD ...
-			#En fait je crois que c'est form.save() et c'est tout mais bon ..
 			
 			mdp_session = FormInscription.cleaned_data['mdp']
 			email_session = FormInscription.cleaned_data['email']
@@ -58,21 +56,14 @@ def InscriptionForm(request):
 			#rajouter autorisation de rentrer dans la famille
 			
 #			FormConnection.save()
-			#authenticate(username = email, password = mdp)
-		print(FormInscription.errors)
 		return redirect('Menu')
-
 	else: 
 		FormInscription = UtilisateurForm()
 	return render(request, 'InscriptionForm.html', {'FormInscription':FormInscription})
 
-
-########On rentre pas dans la boucle if FormConnection.is_valid()
-########Faut essayer de trouver pourquoi si non on envoie un mail !
+#Connexion d'un utilisateur
 def accueilForm(request):
 	if request.method == 'POST':
-
-		#On s'occupe du formulaire de connection
 		FormConnection = UtilisateurForm(request.POST)
 		if FormConnection.is_valid():
 			mail = FormConnection.cleaned_data['email']
@@ -84,7 +75,6 @@ def accueilForm(request):
 			else:
 				#mot = 'hello'
 				return render_to_response('Menu.html', {'FormConnection':FormConnection})
-		print(FormConnection.errors)  
 	else: 
 
 		FormConnection = UtilisateurForm()
@@ -96,9 +86,7 @@ def modificationForm(request):
 	if request.method == 'POST':
 		FormModif = modifForm(request.POST)
 		if FormModif.is_valid():
-			#Il faut enregistrer tout ça dans la BDD ...
-			#En fait je crois que c'est FormModif.save() et c'est tout mais bon ..
-			#image = 
+
 			nom = FormModif.cleaned_data['nom']
 			prenom = FormModif.cleaned_data['prenom']
 			prenoms_autre = FormModif.cleaned_data['prenoms_autre']
@@ -138,9 +126,14 @@ def Form_famille(request):
 				nom = ajoutFamille.cleaned_data['nom'],
 				nb_personnes = 1)
 			form.save()
+			return redirect('Menu')
 	else :
 		ajoutFamille = Famille()
 	return render(request, 'Form_famille.html', {'ajoutFamille':ajoutFamille})
+
+@login_required
+def Rejoindre_famille(request):
+	return render(request, 'Rejoindre_famille.html')
 
 @login_required
 def Form_famille_ajoutmembre(request):
@@ -152,6 +145,8 @@ def Form_event(request):
 def Confirm_ajoutevent(request):
 	return render(request, 'Confirm_ajoutevent.html')
 
+
+#fonction de déconnexion
 def logout_view(request):
 	logout(request)
 	return redirect('accueilForm')
