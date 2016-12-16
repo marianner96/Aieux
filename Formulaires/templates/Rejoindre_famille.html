@@ -27,7 +27,7 @@
 			Veuillez donc faire votre choix.
 		</div>
 		<br/><br>
-		<!--Il faudra vérifier si le nom de la famille existe dans la BDD. Si oui, on lui demandera si il ne veut pas plutôt rejoindre cette famille. Si non, on l'a créé quand même.-->
+		<!--Il faudra vérifier si le nom de la famille existe dans la BDD. Si oui, on lui demandera si il ne veut pas plutôt rejoindre cette famille. Si non, on la créé quand même.-->
 
 		<div class="row etire_form">
 			<form method='post' action='/Form_famille/' class="col s12 ">
@@ -39,14 +39,12 @@
 			          <label for="nom_famille">Nom de la famille</label>
 			        </div>
 
-					<div><button type='submit' id='bouton' class='btn btn-primary'>Créer la famille</button></div>
+			        <div><button type='submit' id='bouton' class='btn btn-primary'>Rejoindre la famille</button></div>
 				</div>
 			</form>
-		</div>
 
-		<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de la famille.</p>
-		<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
-		
+			<div><a href="{% url 'Form_famille' %}"><button type="button" id='bouton' class='btn btn-primary'>Créer une nouvelle famille</button></a></div>
+		</div>		
 	</div>
 </body>
 </html>

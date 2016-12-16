@@ -2,11 +2,13 @@
 # -*- coding:Utf-8 -*-
 
 import hashlib
+import json
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.template import Context, loader, RequestContext
@@ -54,7 +56,7 @@ def InscriptionForm(request):
 			#form.save()
 			#rajouter autorisation de rentrer dans la famille
 			
-		return redirect('Menu')
+		return redirect('Rejoindre_famille')
 	else: 
 		FormInscription = UtilisateurForm()
 	return render(request, 'InscriptionForm.html', {'FormInscription':FormInscription})
@@ -130,6 +132,7 @@ def Form_famille(request):
 
 @login_required
 def Rejoindre_famille(request):
+	fam = Famille.objects.get(nom = nom_session)
 	return render(request, 'Rejoindre_famille.html')
 
 @login_required
