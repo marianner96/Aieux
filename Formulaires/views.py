@@ -18,7 +18,6 @@ def InscriptionForm(request):
 	if request.method == 'POST':
 		#On s'occupe du formulaire d'inscription
 		FormInscription = UtilisateurForm(request.POST)
-           print(FormInscription.errors)
 		if FormInscription.is_valid():
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est form.save() et c'est tout mais bon ..
@@ -59,7 +58,8 @@ def InscriptionForm(request):
 			
 #			FormConnection.save()
 			#authenticate(username = email, password = mdp)
-		print(FormInscription.errors)
+			
+			#print(FormInscription.errors)
 		return redirect('Menu')
 
 	else: 
@@ -93,12 +93,12 @@ def accueilForm(request):
 @login_required
 def modificationForm(request):
 	if request.method == 'POST':
-		FormModif = modifForm(request.POST)
+		FormModif = UtilisateurForm(request.POST)
 		if FormModif.is_valid():
 			#Il faut enregistrer tout ça dans la BDD ...
 			#En fait je crois que c'est FormModif.save() et c'est tout mais bon ..
 			#image = 
-			nom = FormModif.cleaned_data['nom']
+			"""nom = FormModif.cleaned_data['nom']
 			prenom = FormModif.cleaned_data['prenom']
 			prenoms_autre = FormModif.cleaned_data['prenoms_autre']
 			genre = FormModif.cleaned_data['genre']
@@ -107,14 +107,14 @@ def modificationForm(request):
 			postal = FormModif.cleaned_data['postal']
 			profession = FormModif.cleaned_data['profession']
 			description = FormModif.cleaned_data['description']
-			mdp = FormModif.cleaned_data['mdp']
+			mdp = FormModif.cleaned_data['mdp']"""
 
 			FormModif.save()
 
-			return render_to_response('modificationForm.html', {'FormModif':FormModif}, 
-				context_instance=RequestContext(request))
+			print(FormModif.errors)
+			return render_to_response('Menu.html', {'FormModif':FormModif})
 	else: 
-		FormModif = modifForm()
+		FormModif = UtilisateurForm()
 	return render(request, 'modificationForm.html', {'FormModif':FormModif})
 
 

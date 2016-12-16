@@ -61,7 +61,20 @@ class UtilisateurForm(ModelForm):
     mdp = forms.CharField(widget=forms.PasswordInput)
     class Meta:
         model = Utilisateur
-        fields = ['nom','prenom','genre','ddn','email','mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
+        fields = ['nom','prenom','autre_prenoms','genre','ddn','email','mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
+        labels = {
+            'nom':'Nom',
+            'prenom':'Prénom',
+            'autres_prenoms':'Autres prénoms',
+            'genre':'Genre',
+            'ddn':'Date de naissance',
+            'email':'E-mail',
+            'mdp':'Mot de passe',
+            'adresse':'Adresse postale',
+            'profession':'Profession',
+            'nationalite':'Nationalité',
+            'description':'Description',
+        }
         widgets = {'genre':forms.RadioSelect}
 
    

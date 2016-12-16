@@ -24,6 +24,7 @@
         <div class="enfants_box">
         <h1>Modificiation des informations du profil</h1>
             <form class="form-horizontal" id="formu" role="form" method="post" action="{% url 'Felicitations' %}">
+                {% csrf_token %}
                     <!--<div id='img'>
                         <label><b><input type='image' id='img_modif' src='../Images/profil_chat.jpg' width='200' height='auto'></label>
                     </div>
@@ -44,15 +45,15 @@
                     <div class="box_type">
                         <div class="enfants_box_type">
                             <p>
-                            <input id="masculin" name="genre_inscr" type="radio" value="Masculin"/>
-                            {{ form.modif_genre.1 }}
+                                <input id="masculin" name="genre" type="radio" value="masculin"/>
+                                <label for="masculin">Masculin</label>
                             </p>
                         </div>
 
                         <div class="enfants_box_type">
                             <p>
-                            <input id="feminin" name="genre_inscr" type="radio" value="Féminin"/>
-                            {{ form.modif_genre.0 }}
+                                <input id="feminin" name="genre" type="radio" value="feminin"/>
+                                <label for="feminin">Féminin</label>
                             </p>
                         </div>
                     </div><br>
@@ -60,62 +61,62 @@
 
                     <div class="input-field col s6">
                         <i class="material-icons prefix">account_circle</i>
-                        {{ form.modif_nom.label_tag }}
-                        {{ form.modif_nom }}
+                        {{ FormModif.nom }}
+                        {{ FormModif.nom.label_tag }}
                     </div>
 
                     <div class="input-field col s6">
                         <i class="material-icons prefix">account_circle</i>
-                        {{ form.modif_prenom.label_tag }}
-                        {{ form.modif_prenom }}
+                        {{ FormModif.prenom }}
+                        {{ FormModif.prenom.label_tag }}
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
-                        {{ form.modif_prenoms_autre.label_tag }}
-                        {{ form.modif_prenoms_autre }}
+                        {{ FormModif.autre_prenoms }}
+                        {{ FormModif.autre_prenoms.label_tag }}
                     </div>
 
                     <div class="input-field col s12">
                         <div>
                             <i class="material-icons prefix">perm_contact_calendar</i>
-                            {{ form.modif_ddn.label_tag }}
-                            {{ form.modif_ddn }}
+                            {{ FormModif.ddn }}
+                            {{ FormModif.ddn.label_tag }}
                         </div>
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">email</i>
-                        {{ form.modif_email }}
-                        {{ form.modif_email.label_tag }}
+                        {{ FormModif.email }}
+                        {{ FormModif.email.label_tag }}
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">email</i>
-                        {{ form.modif_postal }}
-                        {{ form.modif_postal.label_tag }}
+                        {{ FormModif.adresse }}
+                        {{ FormModif.adresse.label_tag }}
                     </div>
 
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">verified_user</i>
-                        {{ form.modif_mdp }}
-                        {{ form.modif_mdp.label_tag }}
+                        {{ FormModif.mdp }}
+                        {{ FormModif.mdp.label_tag }}
                     </div>
 
                     <div class="input-field col s12">
                         <div>
                             <i class="material-icons prefix">account_circle</i>
-                            {{ form.modif_profession.label_tag }}
-                            {{ form.modif_profession }}
+                            {{ FormModif.profession }}
+                            {{ FormModif.profession.label_tag }}
                         </div>
                     </div>
 
                     <div>
                         <div>
                             <i class="material-icons prefix">account_circle</i>
-                            {{ form.modif_description.label_tag }}
-                            {{ form.modif_description }}
+                            {{ FormModif.description.label_tag }}
+                            {{ FormModif.description }}
                         </div>
                     </div>
 
