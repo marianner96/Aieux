@@ -80,10 +80,11 @@ def accueilForm(request):
 			user = authenticate(username = mail, password = mdp)
 			if user is not None:
 				login(request, user)
-				redirect('Menu')
+				return redirect('Menu')
 			else:
 				#mot = 'hello'
-				return render_to_response('Menu.html', {'FormConnection':FormConnection})  
+				return render_to_response('Menu.html', {'FormConnection':FormConnection})
+		print(FormConnection.errors)  
 	else: 
 
 		FormConnection = UtilisateurForm()
@@ -124,7 +125,7 @@ def Felicitations(request):
 def Menubis(request):
 	return render(request, 'Menubis.html')
 
-##@login_required
+@login_required
 def Menu(request):
 	return render(request, 'Menu.html')
 
