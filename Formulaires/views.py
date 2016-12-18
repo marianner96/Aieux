@@ -7,14 +7,16 @@ import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.template import Context, loader, RequestContext
 from django.views import generic
 
 from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm
+
+global fam
 
 def InscriptionForm(request):
 	if request.method == 'POST':
@@ -25,6 +27,7 @@ def InscriptionForm(request):
 			mdp_session = FormInscription.cleaned_data['mdp']
 			email_session = FormInscription.cleaned_data['email']
 			nom_session = FormInscription.cleaned_data['nom']
+			prenom_session = FormInscription.cleaned_data['prenom']
 
 			"""FormInscription = UtilisateurForm(
 				nom = FormInscription.cleaned_data['nom'],
@@ -37,6 +40,8 @@ def InscriptionForm(request):
 			FormInscription.save()
 
 			user = User.objects.create_user(email_session, email=email_session, password=mdp_session)
+			user.firstname = prenom_session
+			user.lastname = nom_session
 			user.save()
 
 			#Connexion automatique lors de l'inscription
@@ -132,8 +137,9 @@ def Form_famille(request):
 
 @login_required
 def Rejoindre_famille(request):
-	fam = Famille.objects.get(nom = nom_session)
-	return render(request, 'Rejoindre_famille.html')
+	nom_session = (request.user).last_name
+	famille = Famille.objects.get(nom = nom_session)
+	return render(request, 'Rejoindre_famille.html', {'famille':famille})
 
 @login_required
 def Form_famille_ajoutmembre(request):
