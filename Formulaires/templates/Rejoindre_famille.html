@@ -6,6 +6,12 @@
 <script type="text/javascript" src="{% static 'Formulaires/Formulaires.js' %}"></script>
 <script type="text/javascript" src="{% static 'Formulaires/jquery-3.1.1.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'Formulaires/materialize.min.js' %}"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+    $('select').material_select();
+  });
+
+</script>
 
 <!-- Icones -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -30,14 +36,16 @@
 		<!--Il faudra vérifier si le nom de la famille existe dans la BDD. Si oui, on lui demandera si il ne veut pas plutôt rejoindre cette famille. Si non, on la créé quand même.-->
 
 		<div class="row etire_form">
-			<form method='post' action='/Rejoindre_famille/' class="col s12 ">
+			<form class="col s12 " method='post' id="formu" role="form" action="{% url 'Rejoindre_famille' %}" >
 			{% csrf_token %}
 				<div class="row">
-					<div class="input-field col s12"><select>
-						{% for fam in famille %}
-						<option value="{{ fam.pk }}">{{ fam }}</option>
-						{% endfor %}
-					</select></div>
+					<div class="input-field col s12">
+						<select name="ajout" id="ajout">
+							{% for fam in famille %}
+							<option value="{{ fam.pk }}">{{ fam }}</option>
+							{% endfor %}
+						</select>
+					</div>
 
 			        <div><button type='submit' id='bouton' class='btn btn-primary'>Rejoindre la famille</button></div>
 				</div>
@@ -45,7 +53,7 @@
 
 			<div><a href="{% url 'Form_famille' %}"><button type="button" id='bouton' class='btn btn-primary'>Créer une nouvelle famille</button></a></div>
 			
-		</div>		
+		</div>	
 	</div>
 </body>
 </html>
