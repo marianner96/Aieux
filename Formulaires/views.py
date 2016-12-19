@@ -136,17 +136,19 @@ def Form_famille(request):
 
 @login_required
 def Rejoindre_famille(request):
+	nom_session = (request.user).last_name
+	famille = Famille.objects.filter(nom = nom_session)
+
 	if request.method == 'POST':
 		form = RejoindreForm(request.POST)
 		if form.is_valid():
 			val = form.cleaned_data['ajout']
-			fam = Famille.objects.get(pk=val)
-			fam.nb_personnes = fam.nb_personnes + 1
-			fam.save()
+			ajout_fam = Famille.objects.get(pk=val)
+			ajout_fam.nb_personnes = ajout_fam.nb_personnes + 1
+			ajout_fam.save()
+			print(form.errors)
 			return redirect('Menu')
-	else :
-		nom_session = (request.user).last_name
-		famille = Famille.objects.filter(nom = nom_session)
+	else :		
 		form = RejoindreForm()
 	return render(request, 'Rejoindre_famille.html', {'form':form ,'famille':famille})
 
