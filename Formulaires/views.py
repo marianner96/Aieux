@@ -15,6 +15,7 @@ from django.template import Context, loader, RequestContext
 from django.views import generic
 
 from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm
+from .forms import RejoindreForm
 
 global fam
 
@@ -40,8 +41,8 @@ def InscriptionForm(request):
 			FormInscription.save()
 
 			user = User.objects.create_user(email_session, email=email_session, password=mdp_session)
-			user.firstname = prenom_session
-			user.lastname = nom_session
+			user.first_name = prenom_session
+			user.last_name = nom_session
 			user.save()
 
 			#Connexion automatique lors de l'inscription
@@ -50,7 +51,7 @@ def InscriptionForm(request):
 
 			#Vérifier si une famille existe lors de la création de l'utilisateur
 			try:
-				fam = Famille.objects.get(nom = nom_session)
+				fam = Famille.objects.filter(nom = nom_session)
 			except ObjectDoesNotExist:
 				return redirect('Form_famille') #creation famille
 			
@@ -128,17 +129,26 @@ def Form_famille(request):
 		if ajoutFamille.is_valid():
 			form = Famille(nom = ajoutFamille.cleaned_data['nom'])
 			form.save()
-			print(ajoutFamille.errors)
 			return redirect('Menu')
 	else :
-		ajoutFamille = Famille()
+		ajoutFamille = FamilleForm()
 	return render(request, 'Form_famille.html', {'ajoutFamille':ajoutFamille})
 
 @login_required
 def Rejoindre_famille(request):
-	nom_session = (request.user).last_name
-	famille = Famille.objects.filter(nom = nom_session)
-	return render(request, 'Rejoindre_famille.html', {'famille':famille})
+	if request.method == 'POST':
+		form = RejoindreForm(request.POST)
+		if form.is_valid():
+			val = form.cleaned_data['ajout']
+			fam = Famille.objects.get(pk=val)
+			fam.nb_personnes = fam.nb_personnes + 1
+			fam.save()
+			return redirect('Menu')
+	else :
+		nom_session = (request.user).last_name
+		nom_famille = Famille.objects.filter(nom = nom_session)
+		form = RejoindreForm()
+	return render(request, 'Rejoindre_famille.html', {'form':form ,'famille':famille})
 
 @login_required
 def Form_famille_ajoutmembre(request):
