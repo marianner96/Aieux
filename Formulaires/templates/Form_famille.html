@@ -34,7 +34,6 @@
 			{% csrf_token %}
 				<div class="row">
 					<div class="input-field col s12">
-			          <input id="nom_famille" name="nom" type="text" class="validate">
 			          {{ ajoutFamille.nom }}
 			          {{ ajoutFamille.nom.label_tag }}
 			        </div>
@@ -43,9 +42,6 @@
 				</div>
 			</form>
 		</div>
-
-		<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de la famille.</p>
-		<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 		
 	</div>
 </body>

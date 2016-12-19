@@ -51,9 +51,11 @@ def InscriptionForm(request):
 
 			#Vérifier si une famille existe lors de la création de l'utilisateur
 			try:
-				fam = Famille.objects.filter(nom = nom_session)
+				fam = Famille.objects.get(nom = nom_session)
 			except ObjectDoesNotExist:
 				return redirect('Form_famille') #creation famille
+			except MultipleObjectsReturned:
+				return redirect('Rejoindre_famille')
 			
 			#Demande à l'utilisateur si il veut être dans une famille existante ou si il veut en créer une
 			#form.moderateur = 0
