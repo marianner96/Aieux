@@ -14,7 +14,7 @@ from django.shortcuts import render, render_to_response, redirect
 from django.template import Context, loader, RequestContext
 from django.views import generic
 
-from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm
+from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm
 
 global fam
 
@@ -124,12 +124,11 @@ def Menu(request):
 @login_required
 def Form_famille(request):
 	if request.method == 'POST':
-		ajoutFamille = Famille(request.POST)
+		ajoutFamille = FamilleForm(request.POST)
 		if ajoutFamille.is_valid():
-			form = Famille(
-				nom = ajoutFamille.cleaned_data['nom'],
-				nb_personnes = 1)
+			form = Famille(nom = ajoutFamille.cleaned_data['nom'])
 			form.save()
+			print(ajoutFamille.errors)
 			return redirect('Menu')
 	else :
 		ajoutFamille = Famille()

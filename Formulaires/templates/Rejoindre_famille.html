@@ -30,9 +30,8 @@
 		<!--Il faudra vérifier si le nom de la famille existe dans la BDD. Si oui, on lui demandera si il ne veut pas plutôt rejoindre cette famille. Si non, on la créé quand même.-->
 
 		<div class="row etire_form">
-			<form method='post' action='/Form_famille/' class="col s12 ">
+			<form method='post' action='/Rejoindre_famille/' class="col s12 ">
 			{% csrf_token %}
-			{{ ajoutFamille}}
 				<div class="row">
 					<div class="input-field col s12"><select>
 						{% for fam in famille %}

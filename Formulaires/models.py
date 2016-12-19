@@ -13,12 +13,18 @@ from django.forms import ModelForm
 # nom : nom de la famille
 # nb_personnes : nombres de personnes présentes dans la famille
 class Famille(models.Model):
-    nom = models.CharField(max_length=30)
-    nb_personnes = models.IntegerField()
+    nom = models.CharField(max_length=30, blank=True)
+    nb_personnes = models.IntegerField(default=1, blank=True)
 
     def __str__(self):
         return self.nom
 
+
+class FamilleForm(ModelForm):
+    class Meta:
+        model = Famille
+        fields = {'nom', 'nb_personnes'}
+        labels = {'nom' : 'Nom', 'nb_personnes' : 'Nombre de personnes'}
 
 # id : identifiant unique de l'utilisateur (généré automatiquement)
 # nom : nom de l'utilisateur
@@ -50,7 +56,7 @@ class Utilisateur(models.Model):
     profession = models.CharField(max_length=60, blank=True)
     nationalite = models.CharField(max_length=60, blank=True)
     description = models.CharField(max_length=200, blank=True)
-    famille = models.ForeignKey(Famille, on_delete=models.CASCADE, default=None, null=True, blank=True)
+    famille = models.ForeignKey(Famille, on_delete=models.CASCADE, null=True, blank=True)
     rang = models.IntegerField(default=0, blank=True)
     moderateur = models.IntegerField(default=1, blank=True)
 
