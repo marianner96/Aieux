@@ -17,8 +17,6 @@ from django.views import generic
 from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm
 from .forms import RejoindreForm
 
-global fam
-
 def InscriptionForm(request):
 	if request.method == 'POST':
 		#On s'occupe du formulaire d'inscription
@@ -148,7 +146,7 @@ def Rejoindre_famille(request):
 			return redirect('Menu')
 	else :
 		nom_session = (request.user).last_name
-		nom_famille = Famille.objects.filter(nom = nom_session)
+		famille = Famille.objects.filter(nom = nom_session)
 		form = RejoindreForm()
 	return render(request, 'Rejoindre_famille.html', {'form':form ,'famille':famille})
 
