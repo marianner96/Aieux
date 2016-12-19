@@ -138,7 +138,9 @@ def Form_famille(request):
 @login_required
 def Rejoindre_famille(request):
 	nom_session = (request.user).last_name
-	famille = Famille.objects.get(nom = nom_session)
+	#famille = Famille.objects.get(nom = nom_session)
+	#famille = serializers.serialize("json", Famille.objects.all(), fields=('nom'))
+	famille = Famille.objects.all()
 	return render(request, 'Rejoindre_famille.html', {'famille':famille})
 
 @login_required
