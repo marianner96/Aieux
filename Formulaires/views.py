@@ -80,7 +80,7 @@ def accueilForm(request):
 				return redirect('Menu')
 			else:
 				#mot = 'hello'
-				return render_to_response('Menu.html', {'FormConnection':FormConnection})
+				return render_to_response('accueilForm.html', {'FormConnection':FormConnection})
 	else: 
 
 		FormConnection = UtilisateurForm()
@@ -127,10 +127,10 @@ def Form_famille(request):
 	if request.method == 'POST':
 		ajoutFamille = FamilleForm(request.POST)
 		if ajoutFamille.is_valid():
-			ajoutFamille = Famille(nom = ajoutFamille.cleaned_data['nom'])
-			ajoutFamille.save()
+			form = Famille(nom = ajoutFamille.cleaned_data['nom'])
+			form.save()
 			return redirect('Menu')
-	else:
+	else :
 		ajoutFamille = FamilleForm()
 	return render(request, 'Form_famille.html', {'ajoutFamille':ajoutFamille})
 
@@ -146,11 +146,9 @@ def Rejoindre_famille(request):
 			ajout_fam = Famille.objects.get(pk=val)
 			ajout_fam.nb_personnes = ajout_fam.nb_personnes + 1
 			ajout_fam.save()
-			
-			return redirect('Menu')
-		else:
 			print(form.errors)
-	else :
+			return redirect('Menu')
+	else :		
 		form = RejoindreForm()
 	return render(request, 'Rejoindre_famille.html', {'form':form ,'famille':famille})
 
@@ -169,3 +167,4 @@ def Confirm_ajoutevent(request):
 def logout_view(request):
 	logout(request)
 	return redirect('accueilForm')
+
