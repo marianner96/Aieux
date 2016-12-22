@@ -28,7 +28,7 @@
 	<nav class="nav-extended teal lighten-2">
 	    <div class="nav-wrapper">
 	      <ul class="tabs tabs-transparent centre_moi aggrandir_nav">
-	        <li class="tab aggrandir_nav"><a href="#box_profil"><i class="material-icons left centre_icons">perm_identity</i>Alice</a></li>
+	        <li class="tab aggrandir_nav"><a href="#box_profil"><i class="material-icons left centre_icons">perm_identity</i>{{ first_name }}</a></li>
 	        <li class="tab aggrandir_nav"><a href="#box_fam"><i class="material-icons left centre_icons">loyalty</i>Famille(s)</a></li>
 	        <li class="tab aggrandir_nav"><a class="active" href="#box_accueil">ACCUEIL</a></li>
 	        <li class="tab aggrandir_nav"><a href="#box_discu"><i class="material-icons left centre_icons">forum</i>Discussions</a></li>
@@ -53,7 +53,11 @@
 
 							  <nav class="nav-extended teal lighten-1">
 							    <div class="nav-wrapper">
-							      <a href="#" class="brand-logo center wrap">Profil de Nom Prénom</a>
+							      <!--Soucis de css : 
+							      <a href="#" class="brand-logo center wrap">
+							 	 -->
+							 	 Profil de {{ first_name }} {{ last_name }}
+							 	 <!--</a>-->
 
 
 							<!-- Cette partie correspond aux différents onglets 'Ma famille','Mes evenements',.. -->

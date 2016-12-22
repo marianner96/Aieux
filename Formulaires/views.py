@@ -75,7 +75,7 @@ def accueilForm(request):
 			mail = FormConnection.cleaned_data['email']
 			mdp = FormConnection.cleaned_data['mdp']
 			user = authenticate(username = mail, password = mdp)
-			if user is not None:
+			if user is not None: #Vérifier aussi si il est dans la BDD
 				login(request, user)
 				return redirect('Menu')
 			else:
@@ -120,7 +120,7 @@ def Menubis(request):
 
 @login_required
 def Menu(request):
-	return render(request, 'Menu.html')
+	return render(request, 'Menu.html', {'first_name':request.user.first_name,'last_name':request.user.last_name})
 
 @login_required
 def Form_famille(request):
