@@ -120,6 +120,7 @@ def Menubis(request):
 
 @login_required
 def Menu(request):
+	#Trouver un moyen pour récupérer la famille
 	return render(request, 'Menu.html', {'first_name':request.user.first_name,'last_name':request.user.last_name})
 
 @login_required
