@@ -14,7 +14,7 @@ from django.shortcuts import render, render_to_response, redirect
 from django.template import Context, loader, RequestContext
 from django.views import generic
 
-from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm
+from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm, Fait_historiqueForm
 from .forms import RejoindreForm
 
 def InscriptionForm(request):
@@ -75,15 +75,14 @@ def accueilForm(request):
 			mail = FormConnection.cleaned_data['email']
 			mdp = FormConnection.cleaned_data['mdp']
 			user = authenticate(username = mail, password = mdp)
-			if user is not None: #Vérifier aussi si il est dans la BDD
+			if user is not None: #Si pas dans la BDD : afficher un message d'erreur
 				login(request, user)
 				return redirect('Menu')
 			else:
 				#mot = 'hello'
-				return render_to_response('accueilForm.html', {'FormConnection':FormConnection})
-	else: 
+				return render(request,'accueilForm.html',{'FormConnection':FormConnection})
 
-		FormConnection = UtilisateurForm()
+	FormConnection = UtilisateurForm()
 	return render(request, 'accueilForm.html', {'FormConnection':FormConnection})
 
 
@@ -121,7 +120,13 @@ def Menubis(request):
 @login_required
 def Menu(request):
 	#Trouver un moyen pour récupérer la famille
-	return render(request, 'Menu.html', {'first_name':request.user.first_name,'last_name':request.user.last_name})
+	#essai = Utilisateur.objects.all()
+
+	#essai = Utilisateur.objects.filter()
+	#essai = request.user.email
+	list_famille = Famille.objects.filter()
+	longueur_list_famille = len(list_famille)
+	return render(request, 'Menu.html', {'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'first_name':request.user.first_name,'last_name':request.user.last_name})
 
 @login_required
 def Form_famille(request):
@@ -158,7 +163,29 @@ def Form_famille_ajoutmembre(request):
 	return render(request, 'Form_famille_ajoutmembre.html')
 
 def Form_event(request):
-	return render(request, 'Form_event.html')
+	if request.method == 'POST':
+		ajoutevent = Fait_historiqueForm(request.POST)
+		if ajoutevent.is_valid():
+			"""code = FormModif.cleaned_data['code']
+			if (code == '1'): 
+				#naissance
+			elif (code == '2'):
+				#mariage
+			elif (code == '3'):
+				#décès
+			elif (code == '4'):
+				#voyage
+			elif (code == '5'):
+				#immigration
+			elif (code == '6'):
+				#ville"""
+
+			form.save()
+			print(ajoutevent.errors)
+			return redirect('Menu')
+	else :
+		ajoutevent = Fait_historiqueForm()
+	return render(request, 'Form_event.html', {'ajoutevent':ajoutevent})
 
 def Confirm_ajoutevent(request):
 	return render(request, 'Confirm_ajoutevent.html')

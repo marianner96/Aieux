@@ -95,13 +95,14 @@
 							    </div>
 							  </div>
 
-
 <!--Onglet pour la ou les famille(s)-->
 		<div id="box_fam" class="col s12 gros_conteneur_central">
 							<div id="list_fam"> 
+								Là ça affiche toutes les familles de la BDD. Trouver un moyen pour que ça affiche les familles QUE du mec ...
 						  		<div class="ajouts">
-						  			<a href="#" class="waves-effect waves-light btn">Famille1</a>
-						  			<a href="#" class="waves-effect waves-light btn">Famille2</a>
+						  			{% for i in list_famille %}
+										<a href="#" class="waves-effect waves-light btn"> {{ i }}</a>
+									{% endfor %}
 						  			<a href="{% url 'Form_famille' %}" class="waves-effect waves-light btn">Créer une nouvelle famille</a>
 						  		</div>
 							  	<div class="actus teal">

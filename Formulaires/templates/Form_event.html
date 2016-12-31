@@ -28,39 +28,38 @@
 			      <div class="collapsible-header teal lighten-2"><i class="material-icons">filter_drama</i>Une naissance</div>
 			      <div class="collapsible-body teal lighten-5">
 								<div class="row">
-								<form method='post' action={% url 'Confirm_ajoutevent' %} class="col s12">
+								<form method='post' action="{% url 'Form_event' %}" class="col s12">
+									{% csrf_token %}
 								    <div class="row">
+								    	<div class="box_type">
+											<div class="enfants_box_type">
+												<p>
+									      		<input id="masculin" name="genre_enfant" type="radio" value="masculin"/>
+									      		<label for="masculin">Masculin</label>
+									    		</p>
+									    	</div>
+
+									    	<div class="enfants_box_type">
+									    		<p>
+									      		<input id="feminin" name="genre_enfant" type="radio" value="feminin"/>
+									     	 	<label for="feminin">Féminin</label>
+									    		</p>
+									    	</div>
+								    	</div><br>
+
 								        <div class="input-field col s6">
-								          <input id="prenom_naissance" name="prenom_naissance" type="text" class="validate">
-								          <label>Prénom du nouveau-né</label>
+								          {{ ajoutevent.prenom_enfant }}
+								          {{ ajoutevent.prenom_enfant.label_tag }}
 								       	</div>
 								        <div class="input-field col s6">
-								          <input id="nom_naissance" name="nom_naissance" type="text" class="validate">
-								          <label>Nom du nouveau-né</label>
-								        </div>
+								          {{ ajoutevent.nom_enfant }}
+								          {{ ajoutevent.nom_enfant.label_tag }}
 								    </div>
 
-								    <div class="box_type">
-										<div class="enfants_box_type">
-										<p>
-									      <input id="masculin_naiss" name="genre_naissance" type="radio" value="Masculin"/>
-									      <label for="masculin_naiss">Masculin</label>
-									    </p>
-									    </div>
-
-									    <div class="enfants_box_type">
-									    <p>
-									      <input id="feminin_naiss" name="genre_naissance" type="radio" value="Féminin"/>
-									      <label for="feminin_naiss">Féminin</label>
-									    </p>
-									    </div>
-								    </div><br>
-
+								   
 									<div class="input-field col s12">
-										<label>Date de naissance</label><br><br>
-										<div>
-											<input id="date_naissance" name="date_naissance" type='date' required='required' class='datepicker'></input>
-										</div>
+										{{ ajoutevent.date_naissance }}
+								        {{ ajoutevent.date_naissance.label_tag }}
 									</div>
 								    <div class="row">
 								        <div class="input-field col s12">
@@ -68,27 +67,25 @@
 								    </div>
 								    <div class="row">
 								        <div class="input-field col s12">
-								          <input id="nom_mere" name="nom_mere" type="text" class="validate">
-								          <label>Prénom de la mère</label>
+								          {{ ajoutevent.prenom_mere }}
+								          {{ ajoutevent.prenom_mere.label_tag }}
 								        </div>
 								    </div>
 								    <div class="row">
 								        <div class="input-field col s12">
-								            <input id="nom_pere" name="nom_pere" type="text" class="validate">
-								            <label>Prénom du père</label>
+								        	{{ ajoutevent.prenom_pere }}
+								        	{{ ajoutevent.prenom_pere.label_tag }}
 								        </div>
 								    </div>
 								    <div class="row">
-										<label>Commentaires </label>
-										<textarea name='commentaire_naissance' id='commentaire_naissance'></textarea>
+								        {{ ajoutevent.commentaire.label_tag }}
+										{{ ajoutevent.commentaire }}
 								    </div>
 
-									<input type='hidden' name='verif' id='verif' value='naissance'></input>
+								    <!--Permet de savoir de quel sorte d'évement il s'agit. 1 = naissance -->
+									<input type='hidden' name='code' id='code' value='1'></input>
 
 									<button type='submit' id='btn' class='btn btn-primary'>Ajout de la naissance</button>
-
-									<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de l'utilisateur où on verra une frise chronologique.</p>
-									<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 
 								</form>
 								</div>
@@ -100,38 +97,40 @@
 			      <div class="collapsible-header teal lighten-2"><i class="material-icons">grade</i>Un mariage</div>
 			      <div class="collapsible-body teal lighten-5">
 								<div class="row">
-								<form method='post' action="{% url 'Confirm_ajoutevent' %}" class="col s12">
+								<form method='post' action="{% url 'Form_event' %}" class="col s12">
 									<div class="box-type">
 								        <div class="input-field col s12">
-											<label>Date du mariage</label><br><br>
-											<div>
-												<input id="date_mariage" name="date_mariage" type='date' required='required' class='datepicker'></input>
-											</div>
+											{{ ajoutevent.date_mariage }}
+								        	{{ ajoutevent.date_mariage.label_tag }}
 										</div>
 									</div>
 
 									<div class="row">
 								        <div class="input-field col s6">
-								        	<input type='text' name='prenom_marie1' id='prenom_marie1' class="validate">
-								        	<label>Prénom de la/du premier(ère) marié(e) </label>
+								        	{{ ajoutevent.prenom_marie_1 }}
+								        	{{ ajoutevent.prenom_marie_1.label_tag }}
 								        </div>
 								        <div class="input-field col s6">
-								        	<input id="nom_naissance" name="prenom_marie2" type="text" class="validate">
-								        	<label>Prénom de la/du deuxième marié(e) </label>
+								        	{{ ajoutevent.prenom_marie_2 }}
+								        	{{ ajoutevent.prenom_marie_2.label_tag }}
+								        </div>
+								    </div>
+								    <div class="row">
+								        <div class="input-field col s12">
+								            {{ ajoutevent.nom_famille }}
+								        	{{ ajoutevent.nom_famille.label_tag }}
 								        </div>
 								    </div>
 
 								    <div class="row">
-										<label>Commentaires </label>
-										<textarea name='commentaire_mariage' id='commentaire_mariage'></textarea>
+								        {{ ajoutevent.commentaire.label_tag }}
+										{{ ajoutevent.commentaire }}
 								    </div>
 
-									<input type='hidden' name='verif' id='verif' value='mariage'></input>
+									<!--Permet de savoir de quel sorte d'évement il s'agit. 2 = mariage -->
+									<input type='hidden' name='code' id='code' value='2'></input>
 
 									<button type='submit' id='btn' class='btn btn-primary'>Ajout du mariage</button>
-
-									<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de l'utilisateur où on verra une frise chronologique.</p>
-									<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 
 								</form>
 								</div>
@@ -139,44 +138,38 @@
 			    </li>
 
 
-
-
 			    <li>
 			      <div class="collapsible-header teal lighten-2"><i class="material-icons">description</i>Un décès</div>
 			      <div class="collapsible-body teal lighten-5">
 			      				<div class="row">
-					      		<form method='post' action="{% url 'Confirm_ajoutevent' %}" class="col s12">
+					      		<form method='post' action="{% url 'Form_event' %}" class="col s12">
 					      			<div class="box-type">
 								        <div class="input-field col s12">
-											<label>Date du décès : </label><br/><br/>
-											<div>
-												<input type='date' name='date_deces' id='date_deces' required='required' class='datepicker'></input>
-											</div>
+											{{ ajoutevent.date_deces }}
+								        	{{ ajoutevent.date_deces.label_tag }}
 										</div>
 									</div>
 
 									<div class="row">
 								        <div class="input-field col s6">
-								        	<input type='text' name='prenom_defunt' id='prenom_defunt' class="validate">
-								        	<label>Prénom du défunt </label>
+								        	{{ ajoutevent.prenom_defunt }}
+								        	{{ ajoutevent.prenom_defunt.label_tag }}
 								        </div>
 								        <div class="input-field col s6">
-								        	<input type='text' name='nom_defunt' id='nom_defunt' class="validate">
-								        	<label>Nom du défunt </label>
+								        	{{ ajoutevent.nom_defunt }}
+								        	{{ ajoutevent.nom_defunt.label_tag }}
 								        </div>
 								    </div>
 
 								     <div class="row">
-										<label>Commentaires </label>
-										<textarea name='commentaire_deces' id='commentaire_deces'></textarea>
+								        {{ ajoutevent.commentaire.label_tag }}
+										{{ ajoutevent.commentaire }}
 								    </div>
 
-									<input type='hidden' name='verif' id='verif' value='deces'></input>
+									<!--Permet de savoir de quel sorte d'évement il s'agit. 3 = décès -->
+									<input type='hidden' name='code' id='code' value='3'></input>
 			
 									<button type='submit' id='btn' class='btn btn-primary'>Ajout du décès</button>
-						
-									<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de l'utilisateur où on verra une frise chronologique.</p>
-									<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 								</form>
 								</div>
 				  </div>
@@ -185,32 +178,73 @@
 				<li>
 			      <div class="collapsible-header teal lighten-2"><i class="material-icons">language</i>Un voyage</div>
 			      <div class="collapsible-body teal lighten-5">
-			      		<form method='post' action="{% url 'Confirm_ajoutevent' %}">
-						<label>Lieu du voyage : <input type='nom' name='lieu_voyage' id='lieu_voyage'></label><br/>
-						<label>Date de début du voyage : <input type='date' name='date_voyage_deb' id='date_voyage_deb'></label><br/>
-						<label>Date de fin du voyage : <input type='date' name='date_voyage_fin' id='date_voyage_fin'></label><br/>
-						<label>Commentaires : <textarea name='commentaire_voyage' id='commentaire_voyage'></textarea></label><br/>
-						<input type='hidden' name='verif' id='verif' value='voyage'></input>
+			      	<div class="row">
+			      		<form method='post' action="{% url 'Form_event' %}" class="col s12">
+			      			<div class="box-type">
+								<div class="input-field col s12">
+									{{ ajoutevent.lieu_voyage }}
+								    {{ ajoutevent.lieu_voyage.label_tag }}
+								</div>
+							</div>
+							<div class="box-type">
+								<div class="input-field col s12">
+									{{ ajoutevent.date_debut }}
+								    {{ ajoutevent.date_debut.label_tag }}
+								</div>
+							</div>
+							<div class="box-type">
+								<div class="input-field col s12">
+									{{ ajoutevent.date_fin }}
+								    {{ ajoutevent.date_fin.label_tag }}
+								</div>
+							</div>
+							<div class="row">
+							    {{ ajoutevent.commentaire.label_tag }}
+								{{ ajoutevent.commentaire }}
+							</div>
+
+						<!--Permet de savoir de quel sorte d'évement il s'agit. 4 = voyage -->
+						<input type='hidden' name='code' id='code' value='4'></input>
 						<button type='submit' id='btn' class='btn btn-primary'>Ajout du voyage</button>
 						</form>
-						<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de l'utilisateur où on verra une frise chronologique.</p>
-						<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
+						
 				  </div>
 				</li>
 
 				<li>
 			      <div class="collapsible-header teal lighten-2"><i class="material-icons">work</i>Une immigration</div>
 			      <div class="collapsible-body teal lighten-5">
-			      		<form method='post' action="{% url 'Confirm_ajoutevent' %}">
-						<label>Date de l'immigration : <input type='date' name='date_immigration' id='date_immigration'></label><br/>
-						<label>Pays de départ : <input type='prenom' name='pays_depart' id='pays_depart'></label><br/>
-						<label>Pays d'arrivé : <input type='nom' name='pays_arrive' id='pays_arrive'></label><br/>
-						<label>Commentaires : <textarea name='commentaire_immigration' id='commentaire_immigration'></textarea></label><br/>
-						<input type='hidden' name='verif' id='verif' value='immigration'></input>
+			      	<div class="row">
+			      		<form method='post' action="{% url 'Form_event' %}" class="col s12">
+			      			<div class="box-type">
+								<div class="input-field col s12">
+									{{ ajoutevent.date_immig }}
+								   	{{ ajoutevent.date_immig.label_tag }}
+								</div>
+							</div>
+
+							<div class="box-type">
+								<div class="input-field col s12">
+									{{ ajoutevent.pays_depart }}
+								   	{{ ajoutevent.pays_depart.label_tag }}
+								</div>
+							</div>
+
+							<div class="box-type">
+								<div class="input-field col s12">
+									{{ ajoutevent.pays_arrive }}
+								   	<!--{{ ajoutevent.pays_arrive.label_tag }}-->
+								   	<label for="pays_arrive">Pays d'arrivé:</label>
+								</div>
+							</div>
+
+						<div class="row">
+							{{ ajoutevent.commentaire.label_tag }}
+							{{ ajoutevent.commentaire }}
+						</div>
+						<!--Permet de savoir de quel sorte d'évement il s'agit. 5 = immigration -->
+						<input type='hidden' name='code' id='code' value='5'></input>
 						<button type='submit' id='btn' class='btn btn-primary'>Ajout de l'immigration</button>
-						</form>
-						<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de l'utilisateur où on verra une frise chronologique.</p>
-						<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 				  </div>
 				</li>
 
@@ -218,10 +252,25 @@
 			      <div class="collapsible-header teal lighten-2"><i class="material-icons">store</i>Un ville habitée</div>
 			      <div class="collapsible-body teal lighten-5">
 			      	<div class="row">
-			      		<form method='post' action="{% url 'Confirm_ajoutevent' %}" class="col s12">
-			      		
-							<label>Ville habitée : <input type='text' name='ville_habitee' id='ville_habitee'></label><br/>
-							<label>Date d'arrivée : <input type='date' name='date_arrive' id='date_arrive'></label><br/>
+			      		<form method='post' action="{% url 'Form_event' %}" class="col s12">
+			      			<div class="box-type">
+								<div class="input-field col s12">
+									{{ ajoutevent.ville }}
+								   	{{ ajoutevent.ville.label_tag }}
+								</div>
+							</div>
+							<div class="box-type">
+								<div class="input-field col s12">
+									{{ ajoutevent.date_arrive }}
+								   	{{ ajoutevent.date_arrive.label_tag }}
+								</div>
+							</div>
+							<div class="box-type">
+								<div class="input-field col s12">
+									{{ ajoutevent.date_depart }}
+								   	{{ ajoutevent.date_depart.label_tag }}
+								</div>
+							</div>
 							
 							<div class="box_type">
 								<!--<label for='datedepart'>Date de départ : </label>-->
@@ -242,17 +291,20 @@
 							 </div>
 
 
-							<label>Commentaires : <textarea name='commentaire_ville' id='commentaire_ville'></textarea></label><br/>
-							<input type='hidden' name='verif' id='verif' value='ville'></input>
+							<div class="row">
+								{{ ajoutevent.commentaire.label_tag }}
+								{{ ajoutevent.commentaire }}
+							</div>
+							<!--Permet de savoir de quel sorte d'évement il s'agit. 6 = ville habitée -->
+							<input type='hidden' name='code' id='code' value='6'></input>
 							<button type='submit' id='btn' class='btn btn-primary'>Ajout de la ville</button>
 						
 						</form>
-						</div>
-						<p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on devrait rediriger vers le profil de l'utilisateur où on verra une frise chronologique.</p>
-						<div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
 				  </div>
+				</div>
 				</li>
 			</ul>
+			<p style="font-size:10px">* Les dates doivent être sous forme YYYY-MM-DD</p>
 			</div>
 	</div>
 

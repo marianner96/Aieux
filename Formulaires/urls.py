@@ -20,3 +20,8 @@ urlpatterns = [
 ]
 
 #l'admin a pour nom eisti et le mdp est rogerdeeisti
+
+#Autre admin : 
+#Username : eisti
+#adresse : eisti@eisti.eu
+#mdp : aieuxaieux
