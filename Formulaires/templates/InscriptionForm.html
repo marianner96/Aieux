@@ -40,6 +40,9 @@
     <div class="enfants_box">
       <h1>Inscription</h1>
 
+      {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+
       <div>
         <div id="inscription" class="row">
           <form class="col s12" id="formu" role="form" method="post" action="{% url 'InscriptionForm' %}">
@@ -97,6 +100,12 @@
                 <i class="material-icons prefix">verified_user</i>
                 {{ FormInscription.mdp }}
                 {{ FormInscription.mdp.label_tag }}
+              </div>
+
+              <div class="input-field col s12">
+                <i class="material-icons prefix">verified_user</i>
+                {{ FormInscription.validation_mdp }}
+                {{ FormInscription.validation_mdp.label_tag }}
               </div>
 
               <div><button type="submit" id="bouton" class="btn btn-primary">Valider</button></div>
