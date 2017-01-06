@@ -6,7 +6,7 @@ import json
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group, Permission
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, HttpResponseRedirect
@@ -124,7 +124,11 @@ def Menu(request):
 
 	#essai = Utilisateur.objects.filter()
 	#essai = request.user.email
-	list_famille = Famille.objects.filter()
+
+	#Les groupes sont en fait les familles
+	list_famille = Group.objects.all()
+
+	#list_famille = Famille.objects.filter()
 	longueur_list_famille = len(list_famille)
 	return render(request, 'Menu.html', {'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'first_name':request.user.first_name,'last_name':request.user.last_name})
 
@@ -133,8 +137,17 @@ def Form_famille(request):
 	if request.method == 'POST':
 		ajoutFamille = FamilleForm(request.POST)
 		if ajoutFamille.is_valid():
-			form = Famille(nom = ajoutFamille.cleaned_data['nom'])
+			nom = ajoutFamille.cleaned_data['nom']
+			form = Famille(nom = nom)
+			group, created = Group.objects.get_or_create(name = nom)
+			if created:
+				#Pour l'instant on lui met toutes les permissions
+				group.permissions.add(Permission.objects.all())
+        		group.save()
 			form.save()
+
+			user.groups.add(Group.objects.get(name = nom))			
+
 			return redirect('Menu')
 	else :
 		ajoutFamille = FamilleForm()
@@ -153,6 +166,9 @@ def Rejoindre_famille(request):
 			ajout_fam.nb_personnes = ajout_fam.nb_personnes + 1
 			ajout_fam.save()
 			print(form.errors)
+
+			#user.groups.add(Group.objects.get(name = val))
+
 			return redirect('Menu')
 	else :		
 		form = RejoindreForm()
