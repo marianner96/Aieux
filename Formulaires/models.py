@@ -52,7 +52,7 @@ class Utilisateur(models.Model):
     ddn = models.DateField(blank=True, null=True)
     email = models.EmailField()
     mdp = models.CharField(max_length=10)
-    validation_mdp = models.CharField(max_length=10)
+#    validation_mdp = models.CharField(max_length=10, default='')
     adresse = models.CharField(max_length=200, blank=True)
     profession = models.CharField(max_length=60, blank=True)
     nationalite = models.CharField(max_length=60, blank=True)
@@ -66,10 +66,10 @@ class Utilisateur(models.Model):
 
 class UtilisateurForm(ModelForm):
     mdp = forms.CharField(widget=forms.PasswordInput)
-    validation_mdp = forms.CharField(widget=forms.PasswordInput)
+    #validation_mdp = forms.CharField(widget=forms.PasswordInput)
     class Meta:
         model = Utilisateur
-        fields = ['nom','prenom','autre_prenoms','genre','ddn','email','mdp', 'validation_mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
+        fields = ['nom','prenom','autre_prenoms','genre','ddn','email','mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
         labels = {
             'nom':'Nom',
             'prenom':'Prénom',
@@ -78,7 +78,7 @@ class UtilisateurForm(ModelForm):
             'ddn':'Date de naissance',
             'email':'E-mail',
             'mdp':'Mot de passe',
-            'validation_mdp' : 'Confirmation mot de passe',
+        #    'validation_mdp' : 'Confirmation mot de passe',
             'adresse':'Adresse postale',
             'profession':'Profession',
             'nationalite':'Nationalité',
@@ -86,6 +86,7 @@ class UtilisateurForm(ModelForm):
         }
         widgets = {'genre':forms.RadioSelect}
 
+"""
     def clean(self):
         pass1 = self.cleaned_data.get('mdp')
         pass2 = self.cleaned_data.get('validation_mdp')
@@ -93,7 +94,7 @@ class UtilisateurForm(ModelForm):
         #if pass1 and pass2 and pass1 != pass2:
         raise forms.ValidationError("Mots de passe différents")
         return self.cleaned_data
-
+"""
    
 # id : identifiant unique de l'arbre de la famille généré automatiquement)
 # id_famille : identifiant de la famille auquel appartient l'arbre  

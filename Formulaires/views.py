@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group, Permission
 from django.core import serializers
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.template import Context, loader, RequestContext
@@ -62,7 +62,7 @@ def InscriptionForm(request):
 			#form.save()
 			#rajouter autorisation de rentrer dans la famille
 			
-		return redirect('Rejoindre_famille')
+			return redirect('Rejoindre_famille')
 	else: 
 		FormInscription = UtilisateurForm()
 	return render(request, 'InscriptionForm.html', {'FormInscription':FormInscription})
@@ -120,13 +120,14 @@ def Menubis(request):
 @login_required
 def Menu(request):
 	#Trouver un moyen pour récupérer la famille
-	#essai = Utilisateur.objects.all()
+
+	list_famille = request.user.groups.values_list('name',flat=True);
 
 	#essai = Utilisateur.objects.filter()
 	#essai = request.user.email
 
 	#Les groupes sont en fait les familles
-	list_famille = Group.objects.all()
+	#list_famille = Group.objects.all()
 
 	#list_famille = Famille.objects.filter()
 	longueur_list_famille = len(list_famille)
@@ -142,21 +143,25 @@ def Form_famille(request):
 			group, created = Group.objects.get_or_create(name = nom)
 			if created:
 				#Pour l'instant on lui met toutes les permissions
-				group.permissions.add(Permission.objects.all())
-        		group.save()
-			form.save()
+				#group.permissions.add(Permission.objects.all())
+				group.save()
 
-			user.groups.add(Group.objects.get(name = nom))			
+        	form.save()
+        	user = request.user
+        	user.groups.add(Group.objects.get(name = nom))
 
-			return redirect('Menu')
+        	return redirect('Menu')
 	else :
 		ajoutFamille = FamilleForm()
 	return render(request, 'Form_famille.html', {'ajoutFamille':ajoutFamille})
 
+
+#Problème là !
 @login_required
 def Rejoindre_famille(request):
 	nom_session = (request.user).last_name
 	famille = Famille.objects.filter(nom = nom_session)
+	user_session = request.user()
 
 	if request.method == 'POST':
 		form = RejoindreForm(request.POST)
@@ -167,7 +172,7 @@ def Rejoindre_famille(request):
 			ajout_fam.save()
 			print(form.errors)
 
-			#user.groups.add(Group.objects.get(name = val))
+			user_session.groups.add(Group.objects.get(name = val))
 
 			return redirect('Menu')
 	else :		
@@ -176,7 +181,15 @@ def Rejoindre_famille(request):
 
 @login_required
 def Form_famille_ajoutmembre(request):
-	return render(request, 'Form_famille_ajoutmembre.html')
+	if request.method == 'POST':
+		ajoutMembreForm = UtilisateurForm(request.POST)
+		if ajoutMembreForm.is_valid():
+			form.save()
+			print(ajoutMembreForm.errors)
+			return redirect('Menu')
+	else :
+		ajoutMembreForm = UtilisateurForm()
+	return render(request, 'Form_famille_ajoutmembre.html', {'ajoutMembreForm':ajoutMembreForm})
 
 def Form_event(request):
 	if request.method == 'POST':
