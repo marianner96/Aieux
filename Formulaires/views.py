@@ -72,8 +72,15 @@ def accueilForm(request):
 		return render(request, 'accueilForm.html', {'FormConnection':FormConnection})
 
 
+
+#Voir comment on peut enregistrer les informations de modification !
 @login_required
 def modificationForm(request):
+	user1 = User.objects.filter(email = request.user)
+	user2 = user1[0]
+	user3 = Utilisateur.objects.filter(email = user2)
+	user = user3[0]
+
 	if request.method == 'POST':
 		FormModif = UtilisateurForm(request.POST)
 		if FormModif.is_valid():
@@ -91,10 +98,10 @@ def modificationForm(request):
 			FormModif.save()
 
 			print(FormModif.errors)
-			return render_to_response('Menu.html', {'FormModif':FormModif})
+			return render_to_response('Menu.html', {'FormModif':FormModif,'user':user})
 	else: 
 		FormModif = UtilisateurForm()
-	return render(request, 'modificationForm.html', {'FormModif':FormModif})
+	return render(request, 'modificationForm.html', {'FormModif':FormModif,'user':user})
 
 
 def Felicitations(request):
@@ -142,23 +149,21 @@ def Form_famille(request):
 	return render(request, 'Form_famille.html', {'ajoutFamille':ajoutFamille})
 
 
-#Problème là !
 @login_required
 def Rejoindre_famille(request):
-	nom_session = (request.user).last_name
+	user_session = request.user
+	nom_session = (user_session).last_name
 	famille = Famille.objects.filter(nom = nom_session)
-	user_session = request.user()
 
 	if request.method == 'POST':
 		form = RejoindreForm(request.POST)
 		if form.is_valid():
 			val = form.cleaned_data['ajout']
-			ajout_fam = Famille.objects.get(pk=val)
+			ajout_fam = Famille.objects.get(pk = val)
 			ajout_fam.nb_personnes = ajout_fam.nb_personnes + 1
 			ajout_fam.save()
-			print(form.errors)
 
-			user_session.groups.add(Group.objects.get(name = val))
+			user_session.groups.add(Group.objects.get(name = ajout_fam))
 
 			return redirect('Menu')
 	else :		

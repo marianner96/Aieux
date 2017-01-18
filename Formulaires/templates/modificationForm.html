@@ -23,7 +23,9 @@
         <div id='modif'>
         <div class="enfants_box">
         <h1>Modificiation des informations du profil</h1>
-            <form class="form-horizontal" id="formu" role="form" method="post" action="{% url 'Felicitations' %}">
+
+        User : {{ user }}
+            <form class="form-horizontal" id="formu" role="form" method="post" action="{% url 'modificationForm' %}">
                 {% csrf_token %}
                     <!--<div id='img'>
                         <label><b><input type='image' id='img_modif' src='../Images/profil_chat.jpg' width='200' height='auto'></label>
@@ -61,40 +63,40 @@
 
                     <div class="input-field col s6">
                         <i class="material-icons prefix">account_circle</i>
-                        {{ FormModif.nom }}
-                        {{ FormModif.nom.label_tag }}
+                        {{ FormModif.nom.label_tag }}<br/><br/>
+                        <input id="nom" name="nom" value="{{ user.nom }}"/>
                     </div>
 
                     <div class="input-field col s6">
                         <i class="material-icons prefix">account_circle</i>
-                        {{ FormModif.prenom }}
-                        {{ FormModif.prenom.label_tag }}
+                        {{ FormModif.prenom.label_tag }}<br/><br/>
+                        <input id="prenom" name="prenom" value="{{ user.prenom }}"/>
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">account_circle</i>
-                        {{ FormModif.autre_prenoms }}
-                        {{ FormModif.autre_prenoms.label_tag }}
+                        {{ FormModif.autre_prenoms.label_tag }}<br/><br/>
+                        <input id="autre_prenoms" name="autre_prenoms" value="{{ user.autre_prenoms }}"/>
                     </div>
 
                     <div class="input-field col s12">
                         <div>
                             <i class="material-icons prefix">perm_contact_calendar</i>
-                            {{ FormModif.ddn }}
-                            {{ FormModif.ddn.label_tag }}
+                            {{ FormModif.ddn.label_tag }}<br/><br/>
+                            <input id="ddn" name="ddn" value="{{ user.ddn }}"/>
                         </div>
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">email</i>
-                        {{ FormModif.email }}
-                        {{ FormModif.email.label_tag }}
+                        {{ FormModif.email.label_tag }}<br/><br/>
+                        <input id="email" name="email" value="{{ user.email }}"/>
                     </div>
 
                     <div class="input-field col s12">
                         <i class="material-icons prefix">email</i>
-                        {{ FormModif.adresse }}
-                        {{ FormModif.adresse.label_tag }}
+                        {{ FormModif.adresse.label_tag }}<br/><br/>
+                        <input id="adresse" name="adresse" value="{{ user.adresse }}"/>
                     </div>
 
 
@@ -107,24 +109,22 @@
                     <div class="input-field col s12">
                         <div>
                             <i class="material-icons prefix">account_circle</i>
-                            {{ FormModif.profession }}
-                            {{ FormModif.profession.label_tag }}
+                            {{ FormModif.profession.label_tag }}<br/><br/>
+                        <input id="profession" name="profession" value="{{ user.profession }}"/>
                         </div>
                     </div>
 
                     <div>
                         <div>
                             <i class="material-icons prefix">account_circle</i>
-                            {{ FormModif.description.label_tag }}
-                            {{ FormModif.description }}
+                            {{ FormModif.description.label_tag }}<br/><br/>
+                        <input id="description" name="description" value="{{ user.description }}"/>
                         </div>
                     </div>
 
                     <input type='hidden' name='verif' id='verif' value='modif'></input><br/>
             <div><button type='submit' id='bouton' class='btn btn-primary'>Modifier</button></div>
             </form>
-            <p style="font-size:10px">Ceci est un bonton provisoire qui nous amène sur la page comme si on avait établi les sessions. Ici on redirige vers le profil de l'utilisateur.</p>
-            <div><a href="{% url 'Menu' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Suivant</button></a></div>
         </div>
         </div>
     </div>
