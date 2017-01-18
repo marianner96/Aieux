@@ -2,6 +2,7 @@
 # -*- coding:Utf-8 -*-
 import datetime
 
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
@@ -52,13 +53,12 @@ class Utilisateur(models.Model):
     ddn = models.DateField(blank=True, null=True)
     email = models.EmailField()
     mdp = models.CharField(max_length=10)
-    validation_mdp = models.CharField(max_length=10)
+    #validation_mdp = models.CharField(max_length=10)
     adresse = models.CharField(max_length=200, blank=True)
     profession = models.CharField(max_length=60, blank=True)
     nationalite = models.CharField(max_length=60, blank=True)
     description = models.CharField(max_length=200, blank=True)
     famille = models.ForeignKey(Famille, on_delete=models.CASCADE, null=True, blank=True)
-    rang = models.IntegerField(default=0, blank=True)
     moderateur = models.IntegerField(default=1, blank=True)
 
     def __str__(self):
@@ -69,7 +69,7 @@ class UtilisateurForm(ModelForm):
     validation_mdp = forms.CharField(widget=forms.PasswordInput)
     class Meta:
         model = Utilisateur
-        fields = ['nom','prenom','autre_prenoms','genre','ddn','email','mdp', 'validation_mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
+        fields = ['nom','prenom','autre_prenoms','genre','ddn','email','mdp', 'validation_mdp','adresse','profession','nationalite','description','famille','moderateur']
         labels = {
             'nom':'Nom',
             'prenom':'Prénom',
@@ -86,12 +86,13 @@ class UtilisateurForm(ModelForm):
         }
         widgets = {'genre':forms.RadioSelect}
 
-    def clean(self):
+    def clean_validation_mdp(self):
         pass1 = self.cleaned_data.get('mdp')
         pass2 = self.cleaned_data.get('validation_mdp')
 
-        #if pass1 and pass2 and pass1 != pass2:
-        raise forms.ValidationError("Mots de passe différents")
+        if pass1 and pass2 and pass1 != pass2:
+            raise forms.ValidationError("Mots de passe différents")
+        
         return self.cleaned_data
 
    

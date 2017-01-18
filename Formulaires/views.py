@@ -27,15 +27,6 @@ def InscriptionForm(request):
 			email_session = FormInscription.cleaned_data['email']
 			nom_session = FormInscription.cleaned_data['nom']
 			prenom_session = FormInscription.cleaned_data['prenom']
-
-			"""FormInscription = UtilisateurForm(
-				nom = FormInscription.cleaned_data['nom'],
-				prenom = FormInscription.cleaned_data['prenom'],
-				genre = FormInscription.cleaned_data['genre'],
-				ddn = FormInscription.cleaned_data['ddn'],
-				email = FormInscription.cleaned_data['email'],
-				mdp = hashlib.sha1(mdp_session).hexdigest())"""
-
 			FormInscription.save()
 
 			user = User.objects.create_user(email_session, email=email_session, password=mdp_session)
@@ -56,13 +47,9 @@ def InscriptionForm(request):
 				return redirect('Rejoindre_famille')
 			
 			#Demande à l'utilisateur si il veut être dans une famille existante ou si il veut en créer une
-			#form.moderateur = 0
-			#On rajoute l'id de la famille à l'utilisateur
-			#form.famille_id = fam.id
-			#form.save()
 			#rajouter autorisation de rentrer dans la famille
 			
-		return redirect('Rejoindre_famille')
+			return redirect('Rejoindre_famille')
 	else: 
 		FormInscription = UtilisateurForm()
 	return render(request, 'InscriptionForm.html', {'FormInscription':FormInscription})
@@ -79,11 +66,10 @@ def accueilForm(request):
 				login(request, user)
 				return redirect('Menu')
 			else:
-				#mot = 'hello'
-				return render(request,'accueilForm.html',{'FormConnection':FormConnection})
-
-	FormConnection = UtilisateurForm()
-	return render(request, 'accueilForm.html', {'FormConnection':FormConnection})
+				return render(request,'accueilForm.html',{'FormConnection':FormConnection, 'error':error})
+	else :
+		FormConnection = UtilisateurForm()
+		return render(request, 'accueilForm.html', {'FormConnection':FormConnection})
 
 
 @login_required
