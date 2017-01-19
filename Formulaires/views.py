@@ -21,28 +21,36 @@ from pprint import pprint
 import os
 
 
+# Fonction qui permet à l'utilisateur de s'inscrire
+# La fonction redirige obligatoirement vers Rejoindre_Famille ou Form_famille car un utilisateur
+# 		doit obligatoirement avoir une famille, même il est le seul dans celle-ci.
 def InscriptionForm(request):
+	# Si la requête est POST on fait ce qui suit
 	if request.method == 'POST':
-		#On s'occupe du formulaire d'inscription
+		# Créé une instance formulaire et récupère les données de la requête
 		FormInscription = UtilisateurForm(request.POST)
+		# Vérifie si le formulaire est valide
 		if FormInscription.is_valid():
-			
+			# On récupère les données dont on aura besoin pour le reste de la fonction
 			mdp_session = FormInscription.cleaned_data['mdp']
 			email_session = FormInscription.cleaned_data['email']
 			nom_session = FormInscription.cleaned_data['nom']
 			prenom_session = FormInscription.cleaned_data['prenom']
+			# On sauvegarde les données du formulaire dans la base de données
 			FormInscription.save()
 
+			# Créé une instance utilisateur à l'aide de l'email et le mot de passe
 			user = User.objects.create_user(email_session, email=email_session, password=mdp_session)
 			user.first_name = prenom_session
 			user.last_name = nom_session
+			# Sauvegarde l'utilisateur
 			user.save()
 
-			#Connexion automatique lors de l'inscription
+			# Connexion automatique lors de l'inscription
 			util = authenticate(username=email_session, password=mdp_session)
 			login(request, util)
 
-			#Vérifier si une famille existe lors de la création de l'utilisateur
+			# Vérifier si une famille existe lors de la création de l'utilisateur
 			try:
 				fam = Famille.objects.get(nom = nom_session)
 			except ObjectDoesNotExist:
@@ -50,25 +58,26 @@ def InscriptionForm(request):
 			except MultipleObjectsReturned:
 				return redirect('Rejoindre_famille')
 			
-			#Demande à l'utilisateur si il veut être dans une famille existante ou si il veut en créer une
-			#rajouter autorisation de rentrer dans la famille
+			# Demande à l'utilisateur si il veut être dans une famille existante ou si il veut en créer une
+			# A rajouter : autorisation de rentrer dans la famille
 			
 			return redirect('Rejoindre_famille')
 	else: 
 		FormInscription = UtilisateurForm()
 	return render(request, 'InscriptionForm.html', {'FormInscription':FormInscription})
 
-#Connexion d'un utilisateur
+
+# Connexion d'un utilisateur
 def accueilForm(request):
 	if request.method == 'POST':
-		print('post')
 		FormConnection = UtilisateurForm(request.POST)
 		if FormConnection.is_valid():
-			print('valid')
 			mail = FormConnection.cleaned_data['email']
 			mdp = FormConnection.cleaned_data['mdp']
 			user = authenticate(username = mail, password = mdp)
-			if user is not None: #Si pas dans la BDD : afficher un message d'erreur
+			# On vérifie si l'utilisateur est dans la base de données ou pas
+			# Si ce n'est pas le cas, on affiche un message d'erreur
+			if user is not None:
 				login(request, user)
 				return redirect('Menu')
 			else:
@@ -79,12 +88,10 @@ def accueilForm(request):
 	return render(request, 'accueilForm.html', {'FormConnection':FormConnection})
 
 
-
-#Voir comment on peut enregistrer les informations de modification !
-#S'arranger pour mettre la date comme il faut ...
-#Encore modifier des trucs blblbl
+# Fonction qui permet à l'utilisateur, une fois connecté, de modifier ses informations
 @login_required
 def modificationForm(request):
+	# On récupère l'utilisateur qui est conencté à l'aide de request.user
 	user1 = User.objects.filter(email = request.user)
 	user3 = Utilisateur.objects.filter(email = user1[0])
 	user = user3[0]
@@ -97,6 +104,7 @@ def modificationForm(request):
 			email = FormModif.cleaned_data['email']
 			mdp = FormModif.cleaned_data['mdp']
 
+			# On met à jour les champs dans la base de données
 			obj = user3.update(
 				nom = FormModif.cleaned_data['nom'],
 				prenom = FormModif.cleaned_data['prenom'],
@@ -111,8 +119,9 @@ def modificationForm(request):
 				mdp = FormModif.cleaned_data['mdp']
 			)
 
+			# On reconnecte l'utilisateur, car le fait de modifier les champs le déconnecte
 			user4 = authenticate(username = email, password = mdp)
-			if user4 is not None: #Si pas dans la BDD : afficher un message d'erreur
+			if user4 is not None:
 				login(request, user4)
 				return redirect('Menu')
 
@@ -124,18 +133,18 @@ def modificationForm(request):
 	return render(request, 'modificationForm.html', {'FormModif':FormModif,'user':user})
 
 
-def Felicitations(request):
-	return render(request, 'Felicitations.html')
-
+# Fonction qui renvoie vers la page Menubis, le menu des visiteurs
 def Menubis(request):
 	return render(request, 'Menubis.html')
 
+# Fonction qui permet de récupérer les familles de l'utilisateur, ainsi que son nom et son prénom (request.user)
 @login_required
 def Menu(request):
 	list_famille = request.user.groups.values_list('name',flat=True);
 	longueur_list_famille = len(list_famille)
 	return render(request, 'Menu.html', {'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'first_name':request.user.first_name,'last_name':request.user.last_name})
 
+# Fonction qui permet d'ajouter une nouvelle famille
 @login_required
 def Form_famille(request):
 	if request.method == 'POST':
@@ -143,14 +152,14 @@ def Form_famille(request):
 		if ajoutFamille.is_valid():
 			nom = ajoutFamille.cleaned_data['nom']
 			form = Famille(nom = nom)
+			# On créé la nouvelle famille en tant que groupe
 			group, created = Group.objects.get_or_create(name = nom)
 			if created:
-				#Pour l'instant on lui met toutes les permissions
-				#group.permissions.add(Permission.objects.all())
 				group.save()
 
         	form.save()
         	user = request.user
+        	# On ajoute l'utilisateur à la famille qu'il vient de créer
         	user.groups.add(Group.objects.get(name = nom))
 
         	return redirect('Menu')
@@ -159,8 +168,10 @@ def Form_famille(request):
 	return render(request, 'Form_famille.html', {'ajoutFamille':ajoutFamille})
 
 
+# Fonction qui permet à l'utilisateur de rejoindre une famille déjà créé
 @login_required
 def Rejoindre_famille(request):
+	# On récupère l'utilisateur qui est connecté ainsi que sa famille
 	user_session = request.user
 	nom_session = (user_session).last_name
 	famille = Famille.objects.filter(nom = nom_session)
@@ -168,11 +179,13 @@ def Rejoindre_famille(request):
 	if request.method == 'POST':
 		form = RejoindreForm(request.POST)
 		if form.is_valid():
+			# On ajoute une personne de plus à la famille
 			val = form.cleaned_data['ajout']
 			ajout_fam = Famille.objects.get(pk = val)
 			ajout_fam.nb_personnes = ajout_fam.nb_personnes + 1
 			ajout_fam.save()
 
+			# On ajoute la famille à l'utilisateur
 			user_session.groups.add(Group.objects.get(name = ajout_fam))
 
 			return redirect('Menu')
@@ -180,7 +193,8 @@ def Rejoindre_famille(request):
 		form = RejoindreForm()
 	return render(request, 'Rejoindre_famille.html', {'form':form ,'famille':famille})
 
-@login_required
+# Fonction qui permet d'ajouter un membre à la famille/N'est plus utilisé.
+"""@login_required
 def Form_famille_ajoutmembre(request):
 	if request.method == 'POST':
 		ajoutMembreForm = UtilisateurForm(request.POST)
@@ -191,7 +205,9 @@ def Form_famille_ajoutmembre(request):
 	else :
 		ajoutMembreForm = UtilisateurForm()
 	return render(request, 'Form_famille_ajoutmembre.html', {'ajoutMembreForm':ajoutMembreForm})
+"""
 
+# Fonction qui permet d'ajouter un évènement. 
 def Form_event(request):
 	if request.method == 'POST':
 		ajoutevent = Fait_historiqueForm(request.POST)
@@ -217,11 +233,7 @@ def Form_event(request):
 		ajoutevent = Fait_historiqueForm()
 	return render(request, 'Form_event.html', {'ajoutevent':ajoutevent})
 
-def Confirm_ajoutevent(request):
-	return render(request, 'Confirm_ajoutevent.html')
-
-
-#fonction de déconnexion
+# Fonction de déconnexion
 def logout_view(request):
 	logout(request)
 	return redirect('accueilForm')

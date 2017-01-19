@@ -34,11 +34,12 @@ class FamilleForm(ModelForm):
 # ddn : date de naissance de l'utilisateur
 # email : e-mail de l'utilisateur
 # mdp : mot de passe chiffré
+# validation_mdp : validation du mot de passe mdp
 # adresse : adresse de l'utilisateur
 # profession : profession de l'utilisateur
 # nationalite : nationalite de l'utilisateur
 # description : description de l'utilisateur (optionnel)
-# id_famille : identifiant de la famille si il y appartient
+# famille : identifiant de la famille si il y appartient
 # rang : droit de l'utilisateur : 0 si c'est un utilisateur classique, 1 si c'est un historien et 2 si c'est un administrateur
 # moderateur : savoir si l'utilisateur est modérateur de son groupe famille. Par défaut il l'est donc c'est égal à 1, sinon c'est égal à 0
 class Utilisateur(models.Model):
@@ -59,7 +60,6 @@ class Utilisateur(models.Model):
     nationalite = models.CharField(max_length=60, blank=True)
     description = models.CharField(max_length=200, blank=True)
     famille = models.ForeignKey(Famille, on_delete=models.CASCADE, null=True, blank=True)
-    #à supprimer ?
     rang = models.IntegerField(default=0, blank=True)
     moderateur = models.IntegerField(default=1, blank=True)
 
@@ -89,6 +89,7 @@ class UtilisateurForm(ModelForm):
         widgets = {'genre':forms.RadioSelect}
 
     def clean_validation_mdp(self):
+        #Si le mdp est le même que le validation_mdp, alors on connecte l'utilisateur, si non on affiche un message d'erreur
         pass1 = self.cleaned_data.get('mdp')
         pass2 = self.cleaned_data.get('validation_mdp')
 
@@ -99,18 +100,42 @@ class UtilisateurForm(ModelForm):
 
    
 # id : identifiant unique de l'arbre de la famille généré automatiquement)
-# id_famille : identifiant de la famille auquel appartient l'arbre  
+# famille : identifiant de la famille auquel appartient l'arbre  
 class Arbre(models.Model):
     famille = models.ForeignKey(Famille, on_delete=models.CASCADE)
 
 
-# id_arbre : l'identifiant de l'arbre sur lequel ce fait est relié
+# arbre : l'identifiant de l'arbre sur lequel ce fait est relié
 # code : code du fait : 1 si naissance, 2 si mariage, 3 si décès, 4 si voyage, 5 si immigration, 6 si ville
-# date_fait : date du fait historique
-# nom : nom de la personne concernée par ce fait
-# prenom : prenom de la personne concernée par ce fait
-#autre_nom : nom du conjoint (de la conjointe) si mariage
-#autre_prenom : prenom du conjoint (de la conjointe) si mariage
+# commentaire : commentaire que l'utilisateur peut mettre pour chaque évènement
+#### naissance
+# nom_enfant : le nom de l'enfant
+# prenom_enfant : le prénom de l'enfant
+# genre_enfant : le genre de l'enfant
+# prenom_mere : le prénom de la mère de l'enfant
+# prenom_pere : le prénom du père de l'enfant
+# date_naissance : la date de naissance de l'enfant
+#### mariage
+# prenom_marie_1 : le prénom du premier marié
+# prenom_marie_2 : le prénom du deuxième marié
+# nom_famille : le nom de famille des mariés (on considère que l'un prend le nom de l'autre)
+# date_mariage : la date du mariage
+#### décès
+# prenom_defunt : le prénom du défunt
+# nom_defunt : le nom du défunt
+# date_deces : la date de décès
+#### voyage
+# lieu_voyage : le lieu du voyage
+# date_debut : la date du début du voyage
+# date_fin : la date de fin du voyage
+#### immigration
+# pays_depart : le pays de départ de la personne
+# pays_arrive : le pays d'arrivé
+# date_immig : la date d'immigration
+#### ville habitée
+# ville : le nom de la ville
+# date_arrive : la date d'arrivé dans la ville
+# date_depart : la date de départ (si il y a lieu)
 class Fait_historique(models.Model):
     GENRES = (
         ('feminin', 'feminin'),
