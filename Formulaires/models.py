@@ -68,7 +68,7 @@ class Utilisateur(models.Model):
 
 class UtilisateurForm(ModelForm):
     mdp = forms.CharField(widget=forms.PasswordInput)
-    #validation_mdp = forms.CharField(widget=forms.PasswordInput)
+    validation_mdp = forms.CharField(widget=forms.PasswordInput)
     class Meta:
         model = Utilisateur
         fields = ['nom','prenom','autre_prenoms','genre','ddn','email','mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
@@ -88,8 +88,6 @@ class UtilisateurForm(ModelForm):
         }
         widgets = {'genre':forms.RadioSelect}
 
-
-"""
     def clean_validation_mdp(self):
         pass1 = self.cleaned_data.get('mdp')
         pass2 = self.cleaned_data.get('validation_mdp')
@@ -98,7 +96,7 @@ class UtilisateurForm(ModelForm):
             raise forms.ValidationError("Mots de passe différents")
         
         return self.cleaned_data
-"""
+
    
 # id : identifiant unique de l'arbre de la famille généré automatiquement)
 # id_famille : identifiant de la famille auquel appartient l'arbre  
