@@ -66,7 +66,7 @@ def accueilForm(request):
 				login(request, user)
 				return redirect('Menu')
 			else:
-				return render(request,'accueilForm.html',{'FormConnection':FormConnection, 'error':error})
+				return render(request,'accueilForm.html',{'FormConnection':FormConnection})
 	else :
 		FormConnection = UtilisateurForm()
 		return render(request, 'accueilForm.html', {'FormConnection':FormConnection})

@@ -39,19 +39,11 @@
 
     <div class="enfants_box">
       <h1>Inscription</h1>
-
-      {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-
       <div>
         <div id="inscription" class="row">
           <form class="col s12" id="formu" role="form" method="post" action="{% url 'InscriptionForm' %}">
             {% csrf_token %}
             <div class="row">
-              <!--////////////Problème ici pour les radio//////////-->
-              <!--Il faut essayer de faire la même chose sur jsbin pour voir si ça marche sans le css par exemple ... 
-              <input id="masculin" name="genre" value="Masculin" type="radio">
-              <label for="id_genre_1"></label>-->
               <div class="box_type">
                 <div class="enfants_box_type">
                 <p>
@@ -101,13 +93,12 @@
                 {{ FormInscription.mdp }}
                 {{ FormInscription.mdp.label_tag }}
               </div>
-<!--
+
               <div class="input-field col s12">
                 <i class="material-icons prefix">verified_user</i>
                 {{ FormInscription.validation_mdp }}
                 {{ FormInscription.validation_mdp.label_tag }}
               </div>
-            -->
 
               <div><button type="submit" id="bouton" class="btn btn-primary">Valider</button></div>
             </div> <!--Fin class row-->
@@ -124,20 +115,9 @@
 <div class="enfants_box">
     <a href="{% url 'accueilForm' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>J'ai déjà un compte.</button></a>
   </div>
-  </div> <!-- box_co_inscri -->
+  </div> 
 
-  </div> <!-- fin conteneur_global -->
-
-    <!--/////////////////////////-->
-
-    <!--
-    <script> 
-    $('.datepicker').pickadate({
-      selectMonths: true, // Creates a dropdown to control month
-      selectYears: 15 // Creates a dropdown of 15 years to control year
-      });
-    </script>
-  -->
+  </div>
 
 </body>
 </html>
