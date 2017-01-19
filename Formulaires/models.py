@@ -50,7 +50,7 @@ class Utilisateur(models.Model):
     prenom = models.CharField(max_length=30, blank=True)
     autre_prenoms = models.CharField(max_length=60, blank=True)
     genre = models.CharField(max_length=10, choices=GENRES, blank=True)
-    ddn = models.DateField(blank=True, null=True)
+    ddn = models.CharField(max_length=10, blank=True, default="")
     email = models.EmailField()
     mdp = models.CharField(max_length=10)
     validation_mdp = models.CharField(max_length=10, default='')

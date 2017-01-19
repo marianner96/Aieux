@@ -42,21 +42,39 @@
                         </div>
                     </div>
 
-                    <div class="box_type">
-                        <div class="enfants_box_type">
-                            <p>
-                                <input id="masculin" name="genre" type="radio" value="masculin"/>
-                                <label for="masculin">Masculin</label>
-                            </p>
-                        </div>
+                    {% if user.genre == 'masculin' %}
+                        <div class="box_type">
+                            <div class="enfants_box_type">
+                                <p>
+                                    <input id="masculin" name="genre" type="radio" value="masculin" checked="checked"/>
+                                    <label for="masculin">Masculin</label>
+                                </p>
+                            </div>
 
-                        <div class="enfants_box_type">
-                            <p>
-                                <input id="feminin" name="genre" type="radio" value="feminin"/>
-                                <label for="feminin">Féminin</label>
-                            </p>
-                        </div>
-                    </div><br>
+                            <div class="enfants_box_type">
+                                <p>
+                                    <input id="feminin" name="genre" type="radio" value="feminin"/>
+                                    <label for="feminin">Féminin</label>
+                                </p>
+                            </div>
+                        </div><br>
+                    {% else %}
+                        <div class="box_type">
+                            <div class="enfants_box_type">
+                                <p>
+                                    <input id="masculin" name="genre" type="radio" value="masculin"/>
+                                    <label for="masculin">Masculin</label>
+                                </p>
+                            </div>
+
+                            <div class="enfants_box_type">
+                                <p>
+                                    <input id="feminin" name="genre" type="radio" value="feminin" checked="checked"/>
+                                    <label for="feminin">Féminin</label>
+                                </p>
+                            </div>
+                        </div><br>
+                    {% endif %}
 
 
                     <div class="input-field col s6">

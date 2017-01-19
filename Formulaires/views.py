@@ -97,7 +97,7 @@ def modificationForm(request):
 			email = FormModif.cleaned_data['email']
 			mdp = FormModif.cleaned_data['mdp']
 
-			obj, created = user3.update(
+			obj = user3.update(
 				nom = FormModif.cleaned_data['nom'],
 				prenom = FormModif.cleaned_data['prenom'],
 				autre_prenoms = FormModif.cleaned_data['autre_prenoms'],
@@ -108,43 +108,13 @@ def modificationForm(request):
 				profession = FormModif.cleaned_data['profession'],
 				nationalite = FormModif.cleaned_data['nationalite'],
 				description = FormModif.cleaned_data['description'],
-				mdp = FormModif.cleaned_data['mdp'],
+				mdp = FormModif.cleaned_data['mdp']
 			)
 
 			user4 = authenticate(username = email, password = mdp)
 			if user4 is not None: #Si pas dans la BDD : afficher un message d'erreur
 				login(request, user4)
 				return redirect('Menu')
-
-			"""new_values = {'nom': FormModif.cleaned_data['nom'],
-				'prenom': FormModif.cleaned_data['prenom'],
-				'autre_prenoms' : FormModif.cleaned_data['autre_prenoms'],
-				'genre' : FormModif.cleaned_data['genre'],
-				'ddn' : FormModif.cleaned_data['ddn'],
-				'email' : FormModif.cleaned_data['email'],
-				'adresse' : FormModif.cleaned_data['adresse'],
-				'profession' : FormModif.cleaned_data['profession'],
-				'nationalite' : FormModif.cleaned_data['nationalite'],
-				'description' : FormModif.cleaned_data['description'],
-				'mdp' : FormModif.cleaned_data['mdp']
-			}
-			new_values.update()
-			obj = user3(**new_values)
-			obj.save()"""
-
-
-			#user3.autre_prenoms.update(FormModif.cleaned_data['autre_prenoms'])
-			
-			"""nom = FormModif.cleaned_data['nom']
-			prenom = FormModif.cleaned_data['prenom']
-			prenoms_autre = FormModif.cleaned_data['prenoms_autre']
-			genre = FormModif.cleaned_data['genre']
-			ddn = FormModif.cleaned_data['ddn']
-			email = FormModif.cleaned_data['email']
-			postal = FormModif.cleaned_data['postal']
-			profession = FormModif.cleaned_data['profession']
-			description = FormModif.cleaned_data['description']
-			mdp = FormModif.cleaned_data['mdp']"""
 
 			FormModif.save()
 
@@ -162,17 +132,7 @@ def Menubis(request):
 
 @login_required
 def Menu(request):
-	#Trouver un moyen pour récupérer la famille
-
 	list_famille = request.user.groups.values_list('name',flat=True);
-
-	#essai = Utilisateur.objects.filter()
-	#essai = request.user.email
-
-	#Les groupes sont en fait les familles
-	#list_famille = Group.objects.all()
-
-	#list_famille = Famille.objects.filter()
 	longueur_list_famille = len(list_famille)
 	return render(request, 'Menu.html', {'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'first_name':request.user.first_name,'last_name':request.user.last_name})
 

@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^Confirm_ajoutevent/$', views.Confirm_ajoutevent, name='Confirm_ajoutevent'),
     url(r'^logout/$', views.logout_view, name='logout'),
 
+    url(r'^initialise_fichier/$',views.initialise_fichier,name='initialise_fichier'),
     url(r'^arbre/$',views.arbre,name='arbre'),
     url(r'^add_membre_arbre/$',views.add_membre_arbre,name='add_memebre_arbre'),
     url(r'^modifierfichier/$',views.modifierfichier,name='modifierfichier'),
