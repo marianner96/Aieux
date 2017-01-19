@@ -82,8 +82,7 @@ def accueilForm(request):
 @login_required
 def modificationForm(request):
 	user1 = User.objects.filter(email = request.user)
-	user2 = user1[0]
-	user3 = Utilisateur.objects.filter(email = user2)
+	user3 = Utilisateur.objects.filter(email = user1[0])
 	user = user3[0]
 
 	if request.method == 'POST':
