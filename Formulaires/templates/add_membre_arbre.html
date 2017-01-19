@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Expires" content="Mon, 2 Jan 2017 05:00:00 GMT">
+    <meta http-equiv="Pragma" content="no-cache">
+    <title>Ajout d'un membre à l'arbre</title>
+
+    {% load static %}
+    <script type="text/javascript"  src='{% static "arbre.js" %}'"></script>    
+    <script src='{% static "jquery-3.1.1.min.js"%}'></script>
+    <link rel="stylesheet" type="text/css" href='{% static "arbre.css" %}'>
+</head>
+
+<body onload="maj_options()">
+    <h3>AJOUT</h3><br><br>
+
+    <form method='post' action="{% url 'arbre' %}" onsubmit="maj_nouv_membre()">
+            {%csrf_token%}
+			<input id="nom_membre_add" name="nom_membre_add" type="text" required>
+            <label for="nom_membre_add">Quel est le nom de famille de la personne? </label>
+
+            <input id="prenom_membre_add" name="prenom_membre_add" type="text" required>
+            <label for="prenom_membre_add">Quel est son prénom? </label>
+
+            <p>
+                <label>De quel sexe est ce membre?</label>
+                <input type="radio" name="sexe_nouveau_membre" value="feminin" id="feminin" required/><label for="feminin">Féminin</label>
+                <input type="radio" name="sexe_nouveau_membre" value="masculin" id="masculin"/><label for="masculin">Masculin</label>
+            </p>
+
+            <p>
+                <label>Souhaitez vous rajouter un conjoint, un parent ou un enfant?</label>
+                <input type="radio" name="epc" value="enfant" id="enfant" onChange="deroule_suite(this)" required/><label for="enfant">Enfant</label>
+                <input type="radio" name="epc" value="parent" id="parent" onChange="deroule_suite(this)"/><label for="parent">Parent</label>
+                <input type="radio" name="epc" value="conjoint" id="conjoint" onChange="deroule_suite(this)"/><label for="conjoint">Conjoint</label>
+            </p>
+            <button id="choix_radio" value="aucune" class="cache"></button>
+
+            <div id="form_enfant" class="cache">
+                <label>De qui est-ce l'enfant?</label>
+                <select id="liste_couples"> <!-- mis a jour par la fonction javascript: maj_option() -->
+                </select>
+            </div>
+
+            <div id="form_parent" class="cache">
+                <label>De qui est-ce le parent?</label>
+                <select id="liste_enfants_sans_parents"> <!-- mis a jour par la fonction javascript: maj_option() -->
+                </select>
+            </div>
+
+            <div id="form_conjoint" class="cache">
+                <label>De qui est-ce le conjoint?</label>
+                <select id="liste_personnes_sans_conjoint"> <!-- mis a jour par la fonction javascript: maj_option() -->
+                </select>
+            </div>
+
+            <br><br><br>
+            <div><button type='submit'>Ajouter un membre</button></div>
+            </div>
+    </form>
+
+</body>
+
+
+</html>
