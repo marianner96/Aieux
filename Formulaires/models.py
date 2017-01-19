@@ -53,7 +53,7 @@ class Utilisateur(models.Model):
     ddn = models.DateField(blank=True, null=True)
     email = models.EmailField()
     mdp = models.CharField(max_length=10)
-#   validation_mdp = models.CharField(max_length=10, default='')
+    validation_mdp = models.CharField(max_length=10, default='')
     adresse = models.CharField(max_length=200, blank=True)
     profession = models.CharField(max_length=60, blank=True)
     nationalite = models.CharField(max_length=60, blank=True)
@@ -68,7 +68,7 @@ class Utilisateur(models.Model):
 
 class UtilisateurForm(ModelForm):
     mdp = forms.CharField(widget=forms.PasswordInput)
-    validation_mdp = forms.CharField(widget=forms.PasswordInput)
+    validation_mdp = forms.CharField(widget=forms.PasswordInput, required=False)
     class Meta:
         model = Utilisateur
         fields = ['nom','prenom','autre_prenoms','genre','ddn','email','mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
@@ -80,7 +80,7 @@ class UtilisateurForm(ModelForm):
             'ddn':'Date de naissance',
             'email':'E-mail',
             'mdp':'Mot de passe',
-        #    'validation_mdp' : 'Confirmation mot de passe',
+            'validation_mdp' : 'Confirmation mot de passe',
             'adresse':'Adresse postale',
             'profession':'Profession',
             'nationalite':'Nationalité',

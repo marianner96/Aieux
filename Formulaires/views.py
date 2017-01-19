@@ -57,8 +57,10 @@ def InscriptionForm(request):
 #Connexion d'un utilisateur
 def accueilForm(request):
 	if request.method == 'POST':
+		print('post')
 		FormConnection = UtilisateurForm(request.POST)
 		if FormConnection.is_valid():
+			print('valid')
 			mail = FormConnection.cleaned_data['email']
 			mdp = FormConnection.cleaned_data['mdp']
 			user = authenticate(username = mail, password = mdp)
@@ -67,9 +69,10 @@ def accueilForm(request):
 				return redirect('Menu')
 			else:
 				return render(request,'accueilForm.html',{'FormConnection':FormConnection})
-	else :
+		print(FormConnection.errors)
+	else:
 		FormConnection = UtilisateurForm()
-		return render(request, 'accueilForm.html', {'FormConnection':FormConnection})
+	return render(request, 'accueilForm.html', {'FormConnection':FormConnection})
 
 
 
