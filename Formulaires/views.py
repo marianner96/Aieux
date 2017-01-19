@@ -84,6 +84,7 @@ def modificationForm(request):
 	if request.method == 'POST':
 		FormModif = UtilisateurForm(request.POST)
 		if FormModif.is_valid():
+			user3.autre_prenoms.add(FormModif.cleaned_data['autre_prenoms'])
 			"""nom = FormModif.cleaned_data['nom']
 			prenom = FormModif.cleaned_data['prenom']
 			prenoms_autre = FormModif.cleaned_data['prenoms_autre']
