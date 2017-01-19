@@ -101,11 +101,12 @@
 						  		<div class="ajouts">
 						  			<p align='center'>Mes familles</p>
 						  			{% for i in list_famille %}
-										<a href="#" class="waves-effect waves-light btn"> {{ i }}</a>
+										<a href="{% url 'initialise_fichier' %}" class="waves-effect waves-light btn"> {{ i }}</a>
 									{% endfor %}
 						  			<a href="{% url 'Form_famille' %}" class="waves-effect waves-light btn">Créer une nouvelle famille</a>
 						  			<a href="{% url 'Rejoindre_famille' %}" class="waves-effect waves-light btn">Rejoindre une famille</a>
 						  		</div>
+						  		<!--
 							  	<div class="actus teal">
 							  		<div class="actus_fam">
 							  			<a href="{% url 'Form_famille_ajoutmembre' %}" class="waves-effect waves-light btn teal lighten-3">Ajout membre</a>
@@ -118,9 +119,10 @@
 								  	<p  class="teal lighten-4"> 
 								  		Ici s'affichera l'arbre généalogique de la famille1 jusqu'à qu'on clique sur famille2.<br>
 								  		S'il n'y a pas d'arbre:
-							  			<a href="#" class="waves-effect waves-light btn">Créer un arbre généalogique</a>
+							  			<a href="{% url 'arbre'%}" class="waves-effect waves-light btn">Voir mon arbre généalogique</a>
 							  		</p>
 						  		</div>
+						  		-->
 						  	</div>
 		</div>
 
