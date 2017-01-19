@@ -277,6 +277,7 @@ def logout_view(request):
 #==============================================FONCTION POUR L'ARBRE==================================================
 #=====================================================================================================================
 #Remplis les fichiers si sont vides
+
 def initialise_fichier(request):
 	error=None
 	user1 = User.objects.filter(email = request.user)
@@ -292,31 +293,32 @@ def initialise_fichier(request):
 		sexe="f"
 		img="/static/img/femme.png"
 
-	if (os.path.getsize("Formulaires/static/json/liste_couples.json")==0): #si le fichier liste_couples est vide
+	#si le fichier liste_couples est vide
+	if (os.path.getsize("Formulaires/static/json/liste_couples.json")==0):
 		contenu_c = '{ "couples" : }'
 		fic = open ("Formulaires/static/json/liste_couples.json", "w")
-    	fic.write(contenu_c)
-    	fic.close()
+		fic.write(contenu_c)
+		fic.close()
 
 	if (os.path.getsize("Formulaires/static/json/liste_enfants.json")==0):
 		contenu_e = '{"orphelins": [{"nom": "'+nom+'", "prenom": "'+prenom+'", "sexe": "'+sexe+'", "parent": "non"}]}'
 		fic = open ("Formulaires/static/json/liste_enfants.json", "w")
-    	fic.write(contenu_e)
-    	fic.close()
+		fic.write(contenu_e)
+		fic.close()
 
 	if (os.path.getsize("Formulaires/static/json/liste_sans_conj.json")==0):
 		contenu_sc = '{"sansconj":[{"nom": "'+nom+'", "prenom": "'+prenom+'", "sexe": "'+sexe+'"}]}'
 		fic = open ("Formulaires/static/json/liste_sans_conj.json", "w")
-    	fic.write(contenu_sc)
-    	fic.close()
+		fic.write(contenu_sc)
+		fic.close()
 
-    if (os.path.getsize("Formulaires/static/json/nodesedges.json")==0):
-    	contenu = '{"nodes":[ {"id": 1, "shape": "image", "image": "'+img+'", "label":"'+nom+' '+prenom+'"}],"edges":[]}'
-    	fic = open ("Formulaires/static/json/nodesedges.json", "w")
-    	fic.write(contenu)
-    	fic.close()
+	if (os.path.getsize("Formulaires/static/json/nodesedges.json")==0):
+		contenu = '{"nodes":[ {"id": 1, "shape": "image", "image": "'+img+'", "label":"'+nom+' '+prenom+'"}],"edges":[]}'
+		fic = open ("Formulaires/static/json/nodesedges.json", "w")
+		fic.write(contenu)
+		fic.close()
 
-    return render(request, template_name='arbre.html', context={"error":error})
+	return render(request, template_name='arbre.html', context={"error":error})
 
 
 def arbre(request):
