@@ -77,6 +77,8 @@ def accueilForm(request):
 
 
 #Voir comment on peut enregistrer les informations de modification !
+#S'arranger pour mettre la date comme il faut ...
+#Encore modifier des trucs blblbl
 @login_required
 def modificationForm(request):
 	user1 = User.objects.filter(email = request.user)
@@ -86,8 +88,50 @@ def modificationForm(request):
 
 	if request.method == 'POST':
 		FormModif = UtilisateurForm(request.POST)
+		print(FormModif.errors)
 		if FormModif.is_valid():
-			user3.autre_prenoms.add(FormModif.cleaned_data['autre_prenoms'])
+
+			email = FormModif.cleaned_data['email']
+			mdp = FormModif.cleaned_data['mdp']
+
+			obj, created = user3.update(
+				nom = FormModif.cleaned_data['nom'],
+				prenom = FormModif.cleaned_data['prenom'],
+				autre_prenoms = FormModif.cleaned_data['autre_prenoms'],
+				genre = FormModif.cleaned_data['genre'],
+				ddn = FormModif.cleaned_data['ddn'],
+				email = FormModif.cleaned_data['email'],
+				adresse = FormModif.cleaned_data['adresse'],
+				profession = FormModif.cleaned_data['profession'],
+				nationalite = FormModif.cleaned_data['nationalite'],
+				description = FormModif.cleaned_data['description'],
+				mdp = FormModif.cleaned_data['mdp'],
+			)
+
+			user4 = authenticate(username = email, password = mdp)
+			if user4 is not None: #Si pas dans la BDD : afficher un message d'erreur
+				login(request, user4)
+				return redirect('Menu')
+
+			"""new_values = {'nom': FormModif.cleaned_data['nom'],
+				'prenom': FormModif.cleaned_data['prenom'],
+				'autre_prenoms' : FormModif.cleaned_data['autre_prenoms'],
+				'genre' : FormModif.cleaned_data['genre'],
+				'ddn' : FormModif.cleaned_data['ddn'],
+				'email' : FormModif.cleaned_data['email'],
+				'adresse' : FormModif.cleaned_data['adresse'],
+				'profession' : FormModif.cleaned_data['profession'],
+				'nationalite' : FormModif.cleaned_data['nationalite'],
+				'description' : FormModif.cleaned_data['description'],
+				'mdp' : FormModif.cleaned_data['mdp']
+			}
+			new_values.update()
+			obj = user3(**new_values)
+			obj.save()"""
+
+
+			#user3.autre_prenoms.update(FormModif.cleaned_data['autre_prenoms'])
+			
 			"""nom = FormModif.cleaned_data['nom']
 			prenom = FormModif.cleaned_data['prenom']
 			prenoms_autre = FormModif.cleaned_data['prenoms_autre']
@@ -101,7 +145,6 @@ def modificationForm(request):
 
 			FormModif.save()
 
-			print(FormModif.errors)
 			return render_to_response('Menu.html', {'FormModif':FormModif,'user':user})
 	else: 
 		FormModif = UtilisateurForm()

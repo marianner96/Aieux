@@ -23,8 +23,6 @@
         <div id='modif'>
         <div class="enfants_box">
         <h1>Modificiation des informations du profil</h1>
-
-        User : {{ user }}
             <form class="form-horizontal" id="formu" role="form" method="post" action="{% url 'modificationForm' %}">
                 {% csrf_token %}
                     <!--<div id='img'>
