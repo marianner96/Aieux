@@ -20,60 +20,55 @@
 <body class="cyan darken-2">
 
   <div id="box_global">
-  <div id="box_centrale">
+    <div id="box_centrale">
 
-    <div class="enfants_box">
-      <h1>Bienvenue sur notre site!</h1>
+      <div class="enfants_box">
+        <h1>Bienvenue sur notre site!</h1>
 
-      <p>Ce site a pour but de permettre au grand public de consulter et préserver leur histoire. Vous pourrez y retrouver les membres de votre famille, partager des faits historiques ou bien créer votre propre arbre généalogique. <br> <br>Alors n'hésitez pas à vous inscrire c'est gratuit et simple d'utilisation! </p> <br> <br>
+        <p>Ce site a pour but de permettre au grand public de consulter et préserver leur histoire. Vous pourrez y retrouver les membres de votre famille, partager des faits historiques ou bien créer votre propre arbre généalogique. <br> <br>Alors n'hésitez pas à vous inscrire c'est gratuit et simple d'utilisation! </p> <br> <br>
 
 
-      <a href="{% url 'Menubis' %}"><button class="btn waves-effect waves-light" type="submit" name="visiteur" >Simple visiteur
-        <i class="material-icons right">send</i>
-        </button>
-      </a>
+        <a href="{% url 'Menubis' %}"><button class="btn waves-effect waves-light" type="submit" name="visiteur" >Simple visiteur
+          <i class="material-icons right">send</i>
+          </button>
+        </a>
 
-    </div> <!--fin box_bvn-->
+      </div> <!--fin box_bvn-->
 
-    <!--/////////////////////////-->
+      <div class="enfants_box">
+        <h1>Connectez vous !</h1>
+      
+        <div id='connection' class="row">
+          <form class="col s12" id="formu" role="form" method="post" action="{% url 'accueilForm' %}">
+            {% csrf_token %}
+            <div class="row">
+              <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                {{ FormConnection.email }}
+                {{ FormConnection.email.label_tag }}
+              </div>
 
-    <div class="enfants_box">
-      <h1>Connectez vous !</h1>
-    
-      <div id='connection' class="row">
-        <form class="col s12" id="formu" role="form" method="post" action="{% url 'accueilForm' %}">
-          {% csrf_token %}
-          <div class="row">
-            <div class="input-field col s6">
-              <i class="material-icons prefix">account_circle</i>
-              {{ FormConnection.email }}
-              {{ FormConnection.email.label_tag }}
-             </div>
-
-             <div class="input-field col s6">
+              <div class="input-field col s6">
                 <i class="material-icons prefix">verified_user</i>
                 {{ FormConnection.mdp }}
                 {{ FormConnection.mdp.label_tag }}
+              </div>
+
+              <button type='submit' id='btn' class='btn btn-primary'>Connection</button>
             </div>
-
-            <button type='submit' id='btn' class='btn btn-primary'>Connection</button>
-          </div>
-        </form>
-        {% if error %}
-        <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
-        {% endif %}
-    </div>
-
-  </div>
+          </form>
+          {% if error %}
+            <p><strong>Utilisateur inconnu ou mauvais de mot de passe.</strong></p>
+          {% endif %}
+        </div>
+      </div>
 
 
-<div class="enfants_box">
-    <h2>Vous n'avez pas de compte ? <a href="{% url 'InscriptionForm' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Cliquez ici</button></a></h2>
-  </div>
-  </div> <!-- box_co_inscri -->
-
+      <div class="enfants_box">
+        <h2>Vous n'avez pas de compte ? <a href="{% url 'InscriptionForm' %}"><button style="font-size:10px" type='button' id='bouton' class='btn btn-primary'>Cliquez ici</button></a></h2>
+      </div>
+    </div> <!-- box_co_inscri -->
   </div> <!-- fin conteneur_global -->
-
-
+  
 </body>
 </html>

@@ -156,6 +156,7 @@ class Fait_historiqueForm(ModelForm):
 # id : identifiant unique de l'utilisateur (généré automatiquement)
 # nom : nom de l'utilisateur
 # prenom : prénom de l'utilisateur
+# photo : photo de profil de l'utilisateur
 # genre : genre de l'utilisateur
 # ddn : date de naissance de l'utilisateur
 # email : e-mail de l'utilisateur
@@ -175,7 +176,7 @@ class Utilisateur(models.Model):
     )
     nom = models.CharField(max_length=30, blank=True)
     prenom = models.CharField(max_length=30, blank=True)
-    photo = models.ImageField(upload_to="Formulaires/static/img/", default='', blank=True)
+    photo = models.ImageField(upload_to="Formulaires/static/img/", default='', blank=True, null=True)
     autre_prenoms = models.CharField(max_length=60, blank=True)
     genre = models.CharField(max_length=10, choices=GENRES, blank=True)
     ddn = models.CharField(max_length=10, blank=True, default="")
@@ -228,6 +229,12 @@ class UtilisateurForm(ModelForm):
         
         return self.cleaned_data
 
+
+# search : ce que l'utilisateur va marquer dans la barre de recherche
+# rech_pers : égal à rech_pers si on recherche une personne
+# rech_fam : égal à rech_fam si on recherche une famille 
+# rech_page : égal à rech_page si on recherche une page
+# False : si on ne coche ni personne, ni famille, ni page
 class Recherche(models.Model):
     RECH = (
         ('rech_pers', 'rech_pers'),
@@ -245,22 +252,3 @@ class RechercheForm(ModelForm):
     class Meta:
         model = Recherche
         fields = ['search','rech_pers','rech_fam','rech_page']
-
-
-class BanqueImages(models.Model):
-    photo1 = models.ImageField(default='test.jpg', blank=True)
-    photo2 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo3 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo4 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo5 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo6 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo7 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo8 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo9 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo10 = models.ImageField(upload_to="img/", default='', blank=True)
-    
-
-class BanqueImagesForm(ModelForm):
-    class Meta:
-        model = BanqueImages
-        fields = {'photo1','photo2','photo3','photo4','photo5','photo6','photo7','photo8','photo9','photo10'}

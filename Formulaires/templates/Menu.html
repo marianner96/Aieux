@@ -37,24 +37,19 @@
 	    </div>
 	</nav>
 
-
-
 <!--Onglet pour le profil de la personne-->
 	<div class="gros_conteneur">
 		<div id="box_profil" class="col s12 gros_conteneur_central">
 			<div class="box_type2">
 				<!-- Image de profil -->
 			    <div class="right cadre_image">
-					<img src="{{ utilis.photo.url }}" style="height:150px;width:150px;">
+					<img src="/static/img/chat.jpg" style="height:150px;width:200px;">
+					<!--<img src="/static/img/test.jpg">-->
 				</div>
 
 				<nav class="nav-extended teal lighten-1">
 				<div class="nav-wrapper">
-				    <!--Soucis de css : 
-				    <a href="#" class="brand-logo center wrap">
-					-->
 					Profil de {{ utilis.prenom }} {{ utilis.nom }}
-					<!--</a>-->
 
 
 					<!-- Cette partie correspond aux différents onglets 'Ma famille','Mes evenements',.. -->
@@ -68,9 +63,7 @@
 			</div>
 
 			<div id="albums" class="col s12">
-				Ici on mettra les albums et évènements. Si la personne est propriétaire du document/publication il y aura un petit icon permettant de modifier la 
-				visibilité de ce document/publication  (au vue du public, de la famille...)<br/><br/>
-
+				
 				Nom : {{ utilis.nom }}<br/>
 				Prénom : {{ utilis.prenom }}<br/>
 				Autres prénoms : {{ utilis.autre_prenoms }}<br/>
@@ -83,7 +76,7 @@
 				Nom : {{ utilis.nom }}<br/>
 			</div>
 			<div id="modif_visi" class="col s12">
-				Ici on mettra les modifications de la visibilité de toutes les publications de la personne
+				Ici on mettra les modifications de la visibilité de toutes les publications de la personne. A faire en amélioration du projet.
 			</div>
 		</div>
 
@@ -155,9 +148,11 @@
 			 	<div class="actus">
 					<p  class="teal lighten-3"> Banque d'images : <br/><br/>
 
-						<!--{{ banque_img.photo1 }}-->
-
-						Vous n'avez aucune actualité pour le moment! <br> Ajoutez un évènement ou suivez l'actualité d'une personne ou d'une page. </p>
+						<img src="/static/img/femme.png" style="width:100px;height:100px;">
+						<img src="/static/img/homme.jpeg" style="width:100px;height:100px;">
+						<img src="/static/img/eisti.jpg" style="width:100px;height:100px;">
+						<img src="/static/img/eisti2.jpg" style="width:100px;height:100px;">
+					</p>
 				</div>
 			</div>
 		</div>
@@ -172,9 +167,7 @@
 
 
 
-		<!--Onglet pour les events
-			Changer la disposition des blocs -> css 
-		-->
+		<!--Onglet pour les events-->
 		<div id="box_notif" class="col s12 gros_conteneur_central">
 		<div class="event">
 			{% for i in fait_historique %}
@@ -233,8 +226,6 @@
 		</div>
 
 		<!--Image de pub-->
-		
-
 	</div>
 
 	<div class="pub">
