@@ -175,7 +175,7 @@ class Utilisateur(models.Model):
     )
     nom = models.CharField(max_length=30, blank=True)
     prenom = models.CharField(max_length=30, blank=True)
-    photo = models.ImageField(upload_to="img/")
+    photo = models.ImageField(upload_to="img/", default='')
     autre_prenoms = models.CharField(max_length=60, blank=True)
     genre = models.CharField(max_length=10, choices=GENRES, blank=True)
     ddn = models.CharField(max_length=10, blank=True, default="")
