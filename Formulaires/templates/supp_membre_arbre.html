@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Suppression d'un membre à l'arbre</title>
+
+    {% load static %}
+    <script type="text/javascript"  src='{% static "arbre.js" %}'"></script>    
+    <script src='{% static "jquery-3.1.1.min.js"%}'></script>
+    <link rel="stylesheet" type="text/css" href='{% static "arbre.css" %}'>
+</head>
+
+<body onload="maj_liste_membres()">
+    <h3>SUPPRESSION</h3><br><br>
+
+    <h4>Veuillez vide le cache de votre navigateur pour voir la mise à jour!</h4> <br>
+
+    <form method='post' action="{% url 'arbre' %}" onsubmit="maj_supp_membre()">
+            {%csrf_token%}
+
+            <div id="form_enfant">
+                <label>Qui est la personne que vous souhaitez supprimer?</label>
+                <select id="liste_personnes"> <!-- mis a jour par la fonction javascript: maj_liste_membre() -->
+                </select>
+            </div>
+
+            <br><br><br>
+            <div><button type='submit'>Supprimer définitivement ce membre</button></div>
+            </div>
+    </form>
+
+</body>
+
+
+</html>
