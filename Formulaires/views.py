@@ -14,7 +14,7 @@ from django.shortcuts import render, render_to_response, redirect
 from django.template import Context, loader, RequestContext
 from django.views import generic
 
-from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm, Fait_historiqueForm
+from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm, Fait_historiqueForm, RechercheForm
 from .forms import RejoindreForm
 
 from pprint import pprint
@@ -130,12 +130,34 @@ def modificationForm(request):
 			return render_to_response('Menu.html', {'FormModif':FormModif,'user':user})
 	else: 
 		FormModif = UtilisateurForm()
+		print(FormModif.errors)
 	return render(request, 'modificationForm.html', {'FormModif':FormModif,'user':user})
 
 
 # Fonction qui renvoie vers la page Menubis, le menu des visiteurs
 def Menubis(request):
-	return render(request, 'Menubis.html')
+	if request.method == 'POST':
+		recherche_form = RechercheForm(request.POST)
+		if recherche_form.is_valid():
+			search = recherche_form.cleaned_data['search']
+			rech_pers = recherche_form.cleaned_data['rech_pers']
+			rech_fam = recherche_form.cleaned_data['rech_fam']
+			rech_page = recherche_form.cleaned_data['rech_page']
+
+			res_pers = Utilisateur.objects.filter(prenom = search)
+			res_fam = Famille.objects.filter(nom = search)
+			
+			#res_page : A faire quand on aura les images en fait
+			res_page = ""
+
+			return render(request, 'Menubis.html', {'res_pers':res_pers,'res_fam':res_fam,'res_page':res_page,'rech_pers':rech_pers,'rech_fam':rech_fam,'rech_page':rech_page})
+		print(recherche_form.errors)
+	else:
+		recherche_form = RechercheForm()
+		print(recherche_form.errors)
+
+	return render(request, 'Menubis.html', {'recherche_form':recherche_form})
+
 
 # Fonction qui permet de récupérer les familles et les faits historiques de l'utilisateur, ainsi que son nom et son prénom (request.user)
 @login_required
@@ -145,7 +167,31 @@ def Menu(request):
 
 	fait_historique = Fait_historique.objects.filter(for_user = request.user)
 
-	return render(request, 'Menu.html', {'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'first_name':request.user.first_name,'last_name':request.user.last_name,'fait_historique':fait_historique})
+	utilis = Utilisateur.objects.filter(email = request.user.email)[0]
+
+	#Partie qui sert à la fonction de recherche
+	if request.method == 'POST':
+		recherche_form = RechercheForm(request.POST)
+		if recherche_form.is_valid():
+			search = recherche_form.cleaned_data['search']
+			rech_pers = recherche_form.cleaned_data['rech_pers']
+			rech_fam = recherche_form.cleaned_data['rech_fam']
+			rech_page = recherche_form.cleaned_data['rech_page']
+
+			res_pers = Utilisateur.objects.filter(prenom = search)
+			res_fam = Famille.objects.filter(nom = search)
+			
+			#res_page : A faire quand on aura les images en fait
+			res_page = ""
+
+			return render(request, 'res_recherche.html', {'res_pers':res_pers,'res_fam':res_fam,'res_page':res_page,'rech_pers':rech_pers,'rech_fam':rech_fam,'rech_page':rech_page})
+		print(recherche_form.errors)
+	else:
+		recherche_form = RechercheForm()
+		print(recherche_form.errors)
+
+
+	return render(request, 'Menu.html', {'recherche_form':recherche_form,'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'utilis':utilis,'fait_historique':fait_historique})
 
 # Fonction qui permet d'ajouter une nouvelle famille
 @login_required
@@ -196,20 +242,6 @@ def Rejoindre_famille(request):
 		form = RejoindreForm()
 	return render(request, 'Rejoindre_famille.html', {'form':form ,'famille':famille})
 
-# Fonction qui permet d'ajouter un membre à la famille/N'est plus utilisé.
-"""@login_required
-def Form_famille_ajoutmembre(request):
-	if request.method == 'POST':
-		ajoutMembreForm = UtilisateurForm(request.POST)
-		if ajoutMembreForm.is_valid():
-			form.save()
-			print(ajoutMembreForm.errors)
-			return redirect('Menu')
-	else :
-		ajoutMembreForm = UtilisateurForm()
-	return render(request, 'Form_famille_ajoutmembre.html', {'ajoutMembreForm':ajoutMembreForm})
-"""
-
 # Fonction qui permet d'ajouter un évènement. 
 # code : 1 si naissance, 2 si mariage, 3 si décès, 4 si voyage, 5 si immigration, 6 si ville
 # On enregistre à chaque fois le user associé pour pouvoir retrouver ensuite ses êvenements associés
@@ -255,7 +287,7 @@ def Form_event(request):
 					date_fin = ajoutevent.cleaned_data['date_fin'],
 				)
 			elif code == 5:
-				ajoutevent = Fait_historique(type_event = "immigation",
+				ajoutevent = Fait_historique(type_event = "immigration",
 					for_user = request.user,
 					commentaire = ajoutevent.cleaned_data['commentaire'],
 					pays_depart = ajoutevent.cleaned_data['pays_depart'],
@@ -284,12 +316,6 @@ def Form_event(request):
 def logout_view(request):
 	logout(request)
 	return redirect('accueilForm')
-
-
-
-
-
-
 
 
 #=====================================================================================================================

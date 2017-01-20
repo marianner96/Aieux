@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^Menu/$', views.Menu, name='Menu'),
     url(r'^Form_famille/$', views.Form_famille, name='Form_famille'),
     url(r'^Form_event/$', views.Form_event, name='Form_event'),
-    
+
     url(r'^initialise_fichier/$',views.initialise_fichier,name='initialise_fichier'),
     url(r'^arbre/$',views.arbre,name='arbre'),
     url(r'^add_membre_arbre/$',views.add_membre_arbre,name='add_memebre_arbre'),

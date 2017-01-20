@@ -211,7 +211,7 @@ class UtilisateurForm(ModelForm):
             'validation_mdp' : 'Confirmation mot de passe',
             'adresse':'Adresse postale',
             'profession':'Profession',
-            'nationalite':'Nationalité',
+            'nationalite':'Nationalite',
             'description':'Description',
         }
         widgets = {'genre':forms.RadioSelect}
@@ -225,3 +225,21 @@ class UtilisateurForm(ModelForm):
             raise forms.ValidationError("Mots de passe différents")
         
         return self.cleaned_data
+
+class Recherche(models.Model):
+    RECH = (
+        ('rech_pers', 'rech_pers'),
+        ('rech_fam', 'rech_fam'),
+        ('rech_page', 'rech_page'),
+        ('False', 'False'),
+    )
+
+    search = models.CharField(max_length=100, blank=True)
+    rech_pers = models.CharField(max_length=10, choices=RECH, blank=True, null=True)
+    rech_fam = models.CharField(max_length=10, choices=RECH, blank=True, null=True)
+    rech_page = models.CharField(max_length=10, choices=RECH, blank=True, null=True)
+
+class RechercheForm(ModelForm):
+    class Meta:
+        model = Recherche
+        fields = ['search','rech_pers','rech_fam','rech_page']
