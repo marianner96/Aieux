@@ -141,14 +141,13 @@ def Menu(request):
 	# On récupère l'utilisateur qui est conencté à l'aide de request.user
 	user1 = User.objects.filter(email = request.user)
 	user3 = Utilisateur.objects.filter(email = user1[0])
-	photo = user3.photo
 
 	list_famille = request.user.groups.values_list('name',flat=True);
 	longueur_list_famille = len(list_famille)
 
 	fait_historique = Fait_historique.objects.filter(for_user = request.user)
 
-	return render(request, 'Menu.html', {'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'first_name':request.user.first_name,'last_name':request.user.last_name,'fait_historique':fait_historique, 'photo':photo})
+	return render(request, 'Menu.html', {'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'first_name':request.user.first_name,'last_name':request.user.last_name,'fait_historique':fait_historique, 'user':user3})
 
 # Fonction qui permet d'ajouter une nouvelle famille
 @login_required
