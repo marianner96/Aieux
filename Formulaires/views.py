@@ -13,9 +13,6 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.template import Context, loader, RequestContext
 from django.views import generic
-#photolog
-#pip install django-photologue
-
 
 from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm, Fait_historiqueForm, RechercheForm
 from .forms import RejoindreForm
@@ -68,10 +65,9 @@ def InscriptionForm(request):
 			except MultipleObjectsReturned:
 				return redirect('Rejoindre_famille')
 			
-			# Demande à l'utilisateur si il veut être dans une famille existante ou si il veut en créer une
-			# A rajouter : autorisation de rentrer dans la famille
-			
+			# Demande à l'utilisateur si il veut être dans une famille existante ou si il veut en créer une			
 			return redirect('Rejoindre_famille')
+
 	return render(request, 'InscriptionForm.html', {'FormInscription':FormInscription})
 
 
@@ -99,7 +95,7 @@ def accueilForm(request):
 # Fonction qui permet à l'utilisateur, une fois connecté, de modifier ses informations
 @login_required
 def modificationForm(request):
-	# On récupère l'utilisateur qui est conencté à l'aide de request.user
+	# On récupère l'utilisateur qui est connecté à l'aide de request.user
 	user1 = User.objects.filter(email = request.user)
 	user3 = Utilisateur.objects.filter(email = user1[0])
 	user = user3[0]
@@ -171,7 +167,6 @@ def Menubis(request):
 # Fonction qui permet de récupérer les familles et les faits historiques de l'utilisateur, ainsi que son nom et son prénom (request.user)
 @login_required
 def Menu(request):
-	#banque_img = BanqueImagesForm()
 	list_famille = request.user.groups.values_list('name',flat=True);
 	longueur_list_famille = len(list_famille)
 
@@ -318,8 +313,6 @@ def Form_event(request):
 		print(ajoutevent.errors)
 	else :
 		ajoutevent = Fait_historiqueForm()
-
-	#fait_historique = Fait_historique.objects.filter(type_event = "mariage", for_user = request.user)
 	return render(request, 'Form_event.html', {'ajoutevent':ajoutevent})
 
 # Fonction de déconnexion
