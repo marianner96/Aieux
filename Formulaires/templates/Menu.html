@@ -32,7 +32,7 @@
 	        <li class="tab aggrandir_nav"><a href="#box_fam"><i class="material-icons left centre_icons">loyalty</i>Famille(s)</a></li>
 	        <li class="tab aggrandir_nav"><a class="active" href="#box_accueil">ACCUEIL</a></li>
 	        <li class="tab aggrandir_nav"><a href="#box_discu"><i class="material-icons left centre_icons">forum</i>Discussions</a></li>
-	        <li class="tab aggrandir_nav"><a href="#box_notif"><i class="material-icons left centre_icons">new_releases</i>Notifications</a></li>
+	        <li class="tab aggrandir_nav"><a href="#box_notif"><i class="material-icons left centre_icons">new_releases</i>Evènements</a></li>
 	        <!-- Cette partie correspond au bouton 'deconnecter' en haut à gauche -->
 			<li><a href="#modal1" class="btn-floating btn-large waves-effect waves-light teal lighten-3 tooltipped" data-position="bottom" data-delay="50" data-tooltip="Me déconnecter"><i class="material-icons">exit_to_app</i>Déconnexion</a></li>
 	      </ul>
@@ -106,23 +106,6 @@
 						  			<a href="{% url 'Form_famille' %}" class="waves-effect waves-light btn">Créer une nouvelle famille</a>
 						  			<a href="{% url 'Rejoindre_famille' %}" class="waves-effect waves-light btn">Rejoindre une famille</a>
 						  		</div>
-						  		<!--
-							  	<div class="actus teal">
-							  		<div class="actus_fam">
-							  			<a href="{% url 'Form_famille_ajoutmembre' %}" class="waves-effect waves-light btn teal lighten-3">Ajout membre</a>
-
-							  			<a href="#" class="waves-effect waves-light btn teal lighten-3">Supprimer membre</a>
-
-
-						  				<a href="#" class="waves-effect waves-light btn teal lighten-3">Modifications droits</a>
-							  		</div>
-								  	<p  class="teal lighten-4"> 
-								  		Ici s'affichera l'arbre généalogique de la famille1 jusqu'à qu'on clique sur famille2.<br>
-								  		S'il n'y a pas d'arbre:
-							  			<a href="{% url 'arbre'%}" class="waves-effect waves-light btn">Voir mon arbre généalogique</a>
-							  		</p>
-						  		</div>
-						  		-->
 						  	</div>
 		</div>
 
@@ -175,14 +158,69 @@
 
 <!--Onglet pour les discussions-->
 		<div id="box_discu" class="col s12 gros_conteneur_central">
-					Ici on mettra les discussions
+			Ici on mettra les discussions
 		</div>
 
 
 
-<!--Onglet pour les notifications-->
+<!--Onglet pour les events
+	Changer la disposition des blocs -> css 
+-->
 		<div id="box_notif" class="col s12 gros_conteneur_central">
-					Ici on mettra les notifications
+			{% for i in fait_historique %}
+				{% if i.type_event == 'naissance' %}
+					<div class="actus">
+						<p  class="teal lighten-3">Naissance de {{ i.prenom_enfant }} {{ i.nom_enfant }} : <br/>
+						<br/>
+						Genre : {{ i.genre_enfant }}<br/>
+						Maman : {{ i.prenom_mere }}<br/>
+						Papa : {{ i.prenom_pere }}<br/>
+						Date de naissance : {{ i.date_naissance }}<br/>
+						Commentaire : {{ i.commentaire }}<br/>
+						</p>
+					</div>
+				{% elif i.type_event == 'mariage' %}
+					<div class="actus">
+						<p  class="teal lighten-3">Mariage de {{ i.prenom_marie_1 }} et {{ i.prenom_marie_2 }} {{ i.nom_famille }} :  <br/><br/>
+						Date : {{ i.date_mariage }}<br/>
+						Commentaire : {{ i.commentaire }}<br/>
+						</p>
+					</div>
+				{% elif i.type_event == 'deces' %}
+					<div class="actus">
+						<p  class="teal lighten-3">Décès de {{ i.prenom_defunt }} {{ i.nom_defunt }} : <br/>
+						Date : {{ i.date_deces }}<br/>
+						Commentaire : {{ i.commentaire }}<br/>
+						</p>
+					</div>
+				{% elif i.type_event == 'voyage' %}
+					<div class="actus">
+						<p  class="teal lighten-3">Voyage à/aux	{{ i.lieu_voyage }} : <br/>
+						Date de départ : {{ i.date_debut }}<br/>
+						Date de retour : {{ i.date_fin }}<br/>
+						Commentaire : {{ i.commentaire }}<br/>
+						</p>
+					</div>
+					<!--Ca n'affiche pas l'immigration ... -->
+				{% elif i.type_event == 'immigration' %}
+					<div class="actus">
+						<p  class="teal lighten-3">Immigration de {{ i.pays_depart }} à {{ i.pays_arrive }} : <br/>
+						Date : {{ i.date_immig }}<br/>
+						Commentaire : {{ i.commentaire }}<br/>
+						</p>
+					</div>
+					<!--Problème ici aussi. Faut voir !-->
+				{% elif i.type_event == 'villehabitee' %}
+					<div class="actus">
+						<p  class="teal lighten-3">Ville habitée : 
+						Nom de la ville : {{ i.ville }}<br/>
+						Date d'arrivée dans la ville : {{ i.date_arrive }}<br/>
+						Date de départ (si il y a lieu) : {{ i.date_depart }}<br/>
+						Commentaire : {{ i.commentaire }}<br/>
+						</p>
+					</div>
+				{% endif %}
+			{% endfor %}
 		</div>
 
 

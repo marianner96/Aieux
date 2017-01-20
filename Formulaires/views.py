@@ -137,12 +137,15 @@ def modificationForm(request):
 def Menubis(request):
 	return render(request, 'Menubis.html')
 
-# Fonction qui permet de récupérer les familles de l'utilisateur, ainsi que son nom et son prénom (request.user)
+# Fonction qui permet de récupérer les familles et les faits historiques de l'utilisateur, ainsi que son nom et son prénom (request.user)
 @login_required
 def Menu(request):
 	list_famille = request.user.groups.values_list('name',flat=True);
 	longueur_list_famille = len(list_famille)
-	return render(request, 'Menu.html', {'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'first_name':request.user.first_name,'last_name':request.user.last_name})
+
+	fait_historique = Fait_historique.objects.filter(for_user = request.user)
+
+	return render(request, 'Menu.html', {'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'first_name':request.user.first_name,'last_name':request.user.last_name,'fait_historique':fait_historique})
 
 # Fonction qui permet d'ajouter une nouvelle famille
 @login_required
@@ -208,29 +211,73 @@ def Form_famille_ajoutmembre(request):
 """
 
 # Fonction qui permet d'ajouter un évènement. 
+# code : 1 si naissance, 2 si mariage, 3 si décès, 4 si voyage, 5 si immigration, 6 si ville
+# On enregistre à chaque fois le user associé pour pouvoir retrouver ensuite ses êvenements associés
 def Form_event(request):
 	if request.method == 'POST':
 		ajoutevent = Fait_historiqueForm(request.POST)
 		if ajoutevent.is_valid():
-			"""code = FormModif.cleaned_data['code']
-			if (code == '1'): 
-				#naissance
-			elif (code == '2'):
-				#mariage
-			elif (code == '3'):
-				#décès
-			elif (code == '4'):
-				#voyage
-			elif (code == '5'):
-				#immigration
-			elif (code == '6'):
-				#ville"""
+			code = ajoutevent.cleaned_data['code']
+			if code == 1:
+				ajoutevent = Fait_historique(type_event = "naissance", 
+					for_user = request.user,
+					commentaire = ajoutevent.cleaned_data['commentaire'],
+					nom_enfant = ajoutevent.cleaned_data['nom_enfant'],
+					prenom_enfant = ajoutevent.cleaned_data['prenom_enfant'],
+					genre_enfant = ajoutevent.cleaned_data['genre_enfant'],
+					prenom_mere = ajoutevent.cleaned_data['prenom_mere'],
+					prenom_pere = ajoutevent.cleaned_data['prenom_pere'],
+					date_naissance = ajoutevent.cleaned_data['date_naissance'],
+				)
+			elif code == 2:
+				ajoutevent = Fait_historique(type_event = "mariage",
+					for_user = request.user,
+					commentaire = ajoutevent.cleaned_data['commentaire'],
+					prenom_marie_1 = ajoutevent.cleaned_data['prenom_marie_1'],
+					prenom_marie_2 = ajoutevent.cleaned_data['prenom_marie_2'],
+					nom_famille = ajoutevent.cleaned_data['nom_famille'],
+					date_mariage = ajoutevent.cleaned_data['date_mariage'],
+				)
+			elif code == 3:
+				ajoutevent = Fait_historique(type_event = "deces",
+					for_user = request.user,
+					commentaire = ajoutevent.cleaned_data['commentaire'],
+					prenom_defunt = ajoutevent.cleaned_data['prenom_defunt'],
+					nom_defunt = ajoutevent.cleaned_data['nom_defunt'],
+					date_deces = ajoutevent.cleaned_data['date_deces'],
+				)
+			elif code == 4:
+				ajoutevent = Fait_historique(type_event = "voyage",
+					for_user = request.user,
+					commentaire = ajoutevent.cleaned_data['commentaire'],
+					lieu_voyage = ajoutevent.cleaned_data['lieu_voyage'],
+					date_debut = ajoutevent.cleaned_data['date_debut'],
+					date_fin = ajoutevent.cleaned_data['date_fin'],
+				)
+			elif code == 5:
+				ajoutevent = Fait_historique(type_event = "immigation",
+					for_user = request.user,
+					commentaire = ajoutevent.cleaned_data['commentaire'],
+					pays_depart = ajoutevent.cleaned_data['pays_depart'],
+					pays_arrive = ajoutevent.cleaned_data['pays_arrive'],
+					date_immig = ajoutevent.cleaned_data['date_immig'],					
+				)
+			elif code == 6:
+				ajoutevent = Fait_historique(type_event = "villehabitee",
+					for_user = request.user,
+					commentaire = ajoutevent.cleaned_data['commentaire'],
+					ville = ajoutevent.cleaned_data['ville'],
+					date_arrive = ajoutevent.cleaned_data['date_arrive'],
+					date_depart = ajoutevent.cleaned_data['date_depart'],
+				)
 
-			form.save()
-			print(ajoutevent.errors)
+			ajoutevent.save()
 			return redirect('Menu')
+		print(ajoutevent.errors)
 	else :
 		ajoutevent = Fait_historiqueForm()
+
+	#fait_historique = Fait_historique.objects.filter(type_event = "mariage", for_user = request.user)
 	return render(request, 'Form_event.html', {'ajoutevent':ajoutevent})
 
 # Fonction de déconnexion

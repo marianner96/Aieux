@@ -27,82 +27,14 @@ class FamilleForm(ModelForm):
         fields = {'nom', 'nb_personnes'}
         labels = {'nom' : 'Nom', 'nb_personnes' : 'Nombre de personnes'}
 
-# id : identifiant unique de l'utilisateur (généré automatiquement)
-# nom : nom de l'utilisateur
-# prenom : prénom de l'utilisateur
-# genre : genre de l'utilisateur
-# ddn : date de naissance de l'utilisateur
-# email : e-mail de l'utilisateur
-# mdp : mot de passe chiffré
-# validation_mdp : validation du mot de passe mdp
-# adresse : adresse de l'utilisateur
-# profession : profession de l'utilisateur
-# nationalite : nationalite de l'utilisateur
-# description : description de l'utilisateur (optionnel)
-# famille : identifiant de la famille si il y appartient
-# rang : droit de l'utilisateur : 0 si c'est un utilisateur classique, 1 si c'est un historien et 2 si c'est un administrateur
-# moderateur : savoir si l'utilisateur est modérateur de son groupe famille. Par défaut il l'est donc c'est égal à 1, sinon c'est égal à 0
-class Utilisateur(models.Model):
-    GENRES = (
-        ('feminin', 'feminin'),
-        ('masculin', 'masculin'),
-    )
-    nom = models.CharField(max_length=30, blank=True)
-    prenom = models.CharField(max_length=30, blank=True)
-    autre_prenoms = models.CharField(max_length=60, blank=True)
-    genre = models.CharField(max_length=10, choices=GENRES, blank=True)
-    ddn = models.CharField(max_length=10, blank=True, default="")
-    email = models.EmailField()
-    mdp = models.CharField(max_length=10)
-    validation_mdp = models.CharField(max_length=10, default='')
-    adresse = models.CharField(max_length=200, blank=True)
-    profession = models.CharField(max_length=60, blank=True)
-    nationalite = models.CharField(max_length=60, blank=True)
-    description = models.CharField(max_length=200, blank=True)
-    famille = models.ForeignKey(Famille, on_delete=models.CASCADE, null=True, blank=True)
-    rang = models.IntegerField(default=0, blank=True)
-    moderateur = models.IntegerField(default=1, blank=True)
-
-    def __str__(self):
-        return self.email
-
-class UtilisateurForm(ModelForm):
-    mdp = forms.CharField(widget=forms.PasswordInput)
-    validation_mdp = forms.CharField(widget=forms.PasswordInput, required=False)
-    class Meta:
-        model = Utilisateur
-        fields = ['nom','prenom','autre_prenoms','genre','ddn','email','mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
-        labels = {
-            'nom':'Nom',
-            'prenom':'Prénom',
-            'autres_prenoms':'Autres prénoms',
-            'genre':'Genre',
-            'ddn':'Date de naissance',
-            'email':'E-mail',
-            'mdp':'Mot de passe',
-            'validation_mdp' : 'Confirmation mot de passe',
-            'adresse':'Adresse postale',
-            'profession':'Profession',
-            'nationalite':'Nationalité',
-            'description':'Description',
-        }
-        widgets = {'genre':forms.RadioSelect}
-
-    def clean_validation_mdp(self):
-        #Si le mdp est le même que le validation_mdp, alors on connecte l'utilisateur, si non on affiche un message d'erreur
-        pass1 = self.cleaned_data.get('mdp')
-        pass2 = self.cleaned_data.get('validation_mdp')
-
-        if pass1 and pass2 and pass1 != pass2:
-            raise forms.ValidationError("Mots de passe différents")
-        
-        return self.cleaned_data
 
    
 # id : identifiant unique de l'arbre de la famille généré automatiquement)
 # famille : identifiant de la famille auquel appartient l'arbre  
 class Arbre(models.Model):
     famille = models.ForeignKey(Famille, on_delete=models.CASCADE)
+
+
 
 
 # arbre : l'identifiant de l'arbre sur lequel ce fait est relié
@@ -141,9 +73,11 @@ class Fait_historique(models.Model):
         ('feminin', 'feminin'),
         ('masculin', 'masculin'),
     )
-    arbre = models.ForeignKey(Arbre, on_delete=models.CASCADE)
-    code = models.IntegerField()
+    arbre = models.ForeignKey(Arbre, on_delete=models.CASCADE, null=True, blank=True)
+    code = models.IntegerField(default=0, null=True, blank=True)
     commentaire = models.CharField(max_length=200, blank=True)
+    type_event = models.CharField(max_length=30, blank=True)
+    for_user = models.CharField(max_length=100, blank=True)
     #naissance
     nom_enfant = models.CharField(max_length=30, blank=True)
     prenom_enfant = models.CharField(max_length=30, blank=True)
@@ -172,6 +106,9 @@ class Fait_historique(models.Model):
     ville = models.CharField(max_length=30, blank=True)
     date_arrive = models.DateField(blank=True, null=True)
     date_depart = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return self.type_event
 
 class Fait_historiqueForm(ModelForm):
     class Meta:
@@ -214,3 +151,77 @@ class Fait_historiqueForm(ModelForm):
             'date_depart' : 'Date de départ',
         }
         widgets = {'genre_enfant':forms.RadioSelect}
+
+
+# id : identifiant unique de l'utilisateur (généré automatiquement)
+# nom : nom de l'utilisateur
+# prenom : prénom de l'utilisateur
+# genre : genre de l'utilisateur
+# ddn : date de naissance de l'utilisateur
+# email : e-mail de l'utilisateur
+# mdp : mot de passe chiffré
+# validation_mdp : validation du mot de passe mdp
+# adresse : adresse de l'utilisateur
+# profession : profession de l'utilisateur
+# nationalite : nationalite de l'utilisateur
+# description : description de l'utilisateur (optionnel)
+# famille : identifiant de la famille si il y appartient
+# rang : droit de l'utilisateur : 0 si c'est un utilisateur classique, 1 si c'est un historien et 2 si c'est un administrateur
+# moderateur : savoir si l'utilisateur est modérateur de son groupe famille. Par défaut il l'est donc c'est égal à 1, sinon c'est égal à 0
+class Utilisateur(models.Model):
+    GENRES = (
+        ('feminin', 'feminin'),
+        ('masculin', 'masculin'),
+    )
+    nom = models.CharField(max_length=30, blank=True)
+    prenom = models.CharField(max_length=30, blank=True)
+    autre_prenoms = models.CharField(max_length=60, blank=True)
+    genre = models.CharField(max_length=10, choices=GENRES, blank=True)
+    ddn = models.CharField(max_length=10, blank=True, default="")
+    email = models.EmailField()
+    mdp = models.CharField(max_length=10)
+    validation_mdp = models.CharField(max_length=10, default='')
+    adresse = models.CharField(max_length=200, blank=True)
+    profession = models.CharField(max_length=60, blank=True)
+    nationalite = models.CharField(max_length=60, blank=True)
+    description = models.CharField(max_length=200, blank=True)
+    famille = models.ForeignKey(Famille, on_delete=models.CASCADE, null=True, blank=True)
+    # Test pour les events
+    event = models.ForeignKey(Fait_historique, on_delete=models.CASCADE, null=True, blank=True)
+    rang = models.IntegerField(default=0, blank=True)
+    moderateur = models.IntegerField(default=1, blank=True)
+
+    def __str__(self):
+        return self.email
+
+class UtilisateurForm(ModelForm):
+    mdp = forms.CharField(widget=forms.PasswordInput)
+    validation_mdp = forms.CharField(widget=forms.PasswordInput, required=False)
+    class Meta:
+        model = Utilisateur
+        fields = ['nom','prenom','autre_prenoms','genre','ddn','email','mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
+        labels = {
+            'nom':'Nom',
+            'prenom':'Prénom',
+            'autres_prenoms':'Autres prénoms',
+            'genre':'Genre',
+            'ddn':'Date de naissance',
+            'email':'E-mail',
+            'mdp':'Mot de passe',
+            'validation_mdp' : 'Confirmation mot de passe',
+            'adresse':'Adresse postale',
+            'profession':'Profession',
+            'nationalite':'Nationalité',
+            'description':'Description',
+        }
+        widgets = {'genre':forms.RadioSelect}
+
+    def clean_validation_mdp(self):
+        #Si le mdp est le même que le validation_mdp, alors on connecte l'utilisateur, si non on affiche un message d'erreur
+        pass1 = self.cleaned_data.get('mdp')
+        pass2 = self.cleaned_data.get('validation_mdp')
+
+        if pass1 and pass2 and pass1 != pass2:
+            raise forms.ValidationError("Mots de passe différents")
+        
+        return self.cleaned_data

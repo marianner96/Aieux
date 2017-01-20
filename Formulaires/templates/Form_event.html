@@ -22,164 +22,176 @@
 
 	<div id='histoire' class="pop_up">
 		<h3>Vous voulez ajouter : </h3>
+		
+
+		{{ fait_historique }}
+		{{ famille }}
+
 			<div class="ajout_event">
 		 	<ul class="collapsible popout" data-collapsible="accordion">
 			    <li>
-			      <div class="collapsible-header teal lighten-2"><i class="material-icons">filter_drama</i>Une naissance</div>
-			      <div class="collapsible-body teal lighten-5">
-								<div class="row">
-								<form method='post' action="{% url 'Form_event' %}" class="col s12">
-									{% csrf_token %}
-								    <div class="row">
-								    	<div class="box_type">
-											<div class="enfants_box_type">
-												<p>
-									      		<input id="masculin" name="genre_enfant" type="radio" value="masculin"/>
-									      		<label for="masculin">Masculin</label>
-									    		</p>
-									    	</div>
+			    	<div class="collapsible-header teal lighten-2">
+			      		<i class="material-icons">filter_drama</i>Une naissance
+			      	</div>
+				    <div class="collapsible-body teal lighten-5">
+						<div class="row">
+							<form method='post' action="{% url 'Form_event' %}" class="col s12">
+							{% csrf_token %}
+						    <div class="row">
+						    	<div class="box_type">
+									<div class="enfants_box_type">
+										<p>
+							      		<input id="masculin" name="genre_enfant" type="radio" value="masculin"/>
+							      		<label for="masculin">Masculin</label>
+							    		</p>
+							    	</div>
 
-									    	<div class="enfants_box_type">
-									    		<p>
-									      		<input id="feminin" name="genre_enfant" type="radio" value="feminin"/>
-									     	 	<label for="feminin">Féminin</label>
-									    		</p>
-									    	</div>
-								    	</div><br>
+							    	<div class="enfants_box_type">
+							    		<p>
+							      		<input id="feminin" name="genre_enfant" type="radio" value="feminin"/>
+							     	 	<label for="feminin">Féminin</label>
+							    		</p>
+							    	</div>
+						    	</div><br>
 
-								        <div class="input-field col s6">
-								          {{ ajoutevent.prenom_enfant }}
-								          {{ ajoutevent.prenom_enfant.label_tag }}
-								       	</div>
-								        <div class="input-field col s6">
-								          {{ ajoutevent.nom_enfant }}
-								          {{ ajoutevent.nom_enfant.label_tag }}
-								    </div>
+						        <div class="input-field col s6">
+						          {{ ajoutevent.prenom_enfant }}
+						          {{ ajoutevent.prenom_enfant.label_tag }}
+						       	</div>
+						        <div class="input-field col s6">
+						          {{ ajoutevent.nom_enfant }}
+						          {{ ajoutevent.nom_enfant.label_tag }}
+							    </div>
 
-								   
-									<div class="input-field col s12">
-										{{ ajoutevent.date_naissance }}
-								        {{ ajoutevent.date_naissance.label_tag }}
-									</div>
-								    <div class="row">
-								        <div class="input-field col s12">
-								        </div>
-								    </div>
-								    <div class="row">
-								        <div class="input-field col s12">
-								          {{ ajoutevent.prenom_mere }}
-								          {{ ajoutevent.prenom_mere.label_tag }}
-								        </div>
-								    </div>
-								    <div class="row">
-								        <div class="input-field col s12">
-								        	{{ ajoutevent.prenom_pere }}
-								        	{{ ajoutevent.prenom_pere.label_tag }}
-								        </div>
-								    </div>
-								    <div class="row">
-								        {{ ajoutevent.commentaire.label_tag }}
-										{{ ajoutevent.commentaire }}
-								    </div>
-
-								    <!--Permet de savoir de quel sorte d'évement il s'agit. 1 = naissance -->
-									<input type='hidden' name='code' id='code' value='1'></input>
-
-									<button type='submit' id='btn' class='btn btn-primary'>Ajout de la naissance</button>
-
-								</form>
+									   
+								<div class="input-field col s12">
+									{{ ajoutevent.date_naissance }}
+							        {{ ajoutevent.date_naissance.label_tag }}
 								</div>
+							    <div class="row">
+							        <div class="input-field col s12">
+							        </div>
+							    </div>
+							    <div class="row">
+							        <div class="input-field col s12">
+							          {{ ajoutevent.prenom_mere }}
+							          {{ ajoutevent.prenom_mere.label_tag }}
+							        </div>
+							    </div>
+							    <div class="row">
+							        <div class="input-field col s12">
+							        	{{ ajoutevent.prenom_pere }}
+							        	{{ ajoutevent.prenom_pere.label_tag }}
+							        </div>
+							    </div>
+							    <div class="row">
+							        {{ ajoutevent.commentaire.label_tag }}
+									{{ ajoutevent.commentaire }}
+							    </div>
+
+							    <!--Permet de savoir de quel sorte d'évement il s'agit. 1 = naissance -->
+								<input type='hidden' name='code' id='code' value='1'></input>
+								<button type='submit' id='btn' class='btn btn-primary'>Ajout de la naissance</button>
+
+							</form>
+						</div>
+			    	</div>
+			    </li>
+
+			    <li>
+			    	<div class="collapsible-header teal lighten-2">
+			    		<i class="material-icons">grade</i>Un mariage
+			    	</div>
+			    	<div class="collapsible-body teal lighten-5">
+						<div class="row">
+							<form method='post' action="{% url 'Form_event' %}" class="col s12">
+							{% csrf_token %}
+							<div class="box-type">
+							    <div class="input-field col s12">
+									{{ ajoutevent.date_mariage }}
+							       	{{ ajoutevent.date_mariage.label_tag }}
+								</div>
+							</div>
+
+							<div class="row">
+							    <div class="input-field col s6">
+							   		{{ ajoutevent.prenom_marie_1 }}
+							   		{{ ajoutevent.prenom_marie_1.label_tag }}
+							    </div>
+								<div class="input-field col s6">
+							   		{{ ajoutevent.prenom_marie_2 }}
+							   		{{ ajoutevent.prenom_marie_2.label_tag }}
+								</div>
+							</div>
+							<div class="row">
+							    <div class="input-field col s12">
+							        {{ ajoutevent.nom_famille }}
+								   	{{ ajoutevent.nom_famille.label_tag }}
+							    </div>
+							</div>
+
+							<div class="row">
+							    {{ ajoutevent.commentaire.label_tag }}
+								{{ ajoutevent.commentaire }}
+							</div>
+
+							<!--Permet de savoir de quel sorte d'évement il s'agit. 2 = mariage -->
+							<input type='hidden' name='code' id='code' value='2'></input>
+
+							<button type='submit' id='btn' class='btn btn-primary'>Ajout du mariage</button>
+
+							</form>
+						</div>
 			      </div>
 			    </li>
 
-
 			    <li>
-			      <div class="collapsible-header teal lighten-2"><i class="material-icons">grade</i>Un mariage</div>
-			      <div class="collapsible-body teal lighten-5">
-								<div class="row">
-								<form method='post' action="{% url 'Form_event' %}" class="col s12">
-									<div class="box-type">
-								        <div class="input-field col s12">
-											{{ ajoutevent.date_mariage }}
-								        	{{ ajoutevent.date_mariage.label_tag }}
-										</div>
-									</div>
-
-									<div class="row">
-								        <div class="input-field col s6">
-								        	{{ ajoutevent.prenom_marie_1 }}
-								        	{{ ajoutevent.prenom_marie_1.label_tag }}
-								        </div>
-								        <div class="input-field col s6">
-								        	{{ ajoutevent.prenom_marie_2 }}
-								        	{{ ajoutevent.prenom_marie_2.label_tag }}
-								        </div>
-								    </div>
-								    <div class="row">
-								        <div class="input-field col s12">
-								            {{ ajoutevent.nom_famille }}
-								        	{{ ajoutevent.nom_famille.label_tag }}
-								        </div>
-								    </div>
-
-								    <div class="row">
-								        {{ ajoutevent.commentaire.label_tag }}
-										{{ ajoutevent.commentaire }}
-								    </div>
-
-									<!--Permet de savoir de quel sorte d'évement il s'agit. 2 = mariage -->
-									<input type='hidden' name='code' id='code' value='2'></input>
-
-									<button type='submit' id='btn' class='btn btn-primary'>Ajout du mariage</button>
-
-								</form>
+			    	<div class="collapsible-header teal lighten-2">
+			      		<i class="material-icons">description</i>Un décès
+			      	</div>
+			      	<div class="collapsible-body teal lighten-5">
+			      		<div class="row">
+							<form method='post' action="{% url 'Form_event' %}" class="col s12">
+							{% csrf_token %}
+							<div class="box-type">
+						        <div class="input-field col s12">
+									{{ ajoutevent.date_deces }}
+						        	{{ ajoutevent.date_deces.label_tag }}
 								</div>
-			      </div>
-			    </li>
+							</div>
 
+							<div class="row">
+						        <div class="input-field col s6">
+						        	{{ ajoutevent.prenom_defunt }}
+						        	{{ ajoutevent.prenom_defunt.label_tag }}
+						        </div>
+						        <div class="input-field col s6">
+						        	{{ ajoutevent.nom_defunt }}
+						        	{{ ajoutevent.nom_defunt.label_tag }}
+						        </div>
+						    </div>
 
-			    <li>
-			      <div class="collapsible-header teal lighten-2"><i class="material-icons">description</i>Un décès</div>
-			      <div class="collapsible-body teal lighten-5">
-			      				<div class="row">
-					      		<form method='post' action="{% url 'Form_event' %}" class="col s12">
-					      			<div class="box-type">
-								        <div class="input-field col s12">
-											{{ ajoutevent.date_deces }}
-								        	{{ ajoutevent.date_deces.label_tag }}
-										</div>
-									</div>
+						    <div class="row">
+						        {{ ajoutevent.commentaire.label_tag }}
+								{{ ajoutevent.commentaire }}
+						    </div>
 
-									<div class="row">
-								        <div class="input-field col s6">
-								        	{{ ajoutevent.prenom_defunt }}
-								        	{{ ajoutevent.prenom_defunt.label_tag }}
-								        </div>
-								        <div class="input-field col s6">
-								        	{{ ajoutevent.nom_defunt }}
-								        	{{ ajoutevent.nom_defunt.label_tag }}
-								        </div>
-								    </div>
-
-								     <div class="row">
-								        {{ ajoutevent.commentaire.label_tag }}
-										{{ ajoutevent.commentaire }}
-								    </div>
-
-									<!--Permet de savoir de quel sorte d'évement il s'agit. 3 = décès -->
-									<input type='hidden' name='code' id='code' value='3'></input>
-			
-									<button type='submit' id='btn' class='btn btn-primary'>Ajout du décès</button>
-								</form>
-								</div>
-				  </div>
+							<!--Permet de savoir de quel sorte d'évement il s'agit. 3 = décès -->
+							<input type='hidden' name='code' id='code' value='3'></input>
+							<button type='submit' id='btn' class='btn btn-primary'>Ajout du décès</button>
+							</form>
+						</div>
+				  	</div>
 				</li>
 
 				<li>
-			      <div class="collapsible-header teal lighten-2"><i class="material-icons">language</i>Un voyage</div>
-			      <div class="collapsible-body teal lighten-5">
-			      	<div class="row">
-			      		<form method='post' action="{% url 'Form_event' %}" class="col s12">
+			     	<div class="collapsible-header teal lighten-2">
+			    		<i class="material-icons">language</i>Un voyage
+			    	</div>
+			      	<div class="collapsible-body teal lighten-5">
+			      		<div class="row">
+			      			<form method='post' action="{% url 'Form_event' %}" class="col s12">
+			      			{% csrf_token %}
 			      			<div class="box-type">
 								<div class="input-field col s12">
 									{{ ajoutevent.lieu_voyage }}
@@ -203,19 +215,22 @@
 								{{ ajoutevent.commentaire }}
 							</div>
 
-						<!--Permet de savoir de quel sorte d'évement il s'agit. 4 = voyage -->
-						<input type='hidden' name='code' id='code' value='4'></input>
-						<button type='submit' id='btn' class='btn btn-primary'>Ajout du voyage</button>
-						</form>
-						
-				  </div>
+							<!--Permet de savoir de quel sorte d'évement il s'agit. 4 = voyage -->
+							<input type='hidden' name='code' id='code' value='4'></input>
+							<button type='submit' id='btn' class='btn btn-primary'>Ajout du voyage</button>
+							</form>
+						</div>
+					</div>
 				</li>
 
 				<li>
-			      <div class="collapsible-header teal lighten-2"><i class="material-icons">work</i>Une immigration</div>
-			      <div class="collapsible-body teal lighten-5">
-			      	<div class="row">
-			      		<form method='post' action="{% url 'Form_event' %}" class="col s12">
+			    	<div class="collapsible-header teal lighten-2">
+			    		<i class="material-icons">work</i>Une immigration
+			    	</div>
+			     	<div class="collapsible-body teal lighten-5">
+			      		<div class="row">
+			      			<form method='post' action="{% url 'Form_event' %}" class="col s12">
+			      			{% csrf_token %}
 			      			<div class="box-type">
 								<div class="input-field col s12">
 									{{ ajoutevent.date_immig }}
@@ -233,26 +248,31 @@
 							<div class="box-type">
 								<div class="input-field col s12">
 									{{ ajoutevent.pays_arrive }}
-								   	<!--{{ ajoutevent.pays_arrive.label_tag }}-->
 								   	<label for="pays_arrive">Pays d'arrivé:</label>
 								</div>
 							</div>
 
-						<div class="row">
-							{{ ajoutevent.commentaire.label_tag }}
-							{{ ajoutevent.commentaire }}
-						</div>
-						<!--Permet de savoir de quel sorte d'évement il s'agit. 5 = immigration -->
-						<input type='hidden' name='code' id='code' value='5'></input>
-						<button type='submit' id='btn' class='btn btn-primary'>Ajout de l'immigration</button>
-				  </div>
+							<div class="row">
+								{{ ajoutevent.commentaire.label_tag }}
+								{{ ajoutevent.commentaire }}
+							</div>
+
+							<!--Permet de savoir de quel sorte d'évement il s'agit. 5 = immigration -->
+							<input type='hidden' name='code' id='code' value='5'></input>
+							<button type='submit' id='btn' class='btn btn-primary'>Ajout de l'immigration</button>
+							</form>
+				 		</div>
+				 	</div>
 				</li>
 
 				<li>
-			      <div class="collapsible-header teal lighten-2"><i class="material-icons">store</i>Un ville habitée</div>
-			      <div class="collapsible-body teal lighten-5">
-			      	<div class="row">
-			      		<form method='post' action="{% url 'Form_event' %}" class="col s12">
+			    	<div class="collapsible-header teal lighten-2">
+			    		<i class="material-icons">store</i>Un ville habitée
+			    	</div>
+			      	<div class="collapsible-body teal lighten-5">
+			      		<div class="row">
+			      			<form method='post' action="{% url 'Form_event' %}" class="col s12">
+			      			{% csrf_token %}
 			      			<div class="box-type">
 								<div class="input-field col s12">
 									{{ ajoutevent.ville }}
@@ -299,16 +319,16 @@
 							<input type='hidden' name='code' id='code' value='6'></input>
 							<button type='submit' id='btn' class='btn btn-primary'>Ajout de la ville</button>
 						
-						</form>
-				  </div>
-				</div>
+							</form>
+				 		</div>
+					</div>
 				</li>
 			</ul>
 			<p style="font-size:10px">* Les dates doivent être sous forme YYYY-MM-DD</p>
 			<div id="actualité"> 
 				<a href="{% url 'Menu' %}" class="waves-effect waves-light btn">Revenir à mon profil</a>
 			</div>
-			</div>
+		</div>
 	</div>
 
 
@@ -325,6 +345,6 @@
     	selectMonths: true, // Creates a dropdown to control month
     	selectYears: 15 // Creates a dropdown of 15 years to control year
   		});
-     </script>
+    </script>
 </body>
 </html>
