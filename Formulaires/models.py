@@ -245,22 +245,3 @@ class RechercheForm(ModelForm):
     class Meta:
         model = Recherche
         fields = ['search','rech_pers','rech_fam','rech_page']
-
-
-class BanqueImages(models.Model):
-    photo1 = models.ImageField(default='test.jpg', blank=True)
-    photo2 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo3 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo4 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo5 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo6 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo7 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo8 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo9 = models.ImageField(upload_to="img/", default='', blank=True)
-    photo10 = models.ImageField(upload_to="img/", default='', blank=True)
-    
-
-class BanqueImagesForm(ModelForm):
-    class Meta:
-        model = BanqueImages
-        fields = {'photo1','photo2','photo3','photo4','photo5','photo6','photo7','photo8','photo9','photo10'}

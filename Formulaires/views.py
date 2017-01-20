@@ -191,7 +191,7 @@ def Menu(request):
 			res_pers = Utilisateur.objects.filter(prenom = search)
 			res_fam = Famille.objects.filter(nom = search)
 			
-			#res_page : A faire quand on aura les images en fait
+			#res_page : A faire quand on aura les images
 			res_page = ""
 
 			return render(request, 'res_recherche.html', {'res_pers':res_pers,'res_fam':res_fam,'res_page':res_page,'rech_pers':rech_pers,'rech_fam':rech_fam,'rech_page':rech_page})
