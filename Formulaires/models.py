@@ -175,6 +175,7 @@ class Utilisateur(models.Model):
     )
     nom = models.CharField(max_length=30, blank=True)
     prenom = models.CharField(max_length=30, blank=True)
+    photo = models.ImageField(upload_to="img/", default='')
     autre_prenoms = models.CharField(max_length=60, blank=True)
     genre = models.CharField(max_length=10, choices=GENRES, blank=True)
     ddn = models.CharField(max_length=10, blank=True, default="")
@@ -197,12 +198,14 @@ class Utilisateur(models.Model):
 class UtilisateurForm(ModelForm):
     mdp = forms.CharField(widget=forms.PasswordInput)
     validation_mdp = forms.CharField(widget=forms.PasswordInput, required=False)
+    photo = forms.ImageField()
     class Meta:
         model = Utilisateur
-        fields = ['nom','prenom','autre_prenoms','genre','ddn','email','mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
+        fields = ['nom','prenom', 'photo', 'autre_prenoms','genre','ddn','email','mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
         labels = {
             'nom':'Nom',
             'prenom':'Prénom',
+            'photo' : 'Photo de profil',
             'autres_prenoms':'Autres prénoms',
             'genre':'Genre',
             'ddn':'Date de naissance',

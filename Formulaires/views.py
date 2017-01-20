@@ -25,10 +25,9 @@ import os
 # La fonction redirige obligatoirement vers Rejoindre_Famille ou Form_famille car un utilisateur
 # 		doit obligatoirement avoir une famille, même il est le seul dans celle-ci.
 def InscriptionForm(request):
+	FormInscription = UtilisateurForm(request.POST or None, request.FILES)
 	# Si la requête est POST on fait ce qui suit
-	if request.method == 'POST':
-		# Créé une instance formulaire et récupère les données de la requête
-		FormInscription = UtilisateurForm(request.POST)
+	if request.method == 'POST':		
 		# Vérifie si le formulaire est valide
 		if FormInscription.is_valid():
 			# On récupère les données dont on aura besoin pour le reste de la fonction
@@ -36,6 +35,7 @@ def InscriptionForm(request):
 			email_session = FormInscription.cleaned_data['email']
 			nom_session = FormInscription.cleaned_data['nom']
 			prenom_session = FormInscription.cleaned_data['prenom']
+			photo_session = FormInscription.cleaned_data['photo']
 			# On sauvegarde les données du formulaire dans la base de données
 			FormInscription.save()
 
@@ -62,8 +62,6 @@ def InscriptionForm(request):
 			# A rajouter : autorisation de rentrer dans la famille
 			
 			return redirect('Rejoindre_famille')
-	else: 
-		FormInscription = UtilisateurForm()
 	return render(request, 'InscriptionForm.html', {'FormInscription':FormInscription})
 
 
@@ -162,6 +160,10 @@ def Menubis(request):
 # Fonction qui permet de récupérer les familles et les faits historiques de l'utilisateur, ainsi que son nom et son prénom (request.user)
 @login_required
 def Menu(request):
+	# On récupère l'utilisateur qui est conencté à l'aide de request.user
+	user1 = User.objects.filter(email = request.user)
+	user3 = Utilisateur.objects.filter(email = user1[0])
+
 	list_famille = request.user.groups.values_list('name',flat=True);
 	longueur_list_famille = len(list_famille)
 
@@ -192,6 +194,7 @@ def Menu(request):
 
 
 	return render(request, 'Menu.html', {'recherche_form':recherche_form,'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'utilis':utilis,'fait_historique':fait_historique})
+
 
 # Fonction qui permet d'ajouter une nouvelle famille
 @login_required

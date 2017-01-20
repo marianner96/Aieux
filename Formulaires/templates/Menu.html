@@ -21,8 +21,6 @@
 
 <body class="cyan lighten-4">
 
-<div  id="conteneur_site">
-
 
 <!-- Menu de navigation -->
 	<nav class="nav-extended teal lighten-2">
@@ -45,7 +43,6 @@
 	<div class="gros_conteneur">
 		<div id="box_profil" class="col s12 gros_conteneur_central">
 			<div class="box_type2">
-
 				<!-- Image de profil -->
 			    <div class="right cadre_image">
 					<div class="image">
@@ -85,10 +82,6 @@
 				profession : {{ utilis.profession }}<br/>
 				nationalite : {{ utilis.nationalite }}<br/>
 				Nom : {{ utilis.nom }}<br/>
-
-
-
-
 			</div>
 			<div id="modif_visi" class="col s12">
 				Ici on mettra les modifications de la visibilité de toutes les publications de la personne
@@ -234,6 +227,11 @@
 				{% endif %}
 			{% endfor %}
 		</div>
+		</div>
+
+		<!--Image de pub-->
+		<div class="box_type2">
+			<img src="{% static 'img/pub9.jpg' %}" style="width:80%;height:80%;">
 		</div>
 
 	</div>

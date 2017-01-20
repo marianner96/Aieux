@@ -41,7 +41,7 @@
       <h1>Inscription</h1>
       <div>
         <div id="inscription" class="row">
-          <form class="col s12" id="formu" role="form" method="post" action="{% url 'InscriptionForm' %}">
+          <form class="col s12" id="formu" role="form" enctype="multipart/form-data" method="post" action="{% url 'InscriptionForm' %}">
             {% csrf_token %}
             <div class="row">
               <div class="box_type">
@@ -98,6 +98,11 @@
                 <i class="material-icons prefix">verified_user</i>
                 {{ FormInscription.validation_mdp }}
                 {{ FormInscription.validation_mdp.label_tag }}
+              </div>
+
+              <div class="input-fiel col s12">
+                <i class="material-icons prefix">perm_media</i>
+                {{ FormInscription.photo }}
               </div>
 
               <div><button type="submit" id="bouton" class="btn btn-primary">Valider</button></div>
