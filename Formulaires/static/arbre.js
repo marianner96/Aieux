@@ -225,7 +225,7 @@ function maj_listes_nouv_couple(conjoint,nom,prenom,sexe){
 
 //Met à jour le fichier modifs.json
 function modifs(typep,lien,nom,prenom,sexe){ //on ajoute un membre, le lien correspond à papa et maman si on ajoute un enfant par exemple
-    alert("Maj fichier modifs!");
+    alert("Mise a jour du fichier modifs...");
 
     $.ajax({
         url:'/modifierfichier/',
@@ -244,7 +244,7 @@ function modifs(typep,lien,nom,prenom,sexe){ //on ajoute un membre, le lien corr
 
 //Met à jour les options des selects pour qu'ils proposent les nouveaux membres ajoutés
 function maj_options(){
-    alert("maj options!");
+    //alert("maj options!");
     var liste_c = document.getElementById("liste_couples");
     var liste_e = document.getElementById("liste_enfants_sans_parents");
     var liste_sc = document.getElementById("liste_personnes_sans_conjoint");
@@ -252,11 +252,11 @@ function maj_options(){
     //Ajout de toutes les options pour la liste des couples, cad ajout des couples au select
     $.getJSON("/static/json/liste_couples.json",function( data ) {
         tab = data.couples;
-        alert("Maj option liste couples")
-        console.log("Taille du tableau contenant les couples: ")
+        console.log("Longueur du tableau des couples: ")
         console.log(tab.length);
 
         for (var i=0; i<(tab.length); i++){
+            console.log(tab[i])
             var option_c = document.createElement("option");
             infos = tab[i];
             couple = infos["nom"]+" "+infos["prenom"]+" - "+infos["nom2"]+" "+infos["prenom2"];
@@ -268,11 +268,11 @@ function maj_options(){
 
     $.getJSON("/static/json/liste_enfants.json",function( data ) {
         tab = data.orphelins;
-        alert("Maj options listes enfants");
-        console.log("Taille du tableau contenant les orphelins: ");
+        console.log("Longueur du tableau des orphelins: ")
         console.log(tab.length);
 
         for (var i=0; i<(tab.length); i++){
+            console.log(tab[i])
             var option_e = document.createElement("option");
             infos = tab[i];
             enfant = infos["nom"]+" "+infos["prenom"];
@@ -283,10 +283,11 @@ function maj_options(){
 
     $.getJSON("/static/json/liste_sans_conj.json",function( data ) {
         tab = data.sansconj;
-        alert("Maj options des sans conjoints")
-        //console.log(tab.length);
+        console.log("Longueur du tableau des celibataire: ")
+        console.log(tab.length);
 
         for (var i=0; i<(tab.length); i++){
+            console.log(tab[i])
             var option_sc = document.createElement("option");
             infos = tab[i];
             celibataire = infos["nom"]+" "+infos["prenom"];
@@ -295,6 +296,52 @@ function maj_options(){
         }
     });
 }
+
+
+function maj_liste_membres(){
+    //alert("Mise a jour de la liste des personnes");
+
+    var liste = document.getElementById("liste_personnes");
+
+    $.getJSON("/static/json/nodesedges.json",function( data ) {
+        console.log(data.nodes[1]);
+
+        tab = data.nodes;
+
+        console.log("Longueur du tableau: ")
+        console.log(tab.length);
+
+        for (var i=0; i<(tab.length); i++){
+            console.log(tab[i])
+            identite = tab[i]["label"];
+
+            if (identite!="Mariage"){
+                var option = document.createElement("option");
+                option.text = identite;
+                liste.add(option);
+            }
+        }
+    });
+}
+
+
+
+function maj_supp_membre(){
+    alert("Mise a jour des listes et de l'arbre");
+
+    var membre_a_supp = document.getElementById("liste_personnes").value;
+
+    $.ajax({
+        url:'/supprime_membre/',
+        type:'get',
+        data:{
+            membre:membre_a_supp
+        }
+    });
+}
+
+
+
 
 
 
