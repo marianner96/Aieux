@@ -39,8 +39,14 @@ urlpatterns = [
     url(r'^maj_parent/$',views.maj_parent,name='maj_parent'),
     url(r'^maj_couple/$',views.maj_couple,name='maj_couple'),
 
+<<<<<<< HEAD
+    url(r'^sendmail/$', views.sendmail, name='sendmail'),
+    url(r'^Envoi_Email/$', views.Envoi_Email, name='Envoi_Email'),
+    url(r'^renvoi_Email/$', views.renvoi_Email, name='renvoi_Email'),
+=======
     url(r'^supprime_membre/$',views.supprime_membre,name='supprime_membre'),
     url(r'^initialise_fichier/$',views.initialise_fichier,name='initialise_fichier')
+>>>>>>> 111744818e92bf81337bedd5fb31bdb1bd107b86
 ]
 
 #l'admin a pour nom eisti et le mdp est rogerdeeisti

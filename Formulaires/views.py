@@ -13,6 +13,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.template import Context, loader, RequestContext
 from django.views import generic
+#photolog
+#pip install django-photologue
+
 
 from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm, Fait_historiqueForm, RechercheForm
 from .forms import RejoindreForm
@@ -168,10 +171,7 @@ def Menubis(request):
 # Fonction qui permet de récupérer les familles et les faits historiques de l'utilisateur, ainsi que son nom et son prénom (request.user)
 @login_required
 def Menu(request):
-	# On récupère l'utilisateur qui est conencté à l'aide de request.user
-	user1 = User.objects.filter(email = request.user)
-	user3 = Utilisateur.objects.filter(email = user1[0])
-
+	#banque_img = BanqueImagesForm()
 	list_famille = request.user.groups.values_list('name',flat=True);
 	longueur_list_famille = len(list_famille)
 
@@ -199,7 +199,6 @@ def Menu(request):
 	else:
 		recherche_form = RechercheForm()
 		print(recherche_form.errors)
-
 
 	return render(request, 'Menu.html', {'recherche_form':recherche_form,'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'utilis':utilis,'fait_historique':fait_historique})
 
@@ -1185,3 +1184,35 @@ def supprime_membre(request):
 
 
     return ""
+
+#sending email
+from django.core.mail import send_mail
+
+
+def Envoi_Email(request):
+	if request.method == 'POST':
+		FormMail = UtilisateurForm(request.POST)
+		if FormMail.is_valid():
+			
+			mdp_session = FormMail.cleaned_data['mdp']
+			email_session = FormMail.cleaned_data['email']
+			nom_session = FormMail.cleaned_data['nom']
+			prenom_session = FormMail.cleaned_data['prenom']
+
+			"""FormMail = UtilisateurForm(
+				nom = FormMail.cleaned_data['nom'],
+				prenom = FormMail.cleaned_data['prenom'],
+				genre = FormMail.cleaned_data['genre'],
+				ddn = FormMail.cleaned_data['ddn'],
+				email = FormMailcleaned_data['email'],
+				mdp = hashlib.sha1(mdp_session).hexdigest())"""
+
+		return render(request,'Envoi_Email.html', {'FormMail':FormMail})
+
+def renvoi_Email(request):
+	return render(request, 'Envoi_Email.html')
+
+def sendmail(request):
+	message="Loren Ipsum"
+	send_mail('Subject here',message,'eisti@eisti.eu',['ngtockmine@eisti.eu'],fail_silently=False,)
+	return redirect('Menu')

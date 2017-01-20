@@ -175,7 +175,7 @@ class Utilisateur(models.Model):
     )
     nom = models.CharField(max_length=30, blank=True)
     prenom = models.CharField(max_length=30, blank=True)
-    photo = models.ImageField(upload_to="img/", default='', blank=True)
+    photo = models.ImageField(upload_to="Formulaires/static/img/", default='', blank=True)
     autre_prenoms = models.CharField(max_length=60, blank=True)
     genre = models.CharField(max_length=10, choices=GENRES, blank=True)
     ddn = models.CharField(max_length=10, blank=True, default="")
@@ -187,7 +187,6 @@ class Utilisateur(models.Model):
     nationalite = models.CharField(max_length=60, blank=True)
     description = models.CharField(max_length=200, blank=True)
     famille = models.ForeignKey(Famille, on_delete=models.CASCADE, null=True, blank=True)
-    # Test pour les events
     event = models.ForeignKey(Fait_historique, on_delete=models.CASCADE, null=True, blank=True)
     rang = models.IntegerField(default=0, blank=True)
     moderateur = models.IntegerField(default=1, blank=True)
@@ -246,3 +245,22 @@ class RechercheForm(ModelForm):
     class Meta:
         model = Recherche
         fields = ['search','rech_pers','rech_fam','rech_page']
+
+
+class BanqueImages(models.Model):
+    photo1 = models.ImageField(default='test.jpg', blank=True)
+    photo2 = models.ImageField(upload_to="img/", default='', blank=True)
+    photo3 = models.ImageField(upload_to="img/", default='', blank=True)
+    photo4 = models.ImageField(upload_to="img/", default='', blank=True)
+    photo5 = models.ImageField(upload_to="img/", default='', blank=True)
+    photo6 = models.ImageField(upload_to="img/", default='', blank=True)
+    photo7 = models.ImageField(upload_to="img/", default='', blank=True)
+    photo8 = models.ImageField(upload_to="img/", default='', blank=True)
+    photo9 = models.ImageField(upload_to="img/", default='', blank=True)
+    photo10 = models.ImageField(upload_to="img/", default='', blank=True)
+    
+
+class BanqueImagesForm(ModelForm):
+    class Meta:
+        model = BanqueImages
+        fields = {'photo1','photo2','photo3','photo4','photo5','photo6','photo7','photo8','photo9','photo10'}

@@ -45,8 +45,7 @@
 			<div class="box_type2">
 				<!-- Image de profil -->
 			    <div class="right cadre_image">
-					<div class="image">
-					</div>
+					<img src="{{ utilis.photo.url }}" style="height:150px;width:150px;">
 				</div>
 
 				<nav class="nav-extended teal lighten-1">
@@ -154,7 +153,11 @@
 					<a href="#" class="waves-effect waves-light btn">Ajouter une/des image(s)</a>
 				</div>
 			 	<div class="actus">
-			  		<p  class="teal lighten-3"> Vous n'avez aucune actualité pour le moment! <br> Ajoutez un évènement ou suivez l'actualité d'une personne ou d'une page. </p>
+					<p  class="teal lighten-3"> Banque d'images : <br/><br/>
+
+						<!--{{ banque_img.photo1 }}-->
+
+						Vous n'avez aucune actualité pour le moment! <br> Ajoutez un évènement ou suivez l'actualité d'une personne ou d'une page. </p>
 				</div>
 			</div>
 		</div>
@@ -164,7 +167,7 @@
 
 		<!--Onglet pour les discussions-->
 		<div id="box_discu" class="col s12 gros_conteneur_central">
-			Ici on mettra les discussions
+			<a href="{% url 'renvoi_Email' %}"<button class="btn waves-effect waves-light" type="submit" >Envoyer un mail<i class="material-icons right">email</i></button></a>
 		</div>
 
 
@@ -230,11 +233,13 @@
 		</div>
 
 		<!--Image de pub-->
-		<div class="box_type2">
-			<img src="{% static 'img/pub9.jpg' %}" style="width:80%;height:80%;">
-		</div>
+		
 
 	</div>
+
+	<div class="pub">
+			<img src="{% static 'img/pub9.jpg' %}" style="width:80%;height:80%;">
+		</div>
         
 
     <!-- Scripts pour le framework Materialize -->    
