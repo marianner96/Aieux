@@ -19,6 +19,13 @@ from .forms import RejoindreForm
 
 from pprint import pprint
 import os
+from django.views.decorators.cache import never_cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+
 
 
 # Fonction qui permet à l'utilisateur de s'inscrire
@@ -322,6 +329,7 @@ def logout_view(request):
 	return redirect('accueilForm')
 
 
+
 #=====================================================================================================================
 #==============================================FONCTION POUR L'ARBRE==================================================
 #=====================================================================================================================
@@ -370,16 +378,27 @@ def initialise_fichier(request):
 	return render(request, template_name='arbre.html', context={"error":error})
 
 
+@never_cache
 def arbre(request):
     error = None
     return render(request, template_name='arbre.html', context={"error": error})
 
-
+@never_cache
 def add_membre_arbre(request):
     error = None
     return render(request, template_name='add_membre_arbre.html', context={"error": error})
 
-#rempli le fichier modifs.json de la chaine passe en parametre = les modifs a mettre a jour dans l'arbre
+@never_cache
+def supp_membre_arbre(request):
+    error = None
+    return render(request, template_name='supp_membre_arbre.html', context={"error": error})
+
+@never_cache
+def maj_arbre(request):
+    error = None
+    return render(request, template_name='arbre.html', context={"error": error})
+
+@never_cache#rempli le fichier modifs.json de la chaine passe en parametre = les modifs a mettre a jour dans l'arbre
 def modifierfichier(request):
     print("---MODIFICATION DU FICHIER modifs.json-------------------------------------")
 
@@ -389,8 +408,16 @@ def modifierfichier(request):
     p=request.GET['sonprenom']
     s=request.GET['sonsexe']
 
+    print("Mes variables: ")
+    print(t)
+    print(l)
+    print(n)
+    print(p)
+    print(s)
+
     nouv_liste = '{ "nouv_membre" : [ {"type":"'+t+'"}, {"lienfamille":"'+l+'"}, {"nom":"'+n+'"}, {"prenom":"'+p+'"}, {"sexe":"'+s+'"} ]}'
 
+    print("Fichier modifs (apres le remplissage): ")
     print(nouv_liste)
 
     fic = open ("Formulaires/static/json/modifs.json", "w")
@@ -399,7 +426,7 @@ def modifierfichier(request):
 
     return ""
 
-#utilisable via javascript : rajoute le nouveau membre a la liste des personnes sans conjoint grace a une requete
+@never_cache#utilisable via javascript : rajoute le nouveau membre a la liste des personnes sans conjoint grace a une requete
 def maj_lsc(request):
     print("---MAJ LISTE SANS CONJOINT")
     mon_fichier = open("Formulaires/static/json/liste_sans_conj.json", "r")
@@ -414,22 +441,9 @@ def maj_lsc(request):
 
     return ""
 
-#utilisable via python: rajoute le nouveau membre a la liste des personnes sans conjoint grace au parametres
-def maj_lsc_b(sonnom, sonprenom, sonsexe):
-    print("---MAJ LISTE SANS CONJOINT BIS")
-    mon_fichier = open("Formulaires/static/json/liste_sans_conj.json", "r")
-    contenu = mon_fichier.read()
-    mon_fichier.close()
 
-    nouvelle_liste=contenu[:-2]+',{"nom":"'+sonnom+'","prenom":"'+sonprenom+'","sexe":"'+sonsexe+'"}]}'
 
-    fic = open ("Formulaires/static/json/liste_sans_conj.json", "w")
-    fic.write(nouvelle_liste)
-    fic.close()
-
-    return ""
-
-#Met a jour les listes correspondante a un nouveau parent
+@never_cache#Met a jour les listes correspondante a un nouveau parent
 def maj_lnp(request):
     print("---MAJ LISTE NOUVEAU PARENT")
     #But 1: verifier si l'enfant du nouveau parent a deja un ou des parent(s) cad verifier s'il est dans la liste des enfants sans parents
@@ -437,8 +451,7 @@ def maj_lnp(request):
     data = json.load(json_data)
     #print("-------Contenu du fichier liste_enfants (SANS PARENTS): ")
     #print type(data) #dict
-    pprint(data)
-
+    #pprint(data)
     json_data.close()
 
 
@@ -459,7 +472,7 @@ def maj_lnp(request):
         prenomListe=liste[i]["prenom"] 
 
     dictio = liste[i] #le dicionnaire correspondant a l'orphelin a etudier
-    print(dictio["parent"]) #le resultat de la cle parent = true ou false = s'il a deja un parent ou non
+    #print(dictio["parent"]) #le resultat de la cle parent = true ou false = s'il a deja un parent ou non
 
     nomp=request.GET['sonnom'] #du nouveau parent
     prenomp=request.GET['sonprenom']
@@ -467,47 +480,174 @@ def maj_lnp(request):
 
     if(dictio["parent"]!="non"): #si l'enfant a deja un (seul) parent 
         #Ajout d'un nouveau couple a la liste des couples
-        add_couple(nomp,prenomp,dictio["parent"].split()[0],dictio["parent"].split()[1])
-        #Enleve les deux amoureux de la liste des personnes sans conjoint
-        supp_lsc(nomp,prenomp,dictio["parent"].split()[0],dictio["parent"].split()[1])
-        #Enlever l'enfant de la liste des enfants sans parents (enlever enfant du nouv parent)
-        supp_le(nomCherche,prenomCherche)
+        #Puis enleve les deux amoureux de la liste des personnes sans conjoint
+        #Et enleve l'enfant de la liste des enfants sans parents (enlever enfant du nouv parent)
+        #Et aussi la liste des enfants sans parents (ajout du nouv parent)
+        maj_np2(nomp,prenomp,dictio["parent"].split()[0],dictio["parent"].split()[1],nomCherche,prenomCherche,nomp,prenomp,sexep)
 
     else: #si l'enfant n'a aucun parent
-        #met a jour la liste des enfants sans parents (modification du parametre parent a true)
-        maj_le_parametre(i, data,(nomp+" "+prenomp))
         #met a jour la liste des personnes sans conjoint
-        maj_lsc_b(nomp,prenomp,sexep)
-
-    #Et aussi la liste des enfants sans parents (ajout du nouv parent)
-    add_enfant(nomp,prenomp,sexep)
+        #met a jour la liste des enfants sans parents (modification du parametre parent a true)
+        #Et aussi la liste des enfants sans parents (ajout du nouv parent)
+        maj_np(i, data,(nomp+" "+prenomp),nomp,prenomp,sexep)
     
     return ""
 
-#Rajoute un parent a l'enfant concerne dans la liste des enfants
-def maj_le_parametre(i, ancien_json,sonparent):
+@never_cache 
+def maj_np(i, ancien_json,sonparent, sonnom, sonprenom, sonsexe):
+    default=None
+    #met a jour la liste des enfants sans parents 
     print("---MAJ LISTE ENFANT PARAMETRE")
     liste = ancien_json["orphelins"]
-    string_json = '{"orphelins":['
+    nouvelle_liste = '{"orphelins":['
     j=0
     for enfant in range(len(liste)):
         re_enfant='{"nom": "'+liste[enfant]["nom"]+'", "prenom": "'+liste[enfant]["prenom"]+'", "sexe": "'+liste[enfant]["sexe"]
-        print(type(re_enfant))
         if (enfant==i):
             nouv_dictio=re_enfant+'", "parent": "'+sonparent+'"},'
-            string_json=string_json+nouv_dictio
+            nouvelle_liste=nouvelle_liste+nouv_dictio
         else: 
             remet_ordre=re_enfant+'", "parent": "'+liste[enfant]["parent"]+'"},' 
-            string_json=string_json+remet_ordre
+            nouvelle_liste=nouvelle_liste+remet_ordre
 
-    string_json=string_json[:-1]+']}' #on enleve la derniere virgule et on ferme le crochet et l'accolade
+    nouvelle_liste=nouvelle_liste[:-1]+']}' #on enleve la derniere virgule et on ferme le crochet et l'accolade
+
+    print("Fichier liste_enfants (apres ajout du parametre pour l'enfant du nouveau parent):")
+    print(nouvelle_liste)
 
     mon_fichier = open("Formulaires/static/json/liste_enfants.json", "w")
-    mon_fichier.write(string_json)
+    mon_fichier.write(nouvelle_liste)
     mon_fichier.close()
-    return ""
 
-#Ajoute un enfant dans la liste des enfants (sans parents)
+
+    #met a jour la liste des personnes sans conjoint
+    #rajoute le nouveau membre a la liste des personnes sans conjoint
+
+    print("---MAJ LISTE SANS CONJOINT BIS")
+    mon_fichier2 = open("Formulaires/static/json/liste_sans_conj.json", "r")
+    contenu2 = mon_fichier2.read()
+    mon_fichier2.close()
+
+    nouvelle_liste2=contenu2[:-2]+',{"nom":"'+sonnom+'","prenom":"'+sonprenom+'","sexe":"'+sonsexe+'"}]}'
+
+    fic = open ("Formulaires/static/json/liste_sans_conj.json", "w")
+    fic.write(nouvelle_liste2)
+    fic.close()
+
+    print("Fichier liste_sans_conj (apres ajout du nouveau membre):")
+    print(nouvelle_liste2)
+
+
+    #Ajoute un enfant dans la liste des enfants (sans parents)
+    print("---MAJ LISTE ENFANTS (sans parents)")
+    mon_fichier3 = open("Formulaires/static/json/liste_enfants.json", "r")
+    contenu3 = mon_fichier3.read()
+    mon_fichier3.close()
+
+    nouvelle_liste=contenu3[:-2]+',{"nom":"'+sonnom+'","prenom":"'+sonprenom+'","sexe":"'+sonsexe+'", "parent": "non" }]}'
+
+    fic = open ("Formulaires/static/json/liste_enfants.json", "w")
+    fic.write(nouvelle_liste)
+    fic.close()
+
+    print("Fichier liste_enfants (apres ajout du nouveau membre): ")
+    print(nouvelle_liste)
+
+    return default
+
+def maj_np2(sonnom,sonprenom,sonnom2,sonprenom2, nomenfant, prenomenfant, nomp, prenomp, sexep):
+    #Ajoute un nouveau couple dans la liste des couples
+    print("---MAJ LISTE COUPLE")
+    mon_fichier = open("Formulaires/static/json/liste_couples.json", "r")
+    contenu = mon_fichier.read()
+    mon_fichier.close()
+
+    nouvelle_liste=contenu[:-2]+',{"nom":"'+sonnom+'","prenom":"'+sonprenom+'","nom2":"'+sonnom2+'", "prenom2": "'+sonprenom2+'" }]}'
+
+    fic = open ("Formulaires/static/json/liste_couples.json", "w")
+    fic.write(nouvelle_liste)
+    fic.close()
+
+    print("Fichier liste_couples (apres ajout du couple)): ")
+    print(nouvelle_liste)
+
+
+    #Supprime deux personnes (le nouveau couple) de la liste des personnes sans conjoint
+    print("---SUPPRIMER LISTE SANS CONJOINT")
+    #Trouver et enlever le nouveau couple de la liste des personnes sans conjoint 
+    json_data=open('Formulaires/static/json/liste_sans_conj.json')
+    data = json.load(json_data)
+    print("--------------Contenu du fichier liste_sans_conj: ")
+    pprint(data)
+
+    json_data.close()
+
+    nouvelle_liste='{"sansconj":['
+
+    liste = data["sansconj"] #la liste des personnes sans conj de mon fichier liste_sans_conj
+    for personne in liste:
+        #si le nom et le prenom de la personne ne correspond pas a ceux du couple 
+        if ((personne["nom"]!=sonnom) or (personne["prenom"]!=sonprenom)) and ((personne["nom"]!=sonnom2) or (personne["prenom"]!=sonprenom2)):
+            #il faut le/la garder dans la liste
+            nouvelle_liste=nouvelle_liste+'{"nom": "'+personne["nom"]+'", "prenom": "'+personne["prenom"]+'", "sexe": "'+personne["sexe"]+'"},"'
+        #et sinon on ne fait rien puisque le but est d'enlever le couple de la liste des personnes sans conjoint
+
+    nouvelle_liste=nouvelle_liste[:-2]+']}'
+
+    fic = open ("Formulaires/static/json/liste_sans_conj.json", "w")
+    fic.write(nouvelle_liste)
+    fic.close()
+
+    print("Fichier liste_sans_conj (apres la suppression du conj du couple)")
+    print(nouvelle_liste)
+
+
+    #Supprime un enfant de la liste des enfants (sans parents) le nom et prenom de l'enfant est passe en parametre (c'est l'enfant du nouveau couple)
+    print("---SUPPRIMER LISTE ENFANT")
+    #Trouver et enlever le nouveau couple de la liste des personnes sans conjoint 
+    json_data=open('Formulaires/static/json/liste_enfants.json')
+    data = json.load(json_data)
+    print("--------------Contenu du fichier liste_enfants: ")
+    pprint(data)
+    json_data.close()
+
+    nouvelle_liste='{"orphelins":['
+
+    liste = data["orphelins"] #la liste des orphelins (=enfant avec un parent maximum)
+    for enfant in liste:
+        if ((enfant["nom"]!=nomenfant) or (enfant["prenom"]!=prenomenfant)):
+            #il faut le/la garder dans la liste
+            nouvelle_liste=nouvelle_liste+'{"nom": "'+enfant["nom"]+'", "prenom": "'+enfant["prenom"]+'", "sexe": "'+enfant["sexe"]+'", "parent": "'+enfant["parent"]+'"}, '
+
+    nouvelle_liste=nouvelle_liste[:-2]+']}'
+
+    fic = open ("Formulaires/static/json/liste_enfants.json", "w")
+    fic.write(nouvelle_liste)
+    fic.close()
+
+    print("Fichier liste_enfant (apres la suppression d'un enfant)")
+    print(nouvelle_liste)
+
+
+    #Rajoute le nouveau membre a la liste des enfants (sans parents)
+    print("---MAJ LISTE ENFANTS (sans parents)")
+    mon_fichier3 = open("Formulaires/static/json/liste_enfants.json", "r")
+    contenu3 = mon_fichier3.read()
+    mon_fichier3.close()
+
+    nouvelle_liste=contenu3[:-2]+',{"nom":"'+nomp+'","prenom":"'+prenomp+'","sexe":"'+sexep+'", "parent": "non" }]}'
+
+    fic = open ("Formulaires/static/json/liste_enfants.json", "w")
+    fic.write(nouvelle_liste)
+    fic.close()
+
+    print("Fichier liste_enfants (apres ajout du nouveau membre): ")
+    print(nouvelle_liste)
+
+
+
+
+@never_cache#Ajoute un enfant dans la liste des enfants (sans parents)
 def add_enfant(sonnom,sonprenom,sonsexe):
     print("---MAJ LISTE ENFANTS (sans parents)")
     mon_fichier = open("Formulaires/static/json/liste_enfants.json", "r")
@@ -520,9 +660,12 @@ def add_enfant(sonnom,sonprenom,sonsexe):
     fic.write(nouvelle_liste)
     fic.close()
 
+    print("Fichier liste_enfants (apres ajout du nouveau membre): ")
+    print(nouvelle_liste)
+
     return ""
 
-#Ajoute un nouveau couple dans la liste des couples
+@never_cache#Ajoute un nouveau couple dans la liste des couples
 def add_couple(sonnom,sonprenom,sonnom2,sonprenom2):
     print("---MAJ LISTE COUPLE")
     mon_fichier = open("Formulaires/static/json/liste_couples.json", "r")
@@ -535,9 +678,12 @@ def add_couple(sonnom,sonprenom,sonnom2,sonprenom2):
     fic.write(nouvelle_liste)
     fic.close()
 
+    print("Fichier liste_couples (apres ajout du couple)): ")
+    print(nouvelle_liste)
+
     return ""
 
-#Supprime deux personnes (le nouveau couple) de la liste des personnes sans conjoint
+@never_cache#Supprime deux personnes (le nouveau couple) de la liste des personnes sans conjoint
 def supp_lsc(sonnom,sonprenom,sonnom2,sonprenom2):
     print("---SUPPRIMER LISTE SANS CONJOINT")
     #Trouver et enlever le nouveau couple de la liste des personnes sans conjoint 
@@ -564,9 +710,12 @@ def supp_lsc(sonnom,sonprenom,sonnom2,sonprenom2):
     fic.write(nouvelle_liste)
     fic.close()
 
+    print("Fichier liste_sans_conj (apres la suppression du conj du couple)")
+    print(nouvelle_liste)
+
     return ""
 
-#Supprime un enfant de la liste des enfants (sans parents) le nom et prenom de l'enfant est passe en parametre
+@never_cache#Supprime un enfant de la liste des enfants (sans parents) le nom et prenom de l'enfant est passe en parametre
 def supp_le(sonnom,sonprenom):
     print("---SUPPRIMER LISTE ENFANT")
     #Trouver et enlever le nouveau couple de la liste des personnes sans conjoint 
@@ -590,9 +739,12 @@ def supp_le(sonnom,sonprenom):
     fic.write(nouvelle_liste)
     fic.close()
 
+    print("Fichier liste_enfant (apres la suppression d'un enfant)")
+    print(nouvelle_liste)
+
     return ""
 
-#Met a jour les listes concernes lorsque le nouveau membre est un conjoint
+@never_cache#Met a jour les listes concernes lorsque le nouveau membre est un conjoint
 def maj_lnc(request):
     print("---MAJ LISTE NOUVEAU CONJOINT")
     #Ajout du nouveau couple a la liste 
@@ -616,7 +768,7 @@ def maj_lnc(request):
     supp_lsc(nom,prenom,nomconj,prenomconj)
     return ""
 
-#Supprime les enfants de la listes des enfants (sans parents) du parent passe en parametre
+@never_cache#Supprime les enfants de la listes des enfants (sans parents) du parent passe en parametre
 def supp_les(nomconj,prenomconj):
     print("---SUPPRIMER LISTE ENFANTS")
     #Trouver et enlever le nouveau couple de la liste des personnes sans conjoint 
@@ -643,7 +795,7 @@ def supp_les(nomconj,prenomconj):
 
     return ""
 
-#met a jour le fichier nodesedges.json a partir du fichier modifs.json
+@never_cache#met a jour le fichier nodesedges.json a partir du fichier modifs.json
 def maj_nodes_edges(request):
     print("---MAJ DES NOEUDS")
 
@@ -651,22 +803,22 @@ def maj_nodes_edges(request):
 
         json_data=open('Formulaires/static/json/nodesedges.json')
         data = json.load(json_data)
-        print("--------------Contenu du fichier nodesedges.json: ")
-        pprint(data)
+        #print("--------------Contenu du fichier nodesedges.json: ")
+        #pprint(data)
         json_data.close()
 
         nodes=data["nodes"]
         edges=data["edges"]
 
-        print("La liste des nodes: ")
-        print(nodes)
-        print("La liste des edges: ")
-        print(edges)
+        #print("La liste des nodes: ")
+        #print(nodes)
+        #print("La liste des edges: ")
+        #print(edges)
 
         json_data2=open('Formulaires/static/json/modifs.json')
         data2 = json.load(json_data2)
-        print("--------------Contenu du fichier modifs.json: ")
-        pprint(data2)
+        #print("--------------Contenu du fichier modifs.json: ")
+        #pprint(data2)
         json_data2.close()
 
         membre=data2["nouv_membre"] #le nouveau membre a ajouter a l'arbre = liste
@@ -691,19 +843,13 @@ def maj_nodes_edges(request):
         else: #en theorie on ne devrait jamais avoir ce cas mais au cas ou...
             print("Erreur lors de la lecture du type du nouveau membre")
 
-        #on vide le fichier modifs pour ne pas renvoyer les infos a chaque fois que l'utilisateur actualise la page
-        fic = open ("Formulaires/static/json/modifs.json", "w")
-        fic.write("")
-        fic.close()
-
-
     else:
         print("Fichier vide, aucune modification n'est a faire!")
 
 
     return ""
 
-
+@never_cache
 def maj_enfant(membre,nodes,edges):
     print("---MAJ ENFANT")
     #Premier but: rajouter l'enfant a la liste des nodes
@@ -750,10 +896,15 @@ def maj_enfant(membre,nodes,edges):
     fic = open ("Formulaires/static/json/nodesedges.json", "w")
     fic.write(nouv_nodes_edges)
     fic.close()
+
+    #on vide le fichier modifs pour ne pas renvoyer les infos a chaque fois que l'utilisateur actualise la page
+    fic = open ("Formulaires/static/json/modifs.json", "w")
+    fic.write("")
+    fic.close()
     
     return ""
 
-#met a jour le fichier nodesedges pour le cas d'un nouveau parent
+@never_cache#met a jour le fichier nodesedges pour le cas d'un nouveau parent
 def maj_parent(membre,nodes,edges):
     print("---MAJ PARENT")
 
@@ -809,10 +960,15 @@ def maj_parent(membre,nodes,edges):
     fic = open ("Formulaires/static/json/nodesedges.json", "w")
     fic.write(nouv_nodes_edges)
     fic.close()
+
+    #on vide le fichier modifs pour ne pas renvoyer les infos a chaque fois que l'utilisateur actualise la page
+    fic = open ("Formulaires/static/json/modifs.json", "w")
+    fic.write("")
+    fic.close()
     
     return ""
 
-
+@never_cache
 def maj_couple(membre,nodes,edges):
     print("---MAJ COUPLE")
     #Premier but: mettre a jour la liste des nodes = cad rajouter une personne et potentiellement un mariage
@@ -870,6 +1026,163 @@ def maj_couple(membre,nodes,edges):
     fic = open ("Formulaires/static/json/nodesedges.json", "w")
     fic.write(nouv_nodes_edges)
     fic.close()
+
+    #on vide le fichier modifs pour ne pas renvoyer les infos a chaque fois que l'utilisateur actualise la page
+    fic = open ("Formulaires/static/json/modifs.json", "w")
+    fic.write("")
+    fic.close()
+
+    return ""
+
+
+#Supprime le membre membre_a_supp de toutes les listes
+def supprime_membre(request):
+    membre_a_supp=request.GET['membre']
+    #Supprime le membre de l'arbre = cad du fichier nodesedges
+    print("---MAJ SUPP MEMBRE DE NODESEDGES: ")
+
+    json_data=open('Formulaires/static/json/nodesedges.json') #lis le fichier nodes edges
+    data = json.load(json_data)
+    json_data.close()
+
+    nodes=data["nodes"]
+    edges=data["edges"]
+
+    #Pour les nodes
+    nouv_nodes='"nodes":[ '
+
+    for i in range(len(nodes)):
+        lab=nodes[i]["label"] #le label du ieme element de ma liste des nodes
+
+        if lab=="Mariage": #si c'est un mariage
+            nouv_nodes=nouv_nodes+'{"id": '+str(nodes[i]["id"])+', "label": "Mariage"},'
+
+        elif (lab!=membre_a_supp): #si le label est different de la personne qu'on cherche
+            nouv_nodes=nouv_nodes+'{"id": '+str(nodes[i]["id"])+', "shape": "image", "image": "'+nodes[i]["image"]+'", "label":"'+lab+'"},'
+
+        else: #si c'est la personne que nous souhaitons supprimer, on recuper son id 
+            sonid = i+1
+
+    nouv_nodes=nouv_nodes[:-1]+' ], '
+
+    #Pour les edges, les liens
+    nouv_edges='"edges":[ '
+
+    for k in range(len(edges)):
+        if (edges[k]["from"]!=sonid) and (edges[k]["to"]!=sonid): #si le lien considere ne relie pas l'id de la personne supprime on le garde 
+            nouv_edges=nouv_edges+'{"from": '+str(edges[k]["from"])+', "to": '+str(edges[k]["to"])+'},'
+        #sinon on ne le recopie pas
+
+    nouv_edges=nouv_edges[:-1]+' ] ' 
+
+    nouv_nodes_edges='{ '+nouv_nodes+nouv_edges+' }'
+    print("La nouvelle liste des nodes et edges est: ")
+    print(nouv_nodes_edges)
+
+    #puis met a jour le fichier nodesedges
+    fic = open ("Formulaires/static/json/nodesedges.json", "w")
+    fic.write(nouv_nodes_edges)
+    fic.close()
+
+    #Supprime le membre de la liste des couples (ainsi que son conjoint)
+    print("---MAJ SUPP MEMBRE DE LISTE COUPLE: ")
+    json_data=open('Formulaires/static/json/liste_couples.json') 
+    data1 = json.load(json_data)
+    json_data.close()
+
+    liste_couples=data1["couples"]
+    nouv_liste_couples='{ "couples" : ['
+    conj="" #sert a enregistrer le conjoint du membre qu'on supprime au besoin
+
+    for i in range(len(liste_couples)):
+        nom1=liste_couples[i]["nom"]
+        prenom1=liste_couples[i]["prenom"]
+        identite1=nom1+' '+prenom1
+
+        nom2=liste_couples[i]["nom2"]
+        prenom2=liste_couples[i]["prenom2"]
+        identite2=nom2+' '+prenom2
+
+        if (identite1!=membre_a_supp) and (identite2!=membre_a_supp): #si aucune personne du couple etudie n'est la personne a supprimer on recopie le couple
+            nouv_liste_couples=nouv_liste_couples+'{ "nom": "'+nom1+'", "prenom": "'+prenom1+'", "nom2": "'+nom2+'", "prenom2": "'+prenom2+'"},'
+        else: #sinon il faut recuperer son conjoint (pour le mettre dans la liste des personnes sans conjoint)
+            if (identite1!=membre_a_supp): #si la premiere personne n'est pas le membre a supprimer on garde son nom et son prenom
+                nom_conjoint=nom1
+                prenom_conjoint=prenom1 
+                conj='{ "nom": "'+nom_conjoint+'", "prenom": "'+prenom_conjoint+'", "sexe": "m" },'
+            else: #sinon cela signifie que c'est la deuxieme personne du couple
+                nom_conjoint=nom2
+                prenom_conjoint=prenom2
+                conj='{ "nom": "'+nom_conjoint+'", "prenom": "'+prenom_conjoint+'", "sexe": "m" },'
+
+
+    nouv_liste_couples=nouv_liste_couples[:-1]+' ]}'
+
+    print("La nouvelle liste des couples est: ")
+    print (nouv_liste_couples)
+
+    #puis met a jour le fichier liste_couples
+    fic1 = open ("Formulaires/static/json/liste_couples.json", "w")
+    fic1.write(nouv_liste_couples)
+    fic1.close()
+
+    #Supprime le membre de la liste des enfants (sans parents) et l'enleve du parametre parent s'il y etait
+    print("---MAJ SUPP MEMBRE DE LISTE ENFANTS: ")
+    json_data=open('Formulaires/static/json/liste_enfants.json') 
+    data2 = json.load(json_data)
+    json_data.close()
+
+    liste_orphelins=data2["orphelins"]
+    nouv_liste_orphelins='{ "orphelins" : ['
+
+    for j in range(len(liste_orphelins)):
+        nom=liste_orphelins[j]["nom"]
+        prenom=liste_orphelins[j]["prenom"]
+        parent=liste_orphelins[j]["parent"]
+        identite=nom+' '+prenom
+
+        if (identite!=membre_a_supp): 
+            if (parent==membre_a_supp): #si le (seul) parent de l'enfant est le membre a supprimer on lui enleve son parent
+                parent="non"
+            nouv_liste_orphelins=nouv_liste_orphelins+'{ "nom": "'+nom+'", "prenom": "'+prenom+'", "sexe": "'+liste_orphelins[j]["sexe"]+'", "parent": "'+parent+'"},'
+
+    nouv_liste_orphelins=nouv_liste_orphelins[:-1]+' ]}'
+
+    print("La nouvelle liste des orphelins est: ")
+    print (nouv_liste_orphelins)
+
+    #puis met a jour le fichier liste_enfants
+    fic1 = open ("Formulaires/static/json/liste_enfants.json", "w")
+    fic1.write(nouv_liste_orphelins)
+    fic1.close()
+
+    #Supprime le membre de la liste des personnes sans conjoint
+    print("---MAJ SUPP MEMBRE DE LISTE SANS CONJOINT: ")
+    json_data=open('Formulaires/static/json/liste_sans_conj.json') 
+    data3 = json.load(json_data)
+    json_data.close()
+
+    liste_celib=data3["sansconj"]
+    nouv_liste_celib='{ "sansconj" : [ '
+
+    for j in range(len(liste_celib)):
+        nom=liste_celib[j]["nom"]
+        prenom=liste_celib[j]["prenom"]
+        identite=nom+' '+prenom
+
+        if (identite!=membre_a_supp): #si le membre etudie n'est pas le membre a supprimer on le laisse dans la liste des sans conjoints
+            nouv_liste_orphelins=nouv_liste_orphelins+'{ "nom": "'+nom+'", "prenom": "'+prenom+'", "sexe": "'+liste_celib[j]["sexe"]+'"},'
+
+    nouv_liste_celib=conj+nouv_liste_celib[:-1]+' ]}'
+
+    print("La nouvelle liste des celibataire est: ")
+    print (nouv_liste_celib)
+
+    #puis met a jour le fichier liste_sans_conj
+    fic1 = open ("Formulaires/static/json/liste_sans_conj.json", "w")
+    fic1.write(nouv_liste_celib)
+    fic1.close()
+
 
     return ""
 

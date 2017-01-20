@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">    
-    <meta http-equiv="expires" content="Tue, 20 Aug 1996 14:25:27 GMT" />
-    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Arbre</title>
 
     {% load static %}
@@ -16,20 +17,19 @@
     <link rel="stylesheet" type="text/css" href='{% static "vis-network.min.css" %}'/>
     <link rel="stylesheet" type="text/css" href='{% static "arbre.css" %}'>
 
-
-
 </head>
 
 
 <body onload="charge_arbre();">
     <h2>Mon arbre généalogique</h2>
 
-    <h3>Cliquez sur l'élément 14 (soit Jeanne) pour aller à une autre page!</h3>
+    <h4>Veuillez vide le cache de votre navigateur pour voir la mise à jour!</h4> <br>
 
     <div id="mynetwork"></div>
     <pre id="eventSpan"></pre>
 
-    <a id='bouton_ajout_membre' href="/add_membre_arbre">Ajouter un membre</a>
+    <a id='bouton_ajout_membre' href="/add_membre_arbre">Ajouter un membre</a> <br>
+    <a id='bouton_supp_membre' href="/supp_membre_arbre">Supprimer un membre</a>
 
 
 </body>

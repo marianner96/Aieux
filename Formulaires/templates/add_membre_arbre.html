@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Expires" content="Mon, 2 Jan 2017 05:00:00 GMT">
-    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Ajout d'un membre à l'arbre</title>
 
     {% load static %}
@@ -15,10 +16,12 @@
 <body onload="maj_options()">
     <h3>AJOUT</h3><br><br>
 
+    <h4>Veuillez vide le cache de votre navigateur pour voir la mise à jour!</h4> <br>
+
     <form method='post' action="{% url 'arbre' %}" onsubmit="maj_nouv_membre()">
             {%csrf_token%}
 			<input id="nom_membre_add" name="nom_membre_add" type="text" required>
-            <label for="nom_membre_add">Quel est le nom de famille de la personne? </label>
+            <label for="nom_membre_add">Quel est le nom de famille de la personne? </label><br>
 
             <input id="prenom_membre_add" name="prenom_membre_add" type="text" required>
             <label for="prenom_membre_add">Quel est son prénom? </label>
