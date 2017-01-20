@@ -1,0 +1,58 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/materialize.min.css' %}" />
+
+<script type="text/javascript" src="{% static 'Formulaires/Formulaires.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/materialize.min.js' %}"></script>
+
+<!-- Icones -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8" />
+    <title>Mes aïeux</title>
+</head>
+
+
+<body class="cyan lighten-4">
+
+<div  id="conteneur_site">
+<p>Voici les résultats de la recherche :</p> 
+
+<!--Si l'utilisateur recherche une personne -->
+{% if rech_pers == 'rech_pers' %}	
+	Personnes trouvées : <br/><br/>
+	{% for i in res_pers %}
+		Prénom : {{ i.prenom }}<br/>
+		Nom : {{ i.nom }}<br/>
+		Email : {{ i.email }}<br/>
+	{% endfor %}
+{% endif %}
+<!--Si l'utilisateur recherche une famille -->
+{% if rech_fam == 'rech_fam' %}	
+	Familles trouvées : <br/><br/>
+	{% for i in res_fam %}
+		Nom de la famille : {{ i.nom }}<br/>
+		Nombre de membre : {{ i.nb_personnes}}<br/>
+	{% endfor %}
+{% endif %}
+<!--Si l'utilisateur recherche une page -->
+{% if rech_page == 'rech_page' %}	
+	Pages trouvées : <br/><br/>
+	{% for i in res_page %}
+		Nom de la famille : {{ i.nom }}<br/>
+		Nombre de membre : {{ i.nb_personnes}}<br/>
+	{% endfor %}
+{% endif %}
+
+
+
+<div align="center"><a href="{% url 'Menu' %}" class="waves-effect waves-light btn">Revenir à mon profil</a></div>
+</div>
+</body>
+</html>
