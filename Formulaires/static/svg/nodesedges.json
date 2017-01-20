@@ -1,6 +1,13 @@
 {
 	"nodes":[
-		{"id": 1, "shape": "image", "image": "/static/img/homme.jpeg", "label":"FamilleDeRoger Roger"}
+		{"id": 1, "shape": "image", "image": "/static/img/homme.jpeg", "label":"FamilleDeRoger Roger"},
+		{"id": 2, "shape": "image", "image": "/static/img/homme.jpeg", "label":"FamilleDeRoger Papa"},
+		{"id": 3, "shape": "image", "image": "/static/img/femme.png", "label":"FamilleDeRoger Maman"},
+		{"id": 4, "label": "Mariage"}
 	],
-	"edges":[]
+	"edges":[
+		{"from": 2, "to": 4},
+		{"from": 3, "to": 4},
+		{"from": 4, "to": 1}
+	]
 }

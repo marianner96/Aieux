@@ -335,6 +335,7 @@ def logout_view(request):
 #Remplis les fichiers si sont vides
 
 def initialise_fichier(request):
+	print("---INITIALISATION DES FICHIERS")
 	error=None
 	user1 = User.objects.filter(email = request.user)
 	user2 = user1[0]
@@ -351,24 +352,28 @@ def initialise_fichier(request):
 
 	#si le fichier liste_couples est vide
 	if (os.path.getsize("Formulaires/static/json/liste_couples.json")==0):
+		print("Fichier liste_couples vide, remplissage...")
 		contenu_c = '{ "couples" : }'
 		fic = open ("Formulaires/static/json/liste_couples.json", "w")
 		fic.write(contenu_c)
 		fic.close()
 
 	if (os.path.getsize("Formulaires/static/json/liste_enfants.json")==0):
+		print("Fichier liste_enfants vide, remplissage...")
 		contenu_e = '{"orphelins": [{"nom": "'+nom+'", "prenom": "'+prenom+'", "sexe": "'+sexe+'", "parent": "non"}]}'
 		fic = open ("Formulaires/static/json/liste_enfants.json", "w")
 		fic.write(contenu_e)
 		fic.close()
 
 	if (os.path.getsize("Formulaires/static/json/liste_sans_conj.json")==0):
+		print("Fichier liste_sans_conj vide, remplissage...")
 		contenu_sc = '{"sansconj":[{"nom": "'+nom+'", "prenom": "'+prenom+'", "sexe": "'+sexe+'"}]}'
 		fic = open ("Formulaires/static/json/liste_sans_conj.json", "w")
 		fic.write(contenu_sc)
 		fic.close()
 
 	if (os.path.getsize("Formulaires/static/json/nodesedges.json")==0):
+		print("Fichier liste_nodesedges vide, remplissage...")
 		contenu = '{"nodes":[ {"id": 1, "shape": "image", "image": "'+img+'", "label":"'+nom+' '+prenom+'"}],"edges":[]}'
 		fic = open ("Formulaires/static/json/nodesedges.json", "w")
 		fic.write(contenu)
