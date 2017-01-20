@@ -27,6 +27,25 @@ Il faut alors aller à l'adresse suivante :
 
 A l'aide d'un navigateur quelconque.
 
+
+Pour créer un super user : 
+
+> python manage.py createsuperuser
+
+Par défaut le super user que nous avons créé a les informations suivantes : 
+
+Username : eisti
+
+Email : eisti@eisti.eu
+
+mdp : aieuxaieux
+
+Ces identifiants nous permettent d'aller sur le module d'administration du site. Pour accéder à celui ci, une fois le serveur démarrer il faut rentrer l'url suivant : 
+
+> http://127.0.0.1:0000/admin/
+
+Puis ensuite on rentre l'identifiant eisti, et le mot de passe aieuxaieux.
+
 ### Auteurs : 
 Ng Tock Mine Robin
 
