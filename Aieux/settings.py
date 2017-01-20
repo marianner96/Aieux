@@ -122,10 +122,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(REPOSITORY_ROOT, 'static/')
 
-<<<<<<< HEAD
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(REPOSITORY_ROOT, 'media/')
-=======
+
 #email
 EMAIL_BACKEND ='django.core.mail.backends.console.EmailBackend'
->>>>>>> ad559fb85f1c698db3f32cb2f9aa3804d320b823
