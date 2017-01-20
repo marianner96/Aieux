@@ -50,10 +50,17 @@ function charge_arbre() {
 
 //Va chercher dans le fichier nodesedges.json la liste des noeuds et la met à jour au besoin (cad si le fichier modifs n'est pas vide)
 function maj_nodes_edges(){
+    
+    $.ajax({
+        url:'/initialise_fichier/',
+        type:'get',
+    });
+    
     $.ajax({
         url:'/maj_nodes_edges/',
         type:'get',
     });
+
 }
 
 //Dessine l'arbre généalogique (le réseau) à partir de la liste des noeuds et des liens passé en paramètre
