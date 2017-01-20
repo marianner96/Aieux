@@ -17,7 +17,7 @@ from django.views import generic
 #pip install django-photologue
 
 
-from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm, Fait_historiqueForm, RechercheForm, BanqueImagesForm
+from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm, Fait_historiqueForm, RechercheForm
 from .forms import RejoindreForm
 
 from pprint import pprint
@@ -200,7 +200,7 @@ def Menu(request):
 		recherche_form = RechercheForm()
 		print(recherche_form.errors)
 
-	return render(request, 'Menu.html', {'banque_img':banque_img,'recherche_form':recherche_form,'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'utilis':utilis,'fait_historique':fait_historique})
+	return render(request, 'Menu.html', {'recherche_form':recherche_form,'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'utilis':utilis,'fait_historique':fait_historique})
 
 
 # Fonction qui permet d'ajouter une nouvelle famille
