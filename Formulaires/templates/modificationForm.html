@@ -25,11 +25,6 @@
         <h1>Modificiation des informations du profil</h1>
             <form class="form-horizontal" id="formu" role="form" method="post" action="{% url 'modificationForm' %}">
                 {% csrf_token %}
-                    <!--<div id='img'>
-                        <label><b><input type='image' id='img_modif' src='../Images/profil_chat.jpg' width='200' height='auto'></label>
-                    </div>
-                    <button type='submit' class='btn btn-primary'>Changer la photo</button><br/><br/>-->
-
                     <img id='img'><script type="text/javascript"> affich_img </script></img>
                    
                     <div class="file-field input-field">

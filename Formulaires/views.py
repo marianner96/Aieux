@@ -30,7 +30,7 @@ CACHES = {
 
 # Fonction qui permet à l'utilisateur de s'inscrire
 # La fonction redirige obligatoirement vers Rejoindre_Famille ou Form_famille car un utilisateur
-# 		doit obligatoirement avoir une famille, même il est le seul dans celle-ci.
+# 		doit obligatoirement avoir une famille, même si il est le seul dans celle-ci.
 def InscriptionForm(request):
 	FormInscription = UtilisateurForm(request.POST or None, request.FILES)
 	# Si la requête est POST on fait ce qui suit

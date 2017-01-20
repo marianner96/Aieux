@@ -44,13 +44,11 @@
 				<!-- Image de profil -->
 			    <div class="right cadre_image">
 					<img src="/static/img/chat.jpg" style="height:150px;width:200px;">
-					<!--<img src="/static/img/test.jpg">-->
 				</div>
 
 				<nav class="nav-extended teal lighten-1">
 				<div class="nav-wrapper">
 					Profil de {{ utilis.prenom }} {{ utilis.nom }}
-
 
 					<!-- Cette partie correspond aux différents onglets 'Ma famille','Mes evenements',.. -->
 					<ul class="tabs tabs-transparent centre_moi">
@@ -63,7 +61,6 @@
 			</div>
 
 			<div id="albums" class="col s12">
-				
 				Nom : {{ utilis.nom }}<br/>
 				Prénom : {{ utilis.prenom }}<br/>
 				Autres prénoms : {{ utilis.autre_prenoms }}<br/>
@@ -106,8 +103,6 @@
 		</div>
 
 
-
-
 		<!--Onglet pour l'accueil-->
 		<div id="box_accueil" class="col s12 gros_conteneur_central">
 			<nav>
@@ -147,7 +142,6 @@
 				</div>
 			 	<div class="actus">
 					<p  class="teal lighten-3"> Banque d'images : <br/><br/>
-
 						<img src="/static/img/femme.png" style="width:100px;height:100px;">
 						<img src="/static/img/homme.jpeg" style="width:100px;height:100px;">
 						<img src="/static/img/eisti.jpg" style="width:100px;height:100px;">
@@ -157,15 +151,10 @@
 			</div>
 		</div>
 
-
-
-
 		<!--Onglet pour les discussions-->
 		<div id="box_discu" class="col s12 gros_conteneur_central">
 			<a href="{% url 'renvoi_Email' %}"<button class="btn waves-effect waves-light" type="submit" >Envoyer un mail<i class="material-icons right">email</i></button></a>
 		</div>
-
-
 
 		<!--Onglet pour les events-->
 		<div id="box_notif" class="col s12 gros_conteneur_central">
@@ -229,8 +218,8 @@
 	</div>
 
 	<div class="pub">
-			<img src="{% static 'img/pub9.jpg' %}" style="width:80%;height:80%;">
-		</div>
+		<img src="{% static 'img/pub9.jpg' %}" style="width:80%;height:80%;">
+	</div>
         
 
     <!-- Scripts pour le framework Materialize -->    
