@@ -842,9 +842,6 @@ def maj_nodes_edges(request):
         else: #en theorie on ne devrait jamais avoir ce cas mais au cas ou...
             print("Erreur lors de la lecture du type du nouveau membre")
 
-
-
-
     else:
         print("Fichier vide, aucune modification n'est a faire!")
 
