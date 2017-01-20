@@ -167,9 +167,10 @@
 	Changer la disposition des blocs -> css 
 -->
 		<div id="box_notif" class="col s12 gros_conteneur_central">
+		<div class="event">
 			{% for i in fait_historique %}
 				{% if i.type_event == 'naissance' %}
-					<div class="actus">
+					<div class="event">
 						<p  class="teal lighten-3">Naissance de {{ i.prenom_enfant }} {{ i.nom_enfant }} : <br/>
 						<br/>
 						Genre : {{ i.genre_enfant }}<br/>
@@ -180,21 +181,21 @@
 						</p>
 					</div>
 				{% elif i.type_event == 'mariage' %}
-					<div class="actus">
+					<div class="event">
 						<p  class="teal lighten-3">Mariage de {{ i.prenom_marie_1 }} et {{ i.prenom_marie_2 }} {{ i.nom_famille }} :  <br/><br/>
 						Date : {{ i.date_mariage }}<br/>
 						Commentaire : {{ i.commentaire }}<br/>
 						</p>
 					</div>
 				{% elif i.type_event == 'deces' %}
-					<div class="actus">
+					<div class="event">
 						<p  class="teal lighten-3">Décès de {{ i.prenom_defunt }} {{ i.nom_defunt }} : <br/>
 						Date : {{ i.date_deces }}<br/>
 						Commentaire : {{ i.commentaire }}<br/>
 						</p>
 					</div>
 				{% elif i.type_event == 'voyage' %}
-					<div class="actus">
+					<div class="event">
 						<p  class="teal lighten-3">Voyage à/aux	{{ i.lieu_voyage }} : <br/>
 						Date de départ : {{ i.date_debut }}<br/>
 						Date de retour : {{ i.date_fin }}<br/>
@@ -203,7 +204,7 @@
 					</div>
 					<!--Ca n'affiche pas l'immigration ... -->
 				{% elif i.type_event == 'immigration' %}
-					<div class="actus">
+					<div class="event">
 						<p  class="teal lighten-3">Immigration de {{ i.pays_depart }} à {{ i.pays_arrive }} : <br/>
 						Date : {{ i.date_immig }}<br/>
 						Commentaire : {{ i.commentaire }}<br/>
@@ -211,7 +212,7 @@
 					</div>
 					<!--Problème ici aussi. Faut voir !-->
 				{% elif i.type_event == 'villehabitee' %}
-					<div class="actus">
+					<div class="event">
 						<p  class="teal lighten-3">Ville habitée : 
 						Nom de la ville : {{ i.ville }}<br/>
 						Date d'arrivée dans la ville : {{ i.date_arrive }}<br/>
@@ -221,6 +222,7 @@
 					</div>
 				{% endif %}
 			{% endfor %}
+		</div>
 		</div>
 
 
