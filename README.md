@@ -1,6 +1,7 @@
 # Projet GL1 : Mes Aieux
 ### Avant de démarrer
 Se placer dans le dossier du projet, celui où il y a manage.py. 
+
 Pour lancer le serveur : 
 > python manage.py runserver
 
