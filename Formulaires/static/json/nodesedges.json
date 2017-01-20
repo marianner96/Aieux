@@ -1,1 +1,6 @@
-{"nodes":[ {"id": 1, "shape": "image", "image": "/static/img/homme.jpeg", "label":"FamilleDeRoger Roger"}],"edges":[]}
+{
+	"nodes":[
+		{"id": 1, "shape": "image", "image": "/static/img/homme.jpeg", "label":"FamilleDeRoger Roger"}
+	],
+	"edges":[]
+}
