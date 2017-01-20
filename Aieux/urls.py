@@ -38,5 +38,9 @@ urlpatterns = [
     url(r'^maj_enfant/$',views.maj_enfant,name='maj_enfant'),
     url(r'^maj_parent/$',views.maj_parent,name='maj_parent'),
     url(r'^maj_couple/$',views.maj_couple,name='maj_couple'),
+    
+    url(r'^sendmail/$', views.sendmail, name='sendmail'),
+    url(r'^Envoi_Email/$', views.Envoi_Email, name='Envoi_Email'),
+    url(r'^renvoi_Email/$', views.renvoi_Email, name='renvoi_Email'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

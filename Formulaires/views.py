@@ -872,3 +872,35 @@ def maj_couple(membre,nodes,edges):
     fic.close()
 
     return ""
+
+#sending email
+from django.core.mail import send_mail
+
+
+def Envoi_Email(request):
+	if request.method == 'POST':
+		FormMail = UtilisateurForm(request.POST)
+		if FormMail.is_valid():
+			
+			mdp_session = FormMail.cleaned_data['mdp']
+			email_session = FormMail.cleaned_data['email']
+			nom_session = FormMail.cleaned_data['nom']
+			prenom_session = FormMail.cleaned_data['prenom']
+
+			"""FormMail = UtilisateurForm(
+				nom = FormMail.cleaned_data['nom'],
+				prenom = FormMail.cleaned_data['prenom'],
+				genre = FormMail.cleaned_data['genre'],
+				ddn = FormMail.cleaned_data['ddn'],
+				email = FormMailcleaned_data['email'],
+				mdp = hashlib.sha1(mdp_session).hexdigest())"""
+
+		return render(request,'Envoi_Email.html', {'FormMail':FormMail})
+
+def renvoi_Email(request):
+	return render(request, 'Envoi_Email.html')
+
+def sendmail(request):
+	message="Loren Ipsum"
+	send_mail('Subject here',message,'eisti@eisti.eu',['ngtockmine@eisti.eu'],fail_silently=False,)
+	return redirect('accueilForm')

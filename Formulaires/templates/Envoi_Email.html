@@ -1,0 +1,42 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'Formulaires/materialize.min.css' %}" />
+
+<script type="text/javascript" src="{% static 'Formulaires/Formulaires.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/jquery-3.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'Formulaires/materialize.min.js' %}"></script>
+
+<!-- Icones -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width">
+  <title>Envoi_Email </title>
+</head>
+<body class="cyan darken-2">
+  <div id="box_global">
+    <!--/////////////////////////-->
+    <div class="enfants_box">
+      <h1>Envoi Email</h1>
+      {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+      <div>
+        <div id="inscription" class="row">
+          <form class="col s12" id="formu" role="form" method="post" action="{% url 'sendmail' %}">
+            {% csrf_token %}
+            Destinataire:<label><input name="destinataire" type="text" autofocus required> </label> <br>
+            Sujet:<label><input name="sujet" type="text" autofocus> </label> <br>
+            Message:<label><br><textarea id="textarea1" name="message" class="materialize-textarea"></textarea></label>
+
+            <div><button type="submit" id="bouton" class="btn btn-primary">Envoyer</button></div>
+          </form>
+        </div>
+      </div>
+  </div>
+</div>
+
+</body>
+</html>

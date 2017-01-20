@@ -121,3 +121,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(REPOSITORY_ROOT, 'static/')
+
+#email
+EMAIL_BACKEND ='django.core.mail.backends.console.EmailBackend'
