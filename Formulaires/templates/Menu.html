@@ -45,8 +45,7 @@
 			<div class="box_type2">
 				<!-- Image de profil -->
 			    <div class="right cadre_image">
-					<div class="image">
-					</div>
+					<img src="{{ utilis.photo.url }}" style="height:150px;width:150px;">
 				</div>
 
 				<nav class="nav-extended teal lighten-1">
@@ -168,7 +167,7 @@
 
 		<!--Onglet pour les discussions-->
 		<div id="box_discu" class="col s12 gros_conteneur_central">
-			Ici on mettra les discussions
+			<a href="{% url 'renvoi_Email' %}"<button class="btn waves-effect waves-light" type="submit" >Envoyer un mail<i class="material-icons right">email</i></button></a>
 		</div>
 
 
