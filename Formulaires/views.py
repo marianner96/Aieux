@@ -1216,4 +1216,4 @@ def renvoi_Email(request):
 def sendmail(request):
 	message="Loren Ipsum"
 	send_mail('Subject here',message,'eisti@eisti.eu',['ngtockmine@eisti.eu'],fail_silently=False,)
-	return redirect('accueilForm')
+	return redirect('Menu')
