@@ -156,6 +156,7 @@ class Fait_historiqueForm(ModelForm):
 # id : identifiant unique de l'utilisateur (généré automatiquement)
 # nom : nom de l'utilisateur
 # prenom : prénom de l'utilisateur
+# photo : photo de profil de l'utilisateur
 # genre : genre de l'utilisateur
 # ddn : date de naissance de l'utilisateur
 # email : e-mail de l'utilisateur
@@ -228,6 +229,12 @@ class UtilisateurForm(ModelForm):
         
         return self.cleaned_data
 
+
+# search : ce que l'utilisateur va marquer dans la barre de recherche
+# rech_pers : égal à rech_pers si on recherche une personne
+# rech_fam : égal à rech_fam si on recherche une famille 
+# rech_page : égal à rech_page si on recherche une page
+# False : si on ne coche ni personne, ni famille, ni page
 class Recherche(models.Model):
     RECH = (
         ('rech_pers', 'rech_pers'),

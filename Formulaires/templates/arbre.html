@@ -9,7 +9,7 @@
 
     {% load static %}
     <script src='{% static "vis.js" %}'></script>
-    <script type="text/javascript"  src='{% static "arbre.js" %}'"></script>
+    <script type="text/javascript"  src='{% static "arbre.js" %}'></script>
     <script src='{% static "googleAnalytics.js" %}'></script>
     <script src='{% static "jquery-3.1.1.min.js"%}'></script>
 
@@ -29,8 +29,9 @@
     <pre id="eventSpan"></pre>
 
     <a id='bouton_ajout_membre' href="/add_membre_arbre">Ajouter un membre</a> <br>
-    <a id='bouton_supp_membre' href="/supp_membre_arbre">Supprimer un membre</a>
+    <a id='bouton_supp_membre' href="/supp_membre_arbre">Supprimer un membre</a><br/>
 
+    <a href="{% url 'Menu' %}" class="waves-effect waves-light btn">Revenir à mon profil</a>
 
 </body>
 
