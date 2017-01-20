@@ -40,39 +40,70 @@
 <!--Onglet pour l'accueil-->
 	<div class="gros_conteneur">
 		<div id="box_accueil" class="col s12 gros_conteneur_central">
-						<nav>
-						    <div class="nav-wrapper teal lighten-2">
-						      <form>
-						        <div class="input-field">
-						          <input id="search" type="search" required>
-						          <label for="search"><i class="material-icons">search</i></label>
-						          <i class="material-icons">close</i>
-						        </div>
-						      </form>
-						    </div>
-					  	</nav>
+			<nav>
+			    <div class="nav-wrapper teal lighten-2">
+				    <form method='post' action="{% url 'Menubis' %}"> <!--Début form-->
+				    {% csrf_token %}
+			        <div class="input-field">
+			        	{{ recherche_form.search }}
+			        	{{ recherche_form.search.label_tag }}
+				    </div>
+				</div>			    
+			</nav>
 
-					  	<div id="rech_opts"> 
-					  		<p>Vous recherchez: </p>
-						  	<p>
-						      <input type="checkbox" id="rech_pers" />
-						      <label for="rech_pers">Une personne</label>
-						    </p>
-						    <p>
-						      <input type="checkbox" id="rech_fam" />
-						      <label for="rech_fam">Une famille</label>
-						    </p>
-						    <p>
-						      <input type="checkbox" id="rech_page" />
-						      <label for="rech_page">Des documents publics</label>
-						    </p>
-					  	</div>
+		  	<div id="rech_opts"> 
+		  		<p>Vous recherchez: </p>
+			  	<p>
+					<input type="checkbox" name="rech_pers" id="rech_pers" value="rech_pers"/>
+		    		<label for="rech_pers">Une personne</label>
+				</p>
+				<p>
+				    <input type="checkbox" name="rech_fam" id="rech_fam" value="rech_fam"/>
+				    <label for="rech_fam">Une famille</label>
+				</p>
+				<p>
+				    <input type="checkbox" name="rech_doc" id="rech_page" value="rech_page"/>
+				    <label for="rech_page">Des documents publics</label>
+				</p>
+				<button type='submit' id='btn' class='btn btn-primary'>Rechercher</button>
+			</div>
+		
+
+        
+			<div  id="conteneur_site">
+				<p>Voici les résultats de la recherche :</p> 
+				<!--Si l'utilisateur recherche une personne -->
+				{% if rech_pers == 'rech_pers' %}	
+					Personnes trouvées : <br/><br/>
+					{% for i in res_pers %}
+						Prénom : {{ i.prenom }}<br/>
+						Nom : {{ i.nom }}<br/>
+						Email : {{ i.email }}<br/>
+					{% endfor %}
+				{% endif %}
+				<!--Si l'utilisateur recherche une famille -->
+				{% if rech_fam == 'rech_fam' %}	
+					Familles trouvées : <br/><br/>
+					{% for i in res_fam %}
+						Nom de la famille : {{ i.nom }}<br/>
+						Nombre de membre : {{ i.nb_personnes}}<br/>
+					{% endfor %}
+				{% endif %}
+				<!--Si l'utilisateur recherche une page -->
+				{% if rech_page == 'rech_page' %}	
+					Pages trouvées : <br/><br/>
+					{% for i in res_page %}
+						Nom de la famille : {{ i.nom }}<br/>
+						Nombre de membre : {{ i.nb_personnes}}<br/>
+					{% endfor %}
+				{% endif %}
+				
+			</div>
+			<div align="center"><a href="{% url 'accueilForm' %}" class="waves-effect waves-light btn">Revenir à l'accueil</a></div>
 		</div>
 	</div>
 
 
-	</div>
-        
 
     <!-- Scripts pour le framework Materialize -->    
 	<script>

@@ -175,7 +175,7 @@ class Utilisateur(models.Model):
     )
     nom = models.CharField(max_length=30, blank=True)
     prenom = models.CharField(max_length=30, blank=True)
-    photo = models.ImageField(upload_to="img/", default='')
+    photo = models.ImageField(upload_to="img/", default='', blank=True)
     autre_prenoms = models.CharField(max_length=60, blank=True)
     genre = models.CharField(max_length=10, choices=GENRES, blank=True)
     ddn = models.CharField(max_length=10, blank=True, default="")
@@ -198,7 +198,7 @@ class Utilisateur(models.Model):
 class UtilisateurForm(ModelForm):
     mdp = forms.CharField(widget=forms.PasswordInput)
     validation_mdp = forms.CharField(widget=forms.PasswordInput, required=False)
-    photo = forms.ImageField()
+    photo = forms.ImageField(required=False)
     class Meta:
         model = Utilisateur
         fields = ['nom','prenom', 'photo', 'autre_prenoms','genre','ddn','email','mdp','adresse','profession','nationalite','description','famille','rang','moderateur']
@@ -214,7 +214,7 @@ class UtilisateurForm(ModelForm):
             'validation_mdp' : 'Confirmation mot de passe',
             'adresse':'Adresse postale',
             'profession':'Profession',
-            'nationalite':'Nationalité',
+            'nationalite':'Nationalite',
             'description':'Description',
         }
         widgets = {'genre':forms.RadioSelect}
@@ -228,3 +228,21 @@ class UtilisateurForm(ModelForm):
             raise forms.ValidationError("Mots de passe différents")
         
         return self.cleaned_data
+
+class Recherche(models.Model):
+    RECH = (
+        ('rech_pers', 'rech_pers'),
+        ('rech_fam', 'rech_fam'),
+        ('rech_page', 'rech_page'),
+        ('False', 'False'),
+    )
+
+    search = models.CharField(max_length=100, blank=True)
+    rech_pers = models.CharField(max_length=10, choices=RECH, blank=True, null=True)
+    rech_fam = models.CharField(max_length=10, choices=RECH, blank=True, null=True)
+    rech_page = models.CharField(max_length=10, choices=RECH, blank=True, null=True)
+
+class RechercheForm(ModelForm):
+    class Meta:
+        model = Recherche
+        fields = ['search','rech_pers','rech_fam','rech_page']

@@ -26,7 +26,7 @@
 	<nav class="nav-extended teal lighten-2">
 	    <div class="nav-wrapper">
 	      <ul class="tabs tabs-transparent centre_moi aggrandir_nav">
-	        <li class="tab aggrandir_nav"><a href="#box_profil"><i class="material-icons left centre_icons">perm_identity</i>{{ first_name }}</a></li>
+	        <li class="tab aggrandir_nav"><a href="#box_profil"><i class="material-icons left centre_icons">perm_identity</i>{{ utilis.prenom }}</a></li>
 	        <li class="tab aggrandir_nav"><a href="#box_fam"><i class="material-icons left centre_icons">loyalty</i>Famille(s)</a></li>
 	        <li class="tab aggrandir_nav"><a class="active" href="#box_accueil">ACCUEIL</a></li>
 	        <li class="tab aggrandir_nav"><a href="#box_discu"><i class="material-icons left centre_icons">forum</i>Discussions</a></li>
@@ -42,128 +42,136 @@
 <!--Onglet pour le profil de la personne-->
 	<div class="gros_conteneur">
 		<div id="box_profil" class="col s12 gros_conteneur_central">
-							<div class="box_type2">
+			<div class="box_type2">
+				<!-- Image de profil -->
+			    <div class="right cadre_image">
+					<div class="image">
+					</div>
+				</div>
 
-							<!-- Image de profil -->
-							      <div class="right cadre_image">
-										<img src="{{ user3.photo.url }}"/>
-							      </div>
-
-							  <nav class="nav-extended teal lighten-1">
-							    <div class="nav-wrapper">
-							      <!--Soucis de css : 
-							      <a href="#" class="brand-logo center wrap">
-							 	 -->
-							 	 Profil de {{ first_name }} {{ last_name }}
-							 	 <!--</a>-->
+				<nav class="nav-extended teal lighten-1">
+				<div class="nav-wrapper">
+				    <!--Soucis de css : 
+				    <a href="#" class="brand-logo center wrap">
+					-->
+					Profil de {{ utilis.prenom }} {{ utilis.nom }}
+					<!--</a>-->
 
 
-							<!-- Cette partie correspond aux différents onglets 'Ma famille','Mes evenements',.. -->
-							      <ul class="tabs tabs-transparent centre_moi">
-							        <li class="tab"><a class="active" href="#albums">Albums et évènements</a></li>
-							        <li class="tab"><a href="#modif_visi">Modifier visibilité</a></li>
-							        <li class="tab"><a target="_blank" href="{% url 'modificationForm' %}">Modifier mon profil</a></li>
-							      </ul>
-							    </div>
-							  </nav>
+					<!-- Cette partie correspond aux différents onglets 'Ma famille','Mes evenements',.. -->
+					<ul class="tabs tabs-transparent centre_moi">
+					    <li class="tab"><a class="active" href="#albums">Albums et profil</a></li>
+					    <li class="tab"><a href="#modif_visi">Modifier visibilité</a></li>
+					    <li class="tab"><a target="_blank" href="{% url 'modificationForm' %}">Modifier mon profil</a></li>
+					</ul>
+				</div>
+				</nav>
+			</div>
 
-							  </div>
+			<div id="albums" class="col s12">
+				Ici on mettra les albums et évènements. Si la personne est propriétaire du document/publication il y aura un petit icon permettant de modifier la 
+				visibilité de ce document/publication  (au vue du public, de la famille...)<br/><br/>
 
-							  
-
-							  <div id="albums" class="col s12">
-									Ici on mettra les albums et évènements. Si la personne est propriétaire du document/publication il y aura un petit icon permettant de modifier la 
-									visibilité de ce document/publication  (au vue du public, de la famille...)
-							  </div>
-
-							  <div id="modif_visi" class="col s12">
-									Ici on mettra les modifications de la visibilité de toutes les publications de la personne
-							  </div>
-
+				Nom : {{ utilis.nom }}<br/>
+				Prénom : {{ utilis.prenom }}<br/>
+				Autres prénoms : {{ utilis.autre_prenoms }}<br/>
+				Genre : {{ utilis.genre }}<br/>
+				Date de naissance : {{ utilis.ddn }}<br/>
+				Email : {{ utilis.email }}<br/>
+				adresse : {{ utilis.adresse }}<br/>
+				profession : {{ utilis.profession }}<br/>
+				nationalite : {{ utilis.nationalite }}<br/>
+				Nom : {{ utilis.nom }}<br/>
+			</div>
+			<div id="modif_visi" class="col s12">
+				Ici on mettra les modifications de la visibilité de toutes les publications de la personne
+			</div>
 		</div>
 
-<!-- Modal Structure | Cette partie correspond à la fenetre lorsqu'on appuie sur le bouton 'déconnecter' -->
-							  <div id="modal1" class="modal">
-							    <div class="modal-content">
-							      <p>Êtes-vous sur que vous souhaitez vous déconnecter ?</p>
-							    </div>
-							    <div class="modal-footer">
-							      <a href="{% url 'logout' %}" class=" modal-action modal-close waves-effect waves-green btn-flat">Oui, je veux me déconnecter.</a>
-							      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Non, je veux rester.</a>
-							    </div>
-							  </div>
+		<!-- Modal Structure | Cette partie correspond à la fenetre lorsqu'on appuie sur le bouton 'déconnecter' -->
+		<div id="modal1" class="modal">
+		    <div class="modal-content">
+			    <p>Êtes-vous sur que vous souhaitez vous déconnecter ?</p>
+		    </div>
+		    <div class="modal-footer">
+			    <a href="{% url 'logout' %}" class=" modal-action modal-close waves-effect waves-green btn-flat">Oui, je veux me déconnecter.</a>
+			    <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Non, je veux rester.</a>
+			</div>
+		</div>
 
-<!--Onglet pour la ou les famille(s)-->
+		<!--Onglet pour la ou les famille(s)-->
 		<div id="box_fam" class="col s12 gros_conteneur_central">
-							<div id="list_fam"> 
-						  		<div class="ajouts">
-						  			<p align='center'>Mes familles</p>
-						  			{% for i in list_famille %}
-										<a href="{% url 'initialise_fichier' %}" class="waves-effect waves-light btn"> {{ i }}</a>
-									{% endfor %}
-						  			<a href="{% url 'Form_famille' %}" class="waves-effect waves-light btn">Créer une nouvelle famille</a>
-						  			<a href="{% url 'Rejoindre_famille' %}" class="waves-effect waves-light btn">Rejoindre une famille</a>
-						  		</div>
-						  	</div>
+			<div id="list_fam"> 
+				<div class="ajouts">
+					<p align='center'>Mes familles</p>
+					{% for i in list_famille %}
+						<a href="{% url 'initialise_fichier' %}" class="waves-effect waves-light btn"> {{ i }}</a>
+					{% endfor %}
+					<a href="{% url 'Form_famille' %}" class="waves-effect waves-light btn">Créer une nouvelle famille</a>
+					<a href="{% url 'Rejoindre_famille' %}" class="waves-effect waves-light btn">Rejoindre une famille</a>
+				</div>
+			</div>
 		</div>
 
 
 
 
-<!--Onglet pour l'accueil-->
+		<!--Onglet pour l'accueil-->
 		<div id="box_accueil" class="col s12 gros_conteneur_central">
-						<nav>
-						    <div class="nav-wrapper teal lighten-2">
-						      <form>
-						        <div class="input-field">
-						          <input id="search" type="search" required>
-						          <label for="search"><i class="material-icons">search</i></label>
-						          <i class="material-icons">close</i>
-						        </div>
-						      </form>
-						    </div>
-					  	</nav>
+			<nav>
+			    <div class="nav-wrapper teal lighten-2">
+				    <form method='post' action="{% url 'Menu' %}"> <!--Début form-->
+				    {% csrf_token %}
+				    <div class="input-field col s6">
+		            	<i class="material-icons prefix">search</i>
+		                {{ recherche_form.search }}
+		            </div>
+				</div>			    
+			</nav>
 
-					  	<div id="rech_opts"> 
-					  		<p>Vous recherchez: </p>
-						  	<p>
-						      <input type="checkbox" id="rech_pers" />
-						      <label for="rech_pers">Une personne</label>
-						    </p>
-						    <p>
-						      <input type="checkbox" id="rech_fam" />
-						      <label for="rech_fam">Une famille</label>
-						    </p>
-						    <p>
-						      <input type="checkbox" id="rech_page" />
-						      <label for="rech_page">Des documents publics</label>
-						    </p>
-					  	</div>
+		  	<div id="rech_opts"> 
+		  		<p>Vous recherchez: </p>
+			  	<p>
+					<input type="checkbox" name="rech_pers" id="rech_pers" value="rech_pers"/>
+		    		<label for="rech_pers">Une personne</label>
+				</p>
+				<p>
+				    <input type="checkbox" name="rech_fam" id="rech_fam" value="rech_fam"/>
+				    <label for="rech_fam">Une famille</label>
+				</p>
+				<p>
+				    <input type="checkbox" name="rech_doc" id="rech_page" value="rech_page"/>
+				    <label for="rech_page">Des documents publics</label>
+				</p>
+				<button type='submit' id='btn' class='btn btn-primary'>Rechercher</button>
+			</div>
 
-					  	<div id="actualité"> 
-					  		<div class="ajouts">
-					  			<a href="{% url 'Form_event' %}" class="waves-effect waves-light btn">Ajouter un évènement</a>
-					  			<a href="#" class="waves-effect waves-light btn">Ajouter une/des image(s)</a>
-					  		</div>
-						  	<div class="actus">
-						  		<p  class="teal lighten-3"> Vous n'avez aucune actualité pour le moment! <br> Ajoutez un évènement ou suivez l'actualité d'une personne ou d'une page. </p>
-					  		</div>
-					  	</div>
+				  	</form> <!--Fin form-->
+
+			<div id="actualité"> 
+				<div class="ajouts">
+					<a href="{% url 'Form_event' %}" class="waves-effect waves-light btn">Ajouter un évènement</a>
+					<a href="#" class="waves-effect waves-light btn">Ajouter une/des image(s)</a>
+				</div>
+			 	<div class="actus">
+			  		<p  class="teal lighten-3"> Vous n'avez aucune actualité pour le moment! <br> Ajoutez un évènement ou suivez l'actualité d'une personne ou d'une page. </p>
+				</div>
+			</div>
 		</div>
 
 
 
 
-<!--Onglet pour les discussions-->
+		<!--Onglet pour les discussions-->
 		<div id="box_discu" class="col s12 gros_conteneur_central">
 			Ici on mettra les discussions
 		</div>
 
 
 
-<!--Onglet pour les events
-	Changer la disposition des blocs -> css 
--->
+		<!--Onglet pour les events
+			Changer la disposition des blocs -> css 
+		-->
 		<div id="box_notif" class="col s12 gros_conteneur_central">
 		<div class="event">
 			{% for i in fait_historique %}
@@ -200,7 +208,6 @@
 						Commentaire : {{ i.commentaire }}<br/>
 						</p>
 					</div>
-					<!--Ca n'affiche pas l'immigration ... -->
 				{% elif i.type_event == 'immigration' %}
 					<div class="event">
 						<p  class="teal lighten-3">Immigration de {{ i.pays_depart }} à {{ i.pays_arrive }} : <br/>
@@ -208,7 +215,6 @@
 						Commentaire : {{ i.commentaire }}<br/>
 						</p>
 					</div>
-					<!--Problème ici aussi. Faut voir !-->
 				{% elif i.type_event == 'villehabitee' %}
 					<div class="event">
 						<p  class="teal lighten-3">Ville habitée : 
@@ -227,8 +233,6 @@
 		<div class="box_type2">
 			<img src="{% static 'img/pub9.jpg' %}" style="width:80%;height:80%;">
 		</div>
-
-
 
 	</div>
         
