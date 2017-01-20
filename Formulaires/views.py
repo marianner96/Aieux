@@ -106,6 +106,7 @@ def modificationForm(request):
 			obj = user3.update(
 				nom = FormModif.cleaned_data['nom'],
 				prenom = FormModif.cleaned_data['prenom'],
+				photo = FormModif.cleaned_data['photo'],
 				autre_prenoms = FormModif.cleaned_data['autre_prenoms'],
 				genre = FormModif.cleaned_data['genre'],
 				ddn = FormModif.cleaned_data['ddn'],
