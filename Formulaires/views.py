@@ -13,8 +13,11 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response, redirect
 from django.template import Context, loader, RequestContext
 from django.views import generic
+#photolog
+#pip install django-photologue
 
-from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm, Fait_historiqueForm, RechercheForm
+
+from .models import Utilisateur, Famille, Arbre, Fait_historique, UtilisateurForm, FamilleForm, Fait_historiqueForm, RechercheForm, BanqueImagesForm
 from .forms import RejoindreForm
 
 from pprint import pprint
@@ -161,6 +164,8 @@ def Menubis(request):
 # Fonction qui permet de récupérer les familles et les faits historiques de l'utilisateur, ainsi que son nom et son prénom (request.user)
 @login_required
 def Menu(request):
+	banque_img = BanqueImagesForm()
+	print(banque_img.errors)
 	# On récupère l'utilisateur qui est conencté à l'aide de request.user
 	user1 = User.objects.filter(email = request.user)
 	user3 = Utilisateur.objects.filter(email = user1[0])
@@ -194,7 +199,7 @@ def Menu(request):
 		print(recherche_form.errors)
 
 
-	return render(request, 'Menu.html', {'recherche_form':recherche_form,'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'utilis':utilis,'fait_historique':fait_historique})
+	return render(request, 'Menu.html', {'banque_img':banque_img,'recherche_form':recherche_form,'list_famille':list_famille,'longueur_list_famille':longueur_list_famille,'utilis':utilis,'fait_historique':fait_historique})
 
 
 # Fonction qui permet d'ajouter une nouvelle famille

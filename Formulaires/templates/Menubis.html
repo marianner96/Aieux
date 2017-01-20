@@ -44,10 +44,10 @@
 			    <div class="nav-wrapper teal lighten-2">
 				    <form method='post' action="{% url 'Menubis' %}"> <!--Début form-->
 				    {% csrf_token %}
-			        <div class="input-field">
-			        	{{ recherche_form.search }}
-			        	{{ recherche_form.search.label_tag }}
-				    </div>
+				    <div class="input-field col s6">
+		            	<i class="material-icons prefix">search</i>
+		                {{ recherche_form.search }}
+		            </div>
 				</div>			    
 			</nav>
 
@@ -78,7 +78,15 @@
 					{% for i in res_pers %}
 						Prénom : {{ i.prenom }}<br/>
 						Nom : {{ i.nom }}<br/>
+						Photo de profil : {{ i.photo }}<br/>
+						Autres prénoms : {{ i.autres_prenoms }}<br/>
+						Genre : {{ i.genre }}<br/>
+						Date de naissance : {{ i.ddn }}<br/>
 						Email : {{ i.email }}<br/>
+						Adresse postale : {{ i.adresse }}<br/>
+						Profession : {{ i.profession }}<br/>
+						Nationalité : {{ i.nationalite }}<br/>
+						Description : {{ i.description }}<br/>
 					{% endfor %}
 				{% endif %}
 				<!--Si l'utilisateur recherche une famille -->
@@ -90,6 +98,7 @@
 					{% endfor %}
 				{% endif %}
 				<!--Si l'utilisateur recherche une page -->
+				<!--
 				{% if rech_page == 'rech_page' %}	
 					Pages trouvées : <br/><br/>
 					{% for i in res_page %}
@@ -97,6 +106,7 @@
 						Nombre de membre : {{ i.nb_personnes}}<br/>
 					{% endfor %}
 				{% endif %}
+				-->
 				
 			</div>
 			<div align="center"><a href="{% url 'accueilForm' %}" class="waves-effect waves-light btn">Revenir à l'accueil</a></div>

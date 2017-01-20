@@ -154,7 +154,11 @@
 					<a href="#" class="waves-effect waves-light btn">Ajouter une/des image(s)</a>
 				</div>
 			 	<div class="actus">
-			  		<p  class="teal lighten-3"> Vous n'avez aucune actualité pour le moment! <br> Ajoutez un évènement ou suivez l'actualité d'une personne ou d'une page. </p>
+					<p  class="teal lighten-3"> Banque d'images : <br/><br/>
+
+						<!--{{ banque_img.photo1 }}-->
+
+						Vous n'avez aucune actualité pour le moment! <br> Ajoutez un évènement ou suivez l'actualité d'une personne ou d'une page. </p>
 				</div>
 			</div>
 		</div>
@@ -230,11 +234,13 @@
 		</div>
 
 		<!--Image de pub-->
-		<div class="box_type2">
-			<img src="{% static 'img/pub9.jpg' %}" style="width:80%;height:80%;">
-		</div>
+		
 
 	</div>
+
+	<div class="pub">
+			<img src="{% static 'img/pub9.jpg' %}" style="width:80%;height:80%;">
+		</div>
         
 
     <!-- Scripts pour le framework Materialize -->    

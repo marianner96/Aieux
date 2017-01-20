@@ -30,7 +30,15 @@
 	{% for i in res_pers %}
 		Prénom : {{ i.prenom }}<br/>
 		Nom : {{ i.nom }}<br/>
+		Photo de profil : {{ i.photo }}<br/>
+		Autres prénoms : {{ i.autres_prenoms }}<br/>
+		Genre : {{ i.genre }}<br/>
+		Date de naissance : {{ i.ddn }}<br/>
 		Email : {{ i.email }}<br/>
+		Adresse postale : {{ i.adresse }}<br/>
+		Profession : {{ i.profession }}<br/>
+		Nationalité : {{ i.nationalite }}<br/>
+		Description : {{ i.description }}<br/>
 	{% endfor %}
 {% endif %}
 <!--Si l'utilisateur recherche une famille -->
