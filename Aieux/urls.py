@@ -1,10 +1,13 @@
 from django.conf.urls import url
+from django.conf.urls.static import static 
+from django.conf import settings
 from django.contrib import admin
 
 from Formulaires import views
 
 
 app_name = 'Formulaires'
+
 urlpatterns = [
     url(r'^$', views.accueilForm, name='accueilForm'),
     url(r'^admin/', admin.site.urls),
@@ -36,5 +39,4 @@ urlpatterns = [
     url(r'^maj_parent/$',views.maj_parent,name='maj_parent'),
     url(r'^maj_couple/$',views.maj_couple,name='maj_couple'),
 
-]
-
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
